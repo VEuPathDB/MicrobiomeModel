@@ -1,0 +1,71 @@
+<wdkModel>
+  <querySet name="sampleIds" queryType="id" isCacheable="true">
+
+   <!-- notes
+      
+      - changed ms_assay param names
+      - all components will have orfs so i changed the includes/excluded to reflect that
+
+    -->
+    
+    <!-- ************************************************************ -->
+    <!-- Popset ID -->  
+    <!-- ************************************************************ -->
+ 
+    <sqlQuery name="SampleBySampleId" doNotTest="true" excludeProjects="EuPathDB"
+              displayName="ID">
+      <paramRef ref="sampleParams.sample_id"/>
+        <column name="name"/>
+        <column name="project_id"/>
+        <sql>
+            <![CDATA[
+                SELECT distinct s.name as name, '@PROJECT_ID@' as project_id
+                FROM   ApidbTuning.SampleAttributes s,
+                       ($$sample_id$$) ds
+                 WHERE lower(s.name) = lower(ds.name)
+            ]]>
+        </sql>
+
+    </sqlQuery>
+ 
+    <sqlQuery name="SampleByMetadata" doNotTest="true" excludeProjects="EuPathDB"
+              displayName="Metadata">
+      <paramRef ref="sampleParams.metadata_datasets" visible="false"/>
+       <paramRef ref="sampleParams.samples_filter_metadata" quote="false" prompt="Samples"/>
+        <column name="name"/>
+        <column name="project_id"/>
+        <sql>
+            <![CDATA[
+              SELECT distinct s.name as name, '@PROJECT_ID@' as project_id
+              FROM   ApidbTuning.SampleAttributes s, APIDBTUNING.SAMPLEDOWNSTREAM sds
+              WHERE sds.OUTPUT_PROTOCOL_APP_NODE_ID in ($$samples_filter_metadata$$)
+                   AND sds.OUTPUT_ISA_TYPE = 'Data'
+                   AND s.PROTOCOL_APP_NODE_ID = sds.PROTOCOL_APP_NODE_ID
+               ORDER BY s.name
+            ]]>
+        </sql>
+
+    </sqlQuery>
+
+    <sqlQuery name="SampleByTaxonAbundance" doNotTest="true" excludeProjects="EuPathDB"
+              displayName="Metadata">
+      <paramRef ref="sampleParams.metadata_datasets"/>
+       <paramRef ref="sampleParams.samples_filter_taxon" quote="false" prompt="Samples"/>
+        <column name="name"/>
+        <column name="project_id"/>
+        <sql>
+            <![CDATA[
+              SELECT distinct s.name as name, '@PROJECT_ID@' as project_id
+              FROM   ApidbTuning.SampleAttributes s, APIDBTUNING.SAMPLEDOWNSTREAM sds
+              WHERE sds.OUTPUT_PROTOCOL_APP_NODE_ID in ($$samples_filter_taxon$$)
+                   AND sds.OUTPUT_ISA_TYPE = 'Data'
+                   AND s.PROTOCOL_APP_NODE_ID = sds.PROTOCOL_APP_NODE_ID
+               ORDER BY s.name
+            ]]>
+        </sql>
+
+    </sqlQuery>
+
+    </querySet>
+
+</wdkModel>

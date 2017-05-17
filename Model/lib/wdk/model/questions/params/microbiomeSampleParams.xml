@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wdkModel>
+
+  <!-- notes
+
+     - should ms_assay param be a controlled vocab pulled from the database?
+
+  -->
+
+  <paramSet name="sampleParams">
+
+    <!--++++++++++++++++++++++++++++++++++++++++++++++++-->
+    <!-- ID -->
+    <!--++++++++++++++++++++++++++++++++++++++++++++++++-->
+  
+      <datasetParam name="sample_id" prompt="Sample ID" 
+                      recordClassRef="SampleRecordClasses.MicrobiomeSampleRecordClass" >
+            <help>Input a comma delimited set of  Sample IDs, or upload a file. Wildcards (*) are allowed.</help>
+             <suggest includeProjects="MicrobiomeDB"
+                     default="EUSMPL0020-1-26"/>
+          </datasetParam>
+
+       <flatVocabParam name="metadata_datasets"
+                     queryRef="samplesVQ.MicrobiomeDatasets"
+                     prompt="Dataset"
+                     quote="true"
+                     visible="true"
+                     multiPick="true">
+            <help>Choose an Experiment</help> 
+            <suggest selectMode="all" />
+       </flatVocabParam>
+
+       <filterParam name="samples_filter_metadata" includeProjects="MicrobiomeDB" 
+                      queryRef="samplesVQ.SamplesWithMetadata"
+                      metadataQueryRef="samplesVQ.SamplesMetadata"
+                      metadataSpecQueryRef="samplesVQ.MetadataSpec"
+                      prompt="Samples"
+                      multiPick="true"
+                      dependedParamRef="sampleParams.metadata_datasets"
+                      quote="true"
+                      suppressNode="true">
+         <help>
+              Select reference samples. 
+         </help>
+         <!-- <suggest selectMode="all" /> -->
+       </filterParam>
+
+       <filterParam name="samples_filter_taxon" includeProjects="MicrobiomeDB" 
+                      queryRef="samplesVQ.SamplesWithMetadata"
+                      metadataQueryRef="samplesVQ.SamplesTaxon"
+                      metadataSpecQueryRef="samplesVQ.SamplesTaxonSpec"
+                      prompt="Taxon Relative Abundance"
+                      multiPick="true"
+                      dependedParamRef="sampleParams.metadata_datasets"
+                      quote="true"
+                      suppressNode="true">
+         <help>
+              Select reference samples. 
+         </help>
+         <!-- <suggest selectMode="all" /> -->
+       </filterParam>
+    
+  </paramSet>
+
+  <querySet name="samplesVQ" queryType="vocab" isCacheable="true">
+
+
+       <sqlQuery name="MicrobiomeDatasets" excludeProjects="EuPathDB">
+             <column name="internal"/>
+             <column name="term"/>
+             <column name="display"/>
+          <sql>
+             select distinct dsp.name AS internal, dsp.name as term,
+                    display_name AS display
+             from apidbTuning.DatasetPresenter dsp
+             where dsp.name like 'otu_%_RSRC'
+             order by display_name asc
+          </sql>
+        </sqlQuery>
+
+        <sqlQuery name="SamplesTaxon" doNotTest="1" includeProjects="MicrobiomeDB">
+          <paramRef ref="sampleParams.metadata_datasets"/>
+          <column name="term" />
+          <column name="value"/>
+          <column name="property" />
+          <sql>
+            <![CDATA[
+                select distinct pan_name as term, term_id as property, round(value,2) as value, taxon_level
+                from apidbtuning.taxonabundance
+                where dataset_name in ($$metadata_datasets$$)
+                and lower(category) != 'species'
+--                and value is not null
+                order by taxon_level
+            ]]>
+            </sql>
+        </sqlQuery>
+
+    <sqlQuery name="SamplesTaxonSpec" doNotTest="1" includeProjects="MicrobiomeDB"> 
+            <paramRef ref="sampleParams.metadata_datasets"/>
+            <column name="property" />
+            <column name="spec_property"/>
+            <column name="spec_value" />
+            <sql>
+              <![CDATA[
+                     select property,
+                            spec_property,
+                           spec_value as spec_value
+                            from (
+                select distinct property as property, spec_property, spec_value
+                  from apidbTuning.TaxonAbundanceSpec
+                where property in ( select distinct term_id as property
+                                                  from apidbtuning.taxonabundance
+                                                where dataset_name in ($$metadata_datasets$$)
+                                                    and lower(category) != 'species'
+                                                union 
+                                                select distinct category as property
+                                                   from apidbtuning.taxonabundance 
+                                                 where dataset_name in ($$metadata_datasets$$)
+                                                    and lower(category) != 'species'
+                                                 )
+)
+              ]]>
+            </sql>
+        </sqlQuery>
+
+    <sqlQuery name="SamplesWithMetadata" excludeProjects="EuPathDB">
+         <paramRef ref="sampleParams.metadata_datasets"/>
+         <column name="internal"/>
+         <column name="term"/>
+         <column name="display"/>
+         <sql>
+           select * from (
+              select pan_name as term, pan_name as display, protocol_app_node_id as internal
+              from apidbTuning.panCharacteristicMetadata
+              where dataset_name in ($$metadata_datasets$$)
+              and pan_name not like '[alpha_diversity]'
+              union
+              select pan_name as term, pan_name as display, protocol_app_node_id as internal
+              from apidbTuning.panProtocolMetadata
+              where dataset_name in ($$metadata_datasets$$)
+              union
+              select pan_name as term, pan_name as display, protocol_app_node_id as internal
+              from apidbTuning.FallbackMetadata
+              where dataset_name in ($$metadata_datasets$$))
+            where term not like '%[alpha_diversity]%' 
+          </sql>
+        </sqlQuery>
+
+        <sqlQuery name="SamplesMetadata" doNotTest="1" excludeProjects="EuPathDB">
+          <paramRef ref="sampleParams.metadata_datasets"/>
+          <column name="term" />
+          <column name="value"/>
+          <column name="property" />
+          <sql>
+            <![CDATA[
+                     select * from (
+                select pan_name as term, term as property, value
+                from apidbTuning.panCharacteristicMetadata
+                where dataset_name in ($$metadata_datasets$$)
+              union
+                select pan_name as term, term as property, value
+                from apidbTuning.panProtocolMetadata
+                where dataset_name in ($$metadata_datasets$$)
+              union
+                select pan_name as term, term_name as property, value
+                from apidbTuning.fallbackmetadata
+                where dataset_name in ($$metadata_datasets$$)
+                ) 
+                where property in ( select distinct property
+                                                  from apidbTuning.MetadataSpec
+                                                where dataset_name in ($$metadata_datasets$$)
+                                                    and spec_property = 'parent'
+                                                            )
+                                                     
+            ]]>
+            </sql>
+        </sqlQuery>
+
+    <sqlQuery name="MetadataSpec" doNotTest="1" excludeProjects="EuPathDB"> 
+            <paramRef ref="sampleParams.metadata_datasets"/>
+            <column name="property" />
+            <column name="spec_property"/>
+            <column name="spec_value" />
+            <sql>
+              <![CDATA[
+                 select property,
+                            spec_property,
+                            decode(spec_value,'Thing',null,spec_value) as spec_value
+                            from (
+                select distinct property, spec_property, spec_value
+                from apidbTuning.MetadataSpec
+                where dataset_name in ($$metadata_datasets$$))
+                 where property in ( select distinct property
+                                                  from apidbTuning.MetadataSpec
+                                                  where dataset_name in ($$metadata_datasets$$)
+                                                    and spec_property = 'parent'
+                )
+               
+              ]]>
+            </sql>
+        </sqlQuery>
+
+ 
+  </querySet>
+
+
+</wdkModel>

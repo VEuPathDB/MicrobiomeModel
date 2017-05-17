@@ -1,0 +1,68 @@
+<wdkModel>
+  <stepAnalysisPlugins>
+    
+    <viewConfig prefix="/wdkCustomization/jsp/analysis/" suffix=".jsp"/>
+    <executionConfig threadPoolSize="25" fileStoreDirectory="@STEP_ANALYSIS_JOB_DIR@"/>
+
+     <stepAnalysisPlugin
+        name="otu_abundance" displayName="OTU abundance"
+        releaseVersion="1"
+        analysisViewName="eupathExternalAnalysisResult"
+        analyzerClass="org.eupathdb.common.model.analysis.EuPathExternalAnalyzer">
+      <shortDescription>
+        <![CDATA[
+          Shiny application to display graphs of OTU abundance for each sample in the result
+        ]]>
+      </shortDescription>
+      <description/>
+      <property name="externalAppUrl"><![CDATA[/shiny/abundance_app]]></property>
+      <property name="tablesToExtract">Characteristics,TaxaRelativeAbundance</property>
+      <property name="addHeader">true</property>
+      <property name="iframeWidthPx">1000</property>
+      <property name="iframeLengthPx">800</property>
+    </stepAnalysisPlugin>
+
+         <stepAnalysisPlugin
+        name="alpha_diversity" displayName="Alpha Diversity"
+        releaseVersion="1"
+        analysisViewName="eupathExternalAnalysisResult"
+        analyzerClass="org.eupathdb.common.model.analysis.EuPathExternalAnalyzer">
+      <shortDescription>
+        <![CDATA[
+          Shiny application to display alpha diversity plots for these samples
+        ]]>
+      </shortDescription>
+      <description/>
+      <property name="externalAppUrl"><![CDATA[/shiny/alpha_diversity]]></property>
+      <property name="tablesToExtract">Characteristics,TaxaRelativeAbundance</property>
+      <property name="addHeader">true</property>
+      <property name="iframeWidthPx">1000</property>
+      <property name="iframeLengthPx">800</property>
+    </stepAnalysisPlugin>
+
+    <stepAnalysisPlugin
+        name="beta_diversity" displayName="Beta Diversity"
+        releaseVersion="1"
+        analysisViewName="eupathExternalAnalysisResult"
+        analyzerClass="org.eupathdb.common.model.analysis.EuPathExternalAnalyzer">
+      <shortDescription>
+        <![CDATA[
+          Shiny application to display beta diversity plots for these samples
+        ]]>
+      </shortDescription>
+      <description/>
+      <property name="externalAppUrl"><![CDATA[/shiny/beta_diversity]]></property>
+      <property name="tablesToExtract">Characteristics,TaxaRelativeAbundance</property>
+      <property name="addHeader">true</property>
+      <property name="iframeWidthPx">1000</property>
+      <property name="iframeLengthPx">800</property>
+    </stepAnalysisPlugin>
+
+    <!-- ============================================================================= -->
+    <!-- ========== PLUGINS BELOW ARE FOR TESTING AND SHOULD NOT BE REMOVED ========== -->
+    <!-- ============================================================================= -->
+
+
+  </stepAnalysisPlugins>
+
+</wdkModel>

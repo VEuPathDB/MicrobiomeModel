@@ -1,0 +1,12 @@
+ 			recordClassName	targetType	name	displayName	shortDisplayName	description	geneOrTranscript	displayOrder	scope	scope	scope
+
+SampleRecordClasses.MicrobiomeSampleRecordClass.record_overview	http://edamontology.org/topic_3050 	Biodiversity	SampleRecordClasses.MicrobiomeSampleRecordClass	attribute	record_overview						record-internal		
+SampleRecordClasses.MicrobiomeSampleRecordClass.description	http://edamontology.org/topic_3050	Biodiversity	SampleRecordClasses.MicrobiomeSampleRecordClass	attribute	description						results	record	download
+SampleRecordClasses.MicrobiomeSampleRecordClass.Characteristics	http://edamontology.org/topic_3050 	Biodiversity	SampleRecordClasses.MicrobiomeSampleRecordClass	table	Characteristics					2	record	download	
+SampleRecordClasses.MicrobiomeSampleRecordClass.Protocols	http://edamontology.org/topic_3050 	Biodiversity	SampleRecordClasses.MicrobiomeSampleRecordClass	table	Protocols					2	record	download	
+SampleRecordClasses.MicrobiomeSampleRecordClass.ProcessedSample	http://edamontology.org/topic_3050 	Biodiversity	SampleRecordClasses.MicrobiomeSampleRecordClass	table	ProcessedSample					3	record	download	
+SampleRecordClasses.MicrobiomeSampleRecordClass.TaxaRelativeAbundance	http://edamontology.org/topic_3050 	Biodiversity	SampleRecordClasses.MicrobiomeSampleRecordClass	table	TaxaRelativeAbundance					4	record	download	
+SampleRecordClasses.MicrobiomeSampleRecordClass.Datasets	http://edamontology.org/topic_3050 	Biodiversity	SampleRecordClasses.MicrobiomeSampleRecordClass	table	Datasets					1	record	download	
+SampleRecordClasses.MicrobiomeSampleRecordClass.SampleQuestions.SampleBySampleID	http://edamontology.org/topic_3050 	Biodiversity	SampleRecordClasses.MicrobiomeSampleRecordClass	search	SampleQuestions.MicrobiomeSampleBySampleId					2	menu	webservice	
+SampleRecordClasses.MicrobiomeSampleRecordClass.SampleQuestions.SampleByMetadata	http://edamontology.org/topic_3050 	Biodiversity	SampleRecordClasses.MicrobiomeSampleRecordClass	search	SampleQuestions.MicrobiomeSampleByMetadata					1	menu	webservice	
+SampleRecordClasses.MicrobiomeSampleRecordClass.SampleQuestions.SampleByTaxonAbundance	http://edamontology.org/topic_3050 	Biodiversity	SampleRecordClasses.MicrobiomeSampleRecordClass	search	SampleQuestions.MicrobiomeSampleByTaxonAbundance 					3	menu	webservice	
