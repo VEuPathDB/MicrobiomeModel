@@ -37,10 +37,6 @@
 
     <!-- XML -->
     <import file="ebrcModelCommon.xml"/>
-    <!--import file="apiCommonModel.xml"/-->
-    <!--import file="ebrcModelCommon/records/xmlRecords.xml"/ -->
-    <!--import file="ebrcModelCommon/questions/xmlQuestions.xml"/ -->
-
 
 
     <!-- Ajax params -->
