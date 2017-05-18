@@ -85,7 +85,6 @@
                                             ReFlow-Installation,
                                             WDK-Installation,
                                             EbrcModelCommon-Installation,
-                                            MicrobiomeModel/DatasetPresenter-Installation,
                                             MicrobiomeModel/Model-Installation">
 
 
@@ -112,12 +111,6 @@
 
   <!-- ooooooooooooooooooooooo  Install Components  ooooooooooooooooooooooo -->
 
-  <target name="MicrobiomeModel/DatasetPresenter-Installation" depends="ProjectTree">
-    <ant target="defaultComponentInstall">
-      <property name="project" value="MicrobiomeModel"/>
-      <property name="component" value="DatasetPresenter"/>
-    </ant>
-  </target>  
 
   <target name="MicrobiomeModel/Model-Installation" depends="ProjectTree">
 
