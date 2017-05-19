@@ -1,5 +1,5 @@
  			recordClassName	targetType	name	displayName	shortDisplayName	description	geneOrTranscript	displayOrder	scope	scope	scope
-
+			eupath/eupath.owl#recordClassName	eupath/eupath.owl#targetType	eupath/eupath.owl#name	EUPATH_0000052	eupath/eupath.owl#shortDisplayName	eupath/eupath.owl#description	eupath/eupath.owl#geneOrTranscript	EUPATH_0000274	eupath/eupath.owl#scope	eupath/eupath.owl#scope	eupath/eupath.owl#scope
 SampleRecordClasses.MicrobiomeSampleRecordClass.record_overview	http://edamontology.org/topic_3050 	Biodiversity	SampleRecordClasses.MicrobiomeSampleRecordClass	attribute	record_overview						record-internal		
 SampleRecordClasses.MicrobiomeSampleRecordClass.description	http://edamontology.org/topic_3050	Biodiversity	SampleRecordClasses.MicrobiomeSampleRecordClass	attribute	description						results	record	download
 SampleRecordClasses.MicrobiomeSampleRecordClass.Characteristics	http://edamontology.org/topic_3050 	Biodiversity	SampleRecordClasses.MicrobiomeSampleRecordClass	table	Characteristics					2	record	download	
