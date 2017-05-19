@@ -8,11 +8,9 @@
 
 <wdkModel>
 
-  <constant name="releaseDate" includeProjects="MicrobiomeDB">31 March 2017 00:00</constant>
-  <constant name="buildNumber" includeProjects="MicrobiomeDB">1</constant>
-  <constant name="releaseVersion" includeProjects="MicrobiomeDB">1</constant>
-
-
+  <constant name="releaseDate">31 March 2017 00:00</constant>
+  <constant name="buildNumber">1</constant>
+  <constant name="releaseVersion">1</constant>
  
 
   <constant name="attributesReporterDisplayName">Tab delimited (Excel) - choose columns to make a custom table</constant>
@@ -20,35 +18,18 @@
   <constant name="fullReporterDisplayName">Text: choose from columns and/or tables</constant>
   
 
-  <modelName includeProjects="MicrobiomeDB" displayName="MicrobiomeDB" 
-    version="%%releaseVersion%%" releaseDate="%%releaseDate%%" buildNumber="%%buildNumber%%" />
+  <modelName  displayName="MicrobiomeDB" version="%%releaseVersion%%" releaseDate="%%releaseDate%%" buildNumber="%%buildNumber%%" />
 
-
-  <declaredMacro name="WEBSERVICEMIRROR"         usedBy="model"/>
   <declaredMacro name="WEBAPP_BASE_URL"          usedBy="model"/>
   <declaredMacro name="LEGACY_WEBAPP_BASE_URL"   usedBy="model"/>
 
-
-
-    <!-- shared -->
-
-    <!-- the order of datatypes is the order in which we show the      -->
-    <!--  tabs in All tab and Basket pages (in the strategy workspace) -->
 
     <!-- XML -->
     <import file="ebrcModelCommon.xml"/>
 
 
-    <!-- Ajax params -->
-
-    <!-- User Files -->
-
     <!-- Categories -->
     <import file="model/questions/categories.xml"/>
-
-    <!-- UI Configuration -->
-
-    <!-- import file="apiCommonModel/uiConfig.xml"/ -->
 
 
     <!-- Step Analysis Plugins -->
@@ -64,6 +45,4 @@
     <import file="model/records/microbiomeSampleRecord.xml"/>
 
     <!-- Data Sets -->
-
-
 </wdkModel>
