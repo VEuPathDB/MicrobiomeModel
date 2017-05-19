@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE xml [
+  <!ENTITY nbsp "&#160;"> 
+  <!ENTITY lt   "&#60;"> 
+  <!ENTITY gt   "&#62;">
+  <!ENTITY sl   "&#47;">
+]>
+
+<xmlAnswer>
+
+
+
+
+ <record>
+       <attribute name="title">Analysis tools: Enrichment</attribute>
+       <attribute name="image">images/choose_analysis_highlighted_550px.jpg</attribute>
+       <attribute name="body">
+<![CDATA[After running a search or strategy that returns genes, you can analyze the results to 
+find statistically enriched Gene Ontology annotations, Metabolic Pathway annotations or 
+words in the gene product descriptions. Click the blue Analyze Results button to run an enrichment
+analysis on the gene result highlighted in yellow.<br><br> ]]>
+       </attribute>
+       <attribute name="tip">
+ <![CDATA[
+you can run an analysis on a gene result ? 
+<br>Click on the blue button <img style='position:relative;top:5px' data-assets-src='wdk/images/strathelp/blueButton.png'> to select an analysis tool.
+]]>
+       </attribute>
+       <attribute name="showTipAsDidYouKnow">true</attribute>
+   </record>
+
+
+ <record>
+       <attribute name="title">Genome Browser: design PCR</attribute>
+       <attribute name="image">images/GBrowseDesignPrimers_550px.jpg</attribute>
+       <attribute name="body"><![CDATA[
+       1. Direct the Genome Browser to the genomic location that you want to amplify. <br>
+       2. Choose <b>Design Primers</b> from the drop down menu and click GO.  <br>
+       3. The Primer Design application opens in a new 
+       window where you can highlight the region you want to amplify, set your primer 
+       parameters and click <b>Design Primers</b>.<br><br>
+       
+      ]]>
+
+       </attribute>
+       <attribute name="tip">
+ <![CDATA[
+ you can use the Genome Browser to design PCR primers ?
+]]>
+       </attribute>
+       <attribute name="showTipAsDidYouKnow">true</attribute>
+   </record>
+
+
+<record>
+       <attribute name="title">Genome Browser: bookmark configurations</attribute>
+       <attribute name="image">images/Bookmark_550px.jpg</attribute>
+       <attribute name="body"><![CDATA[
+       Use the <b>Select Tracks</b> tab of the Genome Browser to turn on the data tracks that you want to view. 
+       The Browser is automatically updated with the tracks you choose. To bookmark the view, choose 
+       <b>Generate URL</b> from the <b>File</b> dropdown menu.  Then, using your internet browser, bookmark the 
+       updated URL.  Use this bookmark to return to the GBrowse view or to share the view with 
+       colleagues when discussing the data. <br><br>
+       ]]>
+
+       </attribute>
+       <attribute name="tip">
+ <![CDATA[
+you can configure the Genome Browser to display specific data tracks ?
+<br>(eg: proteomics or mRNAseq data from selected experiments)
+<br>and you may also bookmark your favorite configurations for future use.
+]]>
+       </attribute>
+       <attribute name="showTipAsDidYouKnow">true</attribute>
+   </record>
+
+<!-- 
+<record>
+       <attribute name="title">DNA motifs: identify genes in vicinity</attribute>
+       <attribute name="image"></attribute>
+       <attribute name="body">
+
+       </attribute>
+       <attribute name="tip">
+ <![CDATA[
+you can search for specific DNA motifs in the genome ?
+<br>Also you may identify genes in the vicinity of these motifs.
+]]>
+       </attribute>
+       <attribute name="showTipAsDidYouKnow">true</attribute>
+   </record>
+ -->
+
+   <record>
+       <attribute name="title">Add Step</attribute>
+       <attribute name="image">wdk/images/strathelp/addstep.png</attribute>
+       <attribute name="body">
+Running a search places you in the Search Strategy system.  Your search is the first "step" of a new strategy.  To refine your result set, add steps to the strategy as needed.
+Click the Add Step button to add a step.  You will be prompted to choose a search.  Next you will be prompted to combine the new search with the previous results (using intersect, union or minus).  The new results reflect this combination.
+We hope strategies help you get the most from the data!
+       </attribute>
+       <attribute name="tip">
+ <![CDATA[
+you can click Add Step to add a step to your strategy ?
+]]>
+       </attribute>
+       <attribute name="showTipAsDidYouKnow">true</attribute>
+   </record>
+
+   <record>
+       <attribute name="title">View prior steps</attribute>
+       <attribute name="image">wdk/images/strathelp/viewresults.png</attribute>
+       <attribute name="body">
+To view the results of a prior search or combination, click on a step box.
+       </attribute>
+       <attribute name="tip">
+ <![CDATA[
+you can see results of a previous step by clicking on its box ?
+]]>
+       </attribute>
+       <attribute name="showTipAsDidYouKnow">true</attribute>
+   </record>
+
+   <record>
+       <attribute name="title">Step actions menu</attribute>
+       <attribute name="image">wdk/images/strathelp/adjuststep.png</attribute>
+       <attribute name="body">
+For a menu of actions/properties for a step's search click on the "Edit" icon near the step box.
+For a menu of actions/properties for how it is combined with the prior step, click on the "Edit" icon near the Venn diagram.
+       </attribute>
+       <attribute name="tip">
+ <![CDATA[
+you can get a menu of step actions by clicking on the "Edit" icon ?
+]]>
+       </attribute>
+       <attribute name="showTipAsDidYouKnow">true</attribute>
+   </record>
+
+   <record>
+       <attribute name="title">Branched (nested) strategy</attribute>
+       <attribute name="image">wdk/images/strathelp/nestedstep.png</attribute>
+       <attribute name="body">
+Simple strategies are linear.  More advanced strategies include branches.  (For example one step may need to union two searches.)  The trick is to "nest" a strategy within a step.
+Click the "Edit" icon to get a menu.  Choose "Make Nested Strategy."  Now that step appears expanded in a panel below.  All steps added to that panel will be nested into the step in the panel above.  The whole nested strategy acts as a single step in the parent strategy.
+       </attribute>
+       <attribute name="tip">
+ <![CDATA[
+you can branch a strategy ?
+<br>Choose "Make Nested Strategy" in the step actions menu.
+]]>
+       </attribute>
+       <attribute name="showTipAsDidYouKnow">true</attribute>
+   </record>
+
+</xmlAnswer>
