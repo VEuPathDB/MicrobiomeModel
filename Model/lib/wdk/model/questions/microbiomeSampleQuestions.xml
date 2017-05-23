@@ -1,0 +1,80 @@
+<wdkModel>
+
+  <questionSet name="SampleQuestions"
+               displayName="Search for microbiomic samples" includeProjects="MicrobiomeDB">
+
+    <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+    <!--Metadata -->
+    <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+    <question name="MicrobiomeSampleByMetadata"
+              searchCategory="Other Attributes"
+              shortDisplayName="Metadata"
+              queryRef="sampleIds.SampleByMetadata"
+              displayName="Sample Details"
+              recordClassRef="SampleRecordClasses.MicrobiomeSampleRecordClass"
+              includeProjects="MicrobiomeDB">
+
+      <suggestion newBuild="23" includeProjects="EuPathDB" />
+        <summary>
+          Find Microbiomic Samples based on Sample details.
+        </summary> 
+        <description> 
+        <![CDATA[ 
+          Find microbiome samples based on sample characteristics
+        ]]> 
+       </description> 
+
+    </question>
+
+   <question name="MicrobiomeSampleByTaxonAbundance"
+              searchCategory="Other Attributes"
+              shortDisplayName="Metadata"
+              queryRef="sampleIds.SampleByTaxonAbundance"
+              displayName="Taxon Abundance"
+              recordClassRef="SampleRecordClasses.MicrobiomeSampleRecordClass"
+              includeProjects="MicrobiomeDB">
+
+      <suggestion newBuild="23" includeProjects="EuPathDB" />
+        <summary>
+          Find Microbiomic Samples based on Taxon Abundance.
+        </summary> 
+        <description> 
+        <![CDATA[ 
+          Find microbiome samples based on Taxon Abundance
+        ]]> 
+       </description> 
+
+    </question>
+
+    <!--++++++++++++++++++++++++++++++++++++++++++++++++-->
+    <!-- Id -->
+    <!--++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+<!-- commented out
+    <question name="MicrobiomeSampleBySampleId" 
+              searchCategory="Other Attributes"
+              displayName="Sample ID(s)"
+              shortDisplayName="Sample IDs"
+              queryRef="sampleIds.SampleBySampleId" 
+              recordClassRef="SampleRecordClasses.MicrobiomeSampleRecordClass"
+              noSummaryOnSingleRecord="true" includeProjects="MicrobiomeDB">
+
+      <suggestion newBuild="23" includeProjects="TrichDB" />
+             <summary>
+               Find Samples by ID.
+             </summary>
+             
+
+            <description includeProjects="MicrobiomeDB">
+              Find samples from Microbiome datasets by their sample id
+            </description>
+           
+   </question>
+-->
+
+
+  </questionSet> 
+
+
+</wdkModel>

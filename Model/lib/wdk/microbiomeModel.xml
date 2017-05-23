@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE xml [
+  <!ENTITY nbsp "&#160;">
+  <!ENTITY lt   "&#60;">
+  <!ENTITY gt   "&#62;">
+]>
+
+<wdkModel>
+
+  <constant name="releaseDate">31 March 2017 00:00</constant>
+  <constant name="buildNumber">1</constant>
+  <constant name="releaseVersion">1</constant>
+ 
+
+  <constant name="attributesReporterDisplayName">Tab delimited (Excel) - choose columns to make a custom table</constant>
+  <constant name="tableReporterDisplayName">Tab delimited (Excel) - choose a pre-configured table</constant>
+  <constant name="fullReporterDisplayName">Text: choose from columns and/or tables</constant>
+  
+
+  <modelName  displayName="MicrobiomeDB" version="%%releaseVersion%%" releaseDate="%%releaseDate%%" buildNumber="%%buildNumber%%" />
+
+  <declaredMacro name="WEBAPP_BASE_URL"          usedBy="model"/>
+  <declaredMacro name="LEGACY_WEBAPP_BASE_URL"   usedBy="model"/>
+
+
+    <!-- XML -->
+    <import file="ebrcModelCommon.xml"/>
+
+
+    <!-- Categories -->
+    <import file="model/questions/categories.xml"/>
+
+
+    <!-- Step Analysis Plugins -->
+    <import file="model/stepAnalysisPlugins.xml"/>
+
+
+    <!-- MicrobiomeSample -->
+    <import file="model/questions/microbiomeSampleQuestions.xml"/>
+    <import file="model/questions/queries/microbiomeSampleQueries.xml"/>
+    <import file="model/questions/params/microbiomeSampleParams.xml"/>
+    <import file="model/records/microbiomeSampleAttributeQueries.xml"/>
+    <import file="model/records/microbiomeSampleTableQueries.xml"/>
+    <import file="model/records/microbiomeSampleRecord.xml"/>
+
+    <!-- Data Sets -->
+</wdkModel>

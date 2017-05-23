@@ -1,0 +1,39 @@
+<wdkModel>
+  <querySet name="SampleAttributes" queryType="attribute" isCacheable="false">
+
+       <testRowCountSql>
+	 SELECT count(*) FROM ApidbTuning.sampleid
+       </testRowCountSql>
+
+        <sqlQuery name="Bfmv">
+            <column name="name"/>
+            <column name="description"/>
+            <column name="type"/>      
+            <!-- column name="observed_otus"/>
+                <column name="Chao_1"/>
+                <column name="Shannon"/>
+                <column name="Simpson"/ -->
+           <sql>
+            <![CDATA[
+             select name, type, description
+             from apidbTuning.SampleAttributes
+	    ]]>
+           </sql>
+	</sqlQuery>
+
+        <sqlQuery name="Alias">
+            <column name="name"/>
+            <column name="old_name"/>
+           <sql>
+            <![CDATA[
+SELECT 
+ sa.name, sa.name as old_name
+FROM
+  apidbTuning.SampleAttributes sa
+	    ]]>
+           </sql>
+	</sqlQuery>
+
+  </querySet>
+</wdkModel>
+

@@ -1,0 +1,119 @@
+<wdkModel>
+  <querySet name="SampleTables" queryType="table" isCacheable="false" >
+
+
+    <sqlQuery name="Characteristics">
+            <column name="name"/>
+            <column name="material_type"/>
+            <column name="property"/>
+            <column name="value"/>
+            <column name="type"/>
+            <column name="filter"/>
+           <sql>
+            <![CDATA[
+SELECT distinct
+  scm.pan_name AS name
+, scm.category AS material_type
+, scm.term AS property
+, scm.value
+, mt.type
+, mt.filter
+FROM 
+  ApidbTuning.SampleCharMetadata scm, ApidbTuning.MetadataType mt
+WHERE
+  scm.term = mt.property
+            ]]>
+            </sql>
+    </sqlQuery>
+
+    <sqlQuery name="Protocols">
+            <column name="name"/>
+            <column name="protocol_name"  />
+            <column name="protocol_param_name"  />
+            <column name="value"  />
+           <sql>
+            <![CDATA[
+SELECT
+  pan_name as name
+, category as protocol_name
+, term AS protocol_param_name
+, value
+FROM
+  APIDBTUNING.sampleprotocolmetadata
+            ]]>
+            </sql>
+    </sqlQuery>
+
+    <sqlQuery name="ProcessedSample">
+            <column name="name"/>
+            <column name="input"  />
+            <column name="input_type"  />
+            <column name="protocol"  />
+            <column name="output"  />
+            <column name="output_type"  />
+           <sql>
+            <![CDATA[
+SELECT
+  name
+, input
+, nvl(input_material_type,  input_isa_type) as input_type
+, protocol
+, output
+, nvl(nvl(output_material_type, output_isa_type), 'Data') as output_type
+from
+ apidbtuning.sampledownstream
+            ]]>
+            </sql>
+    </sqlQuery>
+
+    <sqlQuery name="TaxaRelativeAbundance">
+      <column name="name"/>
+      <column name="taxon_id"/>
+      <column name="ncbi_tax_id"/>
+      <column name="kingdom"/>
+      <column name="phylum"/>
+      <column name="class"/>
+      <column name="rank_order"/>
+      <column name="family"/>
+      <column name="genus"/>
+      <column name="species"/>
+      <column name="relative_abundance"/>
+      <column name="absolute_abundance"/>
+        <sql>
+          <![CDATA[
+            select name, taxon_id, ncbi_tax_id, kingdom, phylum, class, rank_order, 
+                   family, genus, species, relative_abundance, absolute_abundance
+            from apidbTuning.TaxonRelativeAbundance
+          ]]>
+        </sql>
+    </sqlQuery>
+
+    <sqlQuery name="Datasets">
+            <column name="name"/>
+            <column name="dataset_presenter_id"/>
+            <column name="display_name"/>
+            <column name="category"/>
+            <column name="summary"/>
+           <sql>
+            <![CDATA[
+select distinct  sd.name
+ , edp.dataset_presenter_id
+ , dsp.display_name
+ , dsp.category
+ , dbms_lob.substr( dsp.summary, 4000, 1 ) as summary
+from apidbtuning.sampledownstream sd
+   , apidbtuning.protocolappnoderesults panr
+   , study.study s
+   , study.studylink sl
+   , apidbtuning.externaldbdatasetpresenter edp
+   , apidbtuning.datasetpresenter dsp
+where sd.output_protocol_app_node_id = panr.protocol_app_node_id
+and panr.protocol_app_node_id = sl.protocol_app_node_id
+and sl.study_id = s.study_id
+and s.external_database_release_id = edp.external_database_release_id
+and edp.dataset_presenter_id = dsp.dataset_presenter_id
+            ]]>
+            </sql>
+    </sqlQuery>
+    </querySet>
+</wdkModel>

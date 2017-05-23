@@ -1,0 +1,157 @@
+<wdkModel>
+  <recordClassSet name="SampleRecordClasses">
+
+    <recordClass name="MicrobiomeSampleRecordClass" urlName="sample" displayName="Sample" doNotTest="true" includeProjects="MicrobiomeDB">
+
+      <!-- primary key definition -->
+      <primaryKey aliasQueryRef="SampleAttributes.Alias">
+        <columnRef>name</columnRef>
+      </primaryKey>
+
+      <idAttribute name="primary_key" displayName="Sample ID">
+        <text>
+          <![CDATA[
+            $$name$$
+          ]]>
+        </text>
+      </idAttribute>
+
+      <attributesList 
+          summary="description"
+       /> 
+
+
+      <!-- =============================================================== -->
+      <!--   Reporters -->  
+      <!-- =============================================================== -->
+
+      <reporter name="attributesTabular" displayName="%%attributesReporterDisplayName%%" scopes="results"
+                implementation="org.gusdb.wdk.model.report.AttributesTabularReporter">
+        <property name="page_size">500</property>
+      </reporter>
+
+      <reporter name="tableTabular" displayName="%%tableReporterDisplayName%%" scopes="results"
+                implementation="org.gusdb.wdk.model.report.TableTabularReporter">
+      </reporter>
+
+      <reporter name="fullRecord" displayName="%%fullReporterDisplayName%%" excludeProjects="EuPathDB"  scopes="record"
+                implementation="org.gusdb.wdk.model.report.FullRecordReporter" />
+
+      <reporter name="xml"  displayName="XML: choose from columns and/or tables"  scopes=""
+                implementation="org.gusdb.wdk.model.report.XMLReporter">
+      </reporter>
+
+      <reporter name="json"  displayName="json: choose from columns and/or tables"  scopes=""
+                implementation="org.gusdb.wdk.model.report.JSONReporter">
+      </reporter>
+
+      <!-- =============================================================== -->
+      <!--  Step Analysis Plugins -->
+      <!-- =============================================================== -->
+
+      <stepAnalysisRef name="otu_abundance" includeProjects="MicrobiomeDB"/>
+      <stepAnalysisRef name="alpha_diversity" includeProjects="MicrobiomeDB"/>
+      <stepAnalysisRef name="beta_diversity" includeProjects="MicrobiomeDB"/>
+
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+      <!-- BFMV attributes -->  
+      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+      <attributeQueryRef ref="SampleAttributes.Bfmv">
+        <textAttribute name="record_overview" internal="true">
+          <text>
+            <![CDATA[
+            <span style="font-size: larger">
+              <span style="font-weight: bold">Sample Type</span>: $$type$$<br/>
+              <span style="font-weight: bold">Description</span>: $$description$$<br/>
+            </span>
+            ]]>
+          </text>
+        </textAttribute>
+
+        <columnAttribute name="description" displayName="Description" inReportMaker="false"/>
+        <columnAttribute name="type" displayName="Sample Type" inReportMaker="false" internal="true"/>
+        <!-- columnAttribute name="observed_otus" displayName="Unique OTUs"/>
+            <columnAttribute name="Chao_1"  displayName="Alpha Diversity (Chao_1)" />
+            <columnAttribute name="Shannon" displayName="Alpha Diversity (Shannon)"/> 
+            <columnAttribute name="Simpson"  displayName="Alpha Diversity (Simpson)"/ -->
+
+      </attributeQueryRef>
+
+ 
+      <!-- =================================================================== -->
+      <!-- Sample Tables -->
+      <!-- =================================================================== -->
+
+      <table name="Characteristics" displayName="Sample Characteristics"
+	     queryRef="SampleTables.Characteristics">
+	<columnAttribute name="material_type" displayName="Source/Sample Type"/>
+	<columnAttribute name="property" displayName="Property"/>
+	<columnAttribute name="value" displayName="Value" />
+	<columnAttribute name="type" displayName="Type" inReportMaker="true" internal="true"/>
+	<columnAttribute name="filter" displayName="Filter" inReportMaker="true" internal="true" />
+      </table>
+
+
+
+      <table name="Protocol Parameters" displayName="Protocols"
+	     queryRef="SampleTables.Protocols">
+	<columnAttribute name="protocol_name" displayName="Protocol Name"/>
+	<columnAttribute name="protocol_param_name" displayName="Parameter Name"/>
+	<columnAttribute name="value" displayName="Value"/>
+      </table>
+
+
+      <table name="ProcessedSample" displayName="Processed Sample"
+	     queryRef="SampleTables.ProcessedSample">
+	<columnAttribute name="input" displayName="Input" />
+	<columnAttribute name="input_type" displayName="Input Type" />
+	<columnAttribute name="protocol" displayName="Protocol Name"/>
+	<columnAttribute name="output" displayName="Output" />
+	<columnAttribute name="output_type" displayName="Output Type" />
+      </table>
+
+     <table name="TaxaRelativeAbundance" displayName="Relative Abundance by Taxon"
+	     queryRef="SampleTables.TaxaRelativeAbundance">
+	<columnAttribute name="ncbi_tax_id" internal="true" displayName="Taxon"/>
+            <linkAttribute name="taxon_link" displayName="Taxon" inReportMaker="false">
+                 <displayText>
+                    <![CDATA[$$ncbi_tax_id$$]]>
+                 </displayText>
+                 <url>
+                   <![CDATA[https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?mode=Info&id=$$ncbi_tax_id$$]]>
+                 </url>
+            </linkAttribute>
+        <columnAttribute name="kingdom"  displayName="Kingdom/SuperKingdom"/>
+        <columnAttribute name="phylum"  displayName="Phylum"/>
+        <columnAttribute name="class" displayName="Class"/>
+        <columnAttribute name="rank_order"  displayName="Order"/>
+        <columnAttribute name="family"  displayName="Family"/>
+        <columnAttribute name="genus" displayName="Genus"/>
+        <columnAttribute name="species" displayName="Species"/>
+	<columnAttribute name="relative_abundance" displayName="Relative Abundance"/>
+        <!-- columnAttribute name="taxon_source" displayName="Taxon Mapping Source" internal="true"/ -->
+	<columnAttribute name="absolute_abundance" displayName="Absolute Abundance"/>
+      </table>
+
+
+      <table name="Datasets" displayName="Datasets"
+	     queryRef="SampleTables.Datasets">
+            <columnAttribute name="dataset_presenter_id" internal="true"/>
+            <columnAttribute name="display_name" internal="true"/>
+            <linkAttribute name="dataset_link" displayName="Dataset Name" inReportMaker="false">
+                 <displayText>
+                    <![CDATA[$$display_name$$]]>
+                 </displayText>
+                 <url>
+                   <![CDATA[@WEBAPP_BASE_URL@/record/dataset/$$dataset_presenter_id$$]]>
+                 </url>
+            </linkAttribute>
+            <columnAttribute name="category" displayName="Dataset Category"/>
+            <columnAttribute name="summary" displayName="Dataset Summary"/>
+      </table>
+
+
+    </recordClass>
+  </recordClassSet>
+</wdkModel>
