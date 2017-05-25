@@ -114,12 +114,20 @@
      <table name="TaxaRelativeAbundance" displayName="Relative Abundance by Taxon"
 	     queryRef="SampleTables.TaxaRelativeAbundance">
 	<columnAttribute name="ncbi_tax_id" internal="true" displayName="Taxon"/>
-            <linkAttribute name="taxon_link" displayName="Taxon" inReportMaker="false">
+            <linkAttribute name="taxon_link" displayName="NCBI Taxonomy" inReportMaker="false">
                  <displayText>
                     <![CDATA[$$ncbi_tax_id$$]]>
                  </displayText>
                  <url>
                    <![CDATA[https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?mode=Info&id=$$ncbi_tax_id$$]]>
+                 </url>
+            </linkAttribute>
+            <linkAttribute name="patric_link" displayName="PATRIC" inReportMaker="false">
+                 <displayText>
+                    <![CDATA[$$ncbi_tax_id$$]]>
+                 </displayText>
+                 <url>
+                   <![CDATA[https://www.patricbrc.org/view/Taxonomy/$$ncbi_tax_id$$]]>
                  </url>
             </linkAttribute>
         <columnAttribute name="kingdom"  displayName="Kingdom/SuperKingdom"/>
