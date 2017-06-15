@@ -58,6 +58,24 @@
       <property name="iframeLengthPx">800</property>
     </stepAnalysisPlugin>
 
+	<stepAnalysisPlugin
+        name="differential_abundance" displayName="Differential Abundance"
+        releaseVersion="1"
+        analysisViewName="eupathExternalAnalysisResult"
+        analyzerClass="org.eupathdb.common.model.analysis.EuPathExternalAnalyzer">
+      <shortDescription>
+        <![CDATA[
+          Shiny application to calculate the differential abundance.
+        ]]>
+      </shortDescription>
+      <description/>
+      <property name="externalAppUrl"><![CDATA[/shiny/differential_abundance]]></property>
+      <property name="tablesToExtract">Characteristics,TaxaRelativeAbundance</property>
+      <property name="addHeader">true</property>
+      <property name="iframeWidthPx">1000</property>
+      <property name="iframeLengthPx">800</property>
+    </stepAnalysisPlugin>
+
     <!-- ============================================================================= -->
     <!-- ========== PLUGINS BELOW ARE FOR TESTING AND SHOULD NOT BE REMOVED ========== -->
     <!-- ============================================================================= -->

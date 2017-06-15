@@ -52,7 +52,7 @@
       <stepAnalysisRef name="otu_abundance" includeProjects="MicrobiomeDB"/>
       <stepAnalysisRef name="alpha_diversity" includeProjects="MicrobiomeDB"/>
       <stepAnalysisRef name="beta_diversity" includeProjects="MicrobiomeDB"/>
-
+      <stepAnalysisRef name="differential_abundance" includeProjects="MicrobiomeDB"/>
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
       <!-- BFMV attributes -->  
       <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
