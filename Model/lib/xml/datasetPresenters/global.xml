@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="datasetPresenters.xslt"?>
+<!DOCTYPE datasetPresenters SYSTEM "datasetPresenters.dtd">
+<datasetPresenters>
+
+<internalDataset name="Ontology_prism_RSRC"/>
+<internalDataset name="OntologyTerm_EuPath_RSRC"/>
+<internalDataset name="Ontology_Relationship_Types_RSRC"/>
+  
+</datasetPresenters>
