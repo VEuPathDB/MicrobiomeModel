@@ -166,11 +166,12 @@
                 from apidbTuning.fallbackmetadata
                 where dataset_name in ($$metadata_datasets$$)
                 ) 
-                where property in ( select distinct property
-                                                  from apidbTuning.MetadataSpec
-                                                where dataset_name in ($$metadata_datasets$$)
-                                                    and spec_property = 'parent'
-                                                            )
+                where property in (select distinct property
+                                   from apidbTuning.MetadataSpec
+                                   where dataset_name in ($$metadata_datasets$$)
+                                     and spec_property = 'parent'
+                                  )
+                  and pan_name not like '%[alpha_diversity]%'
                                                      
             ]]>
             </sql>
