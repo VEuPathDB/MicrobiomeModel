@@ -171,7 +171,7 @@
                                    where dataset_name in ($$metadata_datasets$$)
                                      and spec_property = 'parent'
                                   )
-                  and pan_name not like '%[alpha_diversity]%'
+                  and term not like '%[alpha_diversity]%'
                                                      
             ]]>
             </sql>
@@ -195,8 +195,8 @@
                                                   from apidbTuning.MetadataSpec
                                                   where dataset_name in ($$metadata_datasets$$)
                                                     and spec_property = 'parent'
-                )
-               
+                                   )
+                   and property != 'Thing'
               ]]>
             </sql>
         </sqlQuery>
