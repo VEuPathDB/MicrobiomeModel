@@ -133,7 +133,7 @@
               select pan_name as term, pan_name as display, protocol_app_node_id as internal
               from apidbTuning.panCharacteristicMetadata
               where dataset_name in ($$metadata_datasets$$)
-              and pan_name not like '[alpha_diversity]'
+              and pan_name not like '%[alpha_diversity]%'
               union
               select pan_name as term, pan_name as display, protocol_app_node_id as internal
               from apidbTuning.panProtocolMetadata
@@ -166,11 +166,12 @@
                 from apidbTuning.fallbackmetadata
                 where dataset_name in ($$metadata_datasets$$)
                 ) 
-                where property in ( select distinct property
-                                                  from apidbTuning.MetadataSpec
-                                                where dataset_name in ($$metadata_datasets$$)
-                                                    and spec_property = 'parent'
-                                                            )
+                where property in (select distinct property
+                                   from apidbTuning.MetadataSpec
+                                   where dataset_name in ($$metadata_datasets$$)
+                                     and spec_property = 'parent'
+                                  )
+                  and term not like '%[alpha_diversity]%'
                                                      
             ]]>
             </sql>
@@ -194,8 +195,8 @@
                                                   from apidbTuning.MetadataSpec
                                                   where dataset_name in ($$metadata_datasets$$)
                                                     and spec_property = 'parent'
-                )
-               
+                                   )
+                   and property != 'Thing'
               ]]>
             </sql>
         </sqlQuery>
