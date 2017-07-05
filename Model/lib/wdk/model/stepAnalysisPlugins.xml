@@ -6,6 +6,7 @@
 
      <stepAnalysisPlugin
         name="otu_abundance" displayName="OTU abundance"
+        customThumbnail="wdkCustomization/images/OTU_abundance.png"
         releaseVersion="1"
         analysisViewName="eupathExternalAnalysisResult"
         analyzerClass="org.eupathdb.common.model.analysis.EuPathExternalAnalyzer">
@@ -24,6 +25,7 @@
 
          <stepAnalysisPlugin
         name="alpha_diversity" displayName="Alpha Diversity"
+        customThumbnail="wdkCustomization/images/alpha_diversity.png"
         releaseVersion="1"
         analysisViewName="eupathExternalAnalysisResult"
         analyzerClass="org.eupathdb.common.model.analysis.EuPathExternalAnalyzer">
@@ -42,6 +44,7 @@
 
     <stepAnalysisPlugin
         name="beta_diversity" displayName="Beta Diversity"
+        customThumbnail="wdkCustomization/images/beta_diversity.png"
         releaseVersion="1"
         analysisViewName="eupathExternalAnalysisResult"
         analyzerClass="org.eupathdb.common.model.analysis.EuPathExternalAnalyzer">
@@ -60,6 +63,7 @@
 
 	<stepAnalysisPlugin
         name="differential_abundance" displayName="Differential Abundance"
+        customThumbnail="wdkCustomization/images/differential_abundance.png"
         releaseVersion="1"
         analysisViewName="eupathExternalAnalysisResult"
         analyzerClass="org.eupathdb.common.model.analysis.EuPathExternalAnalyzer">
