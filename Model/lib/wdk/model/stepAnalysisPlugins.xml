@@ -6,7 +6,7 @@
 
      <stepAnalysisPlugin
         name="otu_abundance" displayName="OTU abundance"
-        customThumbnail="wdkCustomization/images/OTU_abundance.png"
+        customThumbnail="wdkCustomization/images/OTU_abundance_120.png"
         releaseVersion="1"
         analysisViewName="eupathExternalAnalysisResult"
         analyzerClass="org.eupathdb.common.model.analysis.EuPathExternalAnalyzer">
@@ -24,8 +24,8 @@
     </stepAnalysisPlugin>
 
          <stepAnalysisPlugin
-        name="alpha_diversity" displayName="Alpha Diversity"
-        customThumbnail="wdkCustomization/images/alpha_diversity.png"
+        name="alpha_diversity" displayName="Alpha diversity"
+        customThumbnail="wdkCustomization/images/alpha_diversity_120.png"
         releaseVersion="1"
         analysisViewName="eupathExternalAnalysisResult"
         analyzerClass="org.eupathdb.common.model.analysis.EuPathExternalAnalyzer">
@@ -43,8 +43,8 @@
     </stepAnalysisPlugin>
 
     <stepAnalysisPlugin
-        name="beta_diversity" displayName="Beta Diversity"
-        customThumbnail="wdkCustomization/images/beta_diversity.png"
+        name="beta_diversity" displayName="Beta diversity"
+        customThumbnail="wdkCustomization/images/beta_diversity_120.png"
         releaseVersion="1"
         analysisViewName="eupathExternalAnalysisResult"
         analyzerClass="org.eupathdb.common.model.analysis.EuPathExternalAnalyzer">
@@ -62,8 +62,8 @@
     </stepAnalysisPlugin>
 
 	<stepAnalysisPlugin
-        name="differential_abundance" displayName="Differential Abundance"
-        customThumbnail="wdkCustomization/images/differential_abundance.png"
+        name="differential_abundance" displayName="Differential abundance"
+        customThumbnail="wdkCustomization/images/differential_abundance_120.png"
         releaseVersion="1"
         analysisViewName="eupathExternalAnalysisResult"
         analyzerClass="org.eupathdb.common.model.analysis.EuPathExternalAnalyzer">
