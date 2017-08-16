@@ -85,6 +85,7 @@
                                             ReFlow-Installation,
                                             WDK-Installation,
                                             EbrcModelCommon-Installation,
+  	                                        MicrobiomeModel-MavenInstallation,
                                             MicrobiomeModel/Model-Installation">
 
 
@@ -92,7 +93,14 @@
       <property name="project" value="MicrobiomeModel"/>
     </ant>
 
-  </target>  
+  </target> 
+	
+	<target name="MicrobiomeModel-MavenInstallation">
+	  <ant target="mavenBuildProject">
+	  	<property name="project" value="MicrobiomeModel"/>
+	  </ant>
+	  <property name="alreadyBuilt" value="true"/>
+	</target>
    
 
   <!-- oooooooooooooooooo  Installation Postprocess  ooooooooooooooooooooo -->
