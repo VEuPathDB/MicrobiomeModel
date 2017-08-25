@@ -1,13 +1,13 @@
 <wdkModel>
   <stepAnalysisPlugins>
-    
+
     <viewConfig prefix="/wdkCustomization/jsp/analysis/" suffix=".jsp"/>
     <executionConfig threadPoolSize="25" fileStoreDirectory="@STEP_ANALYSIS_JOB_DIR@"/>
 
-     <stepAnalysisPlugin
+    <stepAnalysisPlugin
         name="otu_abundance" displayName="OTU abundance"
         customThumbnail="wdkCustomization/images/OTU_abundance_120.png"
-        releaseVersion="1"
+        releaseVersion="1" hasParameters="false"
         analysisViewName="eupathExternalAnalysisResult"
         analyzerClass="org.eupathdb.common.model.analysis.EuPathExternalAnalyzer">
       <shortDescription>
@@ -23,10 +23,10 @@
       <property name="iframeLengthPx">800</property>
     </stepAnalysisPlugin>
 
-         <stepAnalysisPlugin
+    <stepAnalysisPlugin
         name="alpha_diversity" displayName="Alpha diversity"
         customThumbnail="wdkCustomization/images/alpha_diversity_120.png"
-        releaseVersion="1"
+        releaseVersion="1" hasParameters="false"
         analysisViewName="eupathExternalAnalysisResult"
         analyzerClass="org.eupathdb.common.model.analysis.EuPathExternalAnalyzer">
       <shortDescription>
@@ -45,7 +45,7 @@
     <stepAnalysisPlugin
         name="beta_diversity" displayName="Beta diversity"
         customThumbnail="wdkCustomization/images/beta_diversity_120.png"
-        releaseVersion="1"
+        releaseVersion="1" hasParameters="false"
         analysisViewName="eupathExternalAnalysisResult"
         analyzerClass="org.eupathdb.common.model.analysis.EuPathExternalAnalyzer">
       <shortDescription>
@@ -61,10 +61,10 @@
       <property name="iframeLengthPx">800</property>
     </stepAnalysisPlugin>
 
-	<stepAnalysisPlugin
+    <stepAnalysisPlugin
         name="differential_abundance" displayName="Differential abundance"
         customThumbnail="wdkCustomization/images/differential_abundance_120.png"
-        releaseVersion="1"
+        releaseVersion="1" hasParameters="false"
         analysisViewName="eupathExternalAnalysisResult"
         analyzerClass="org.eupathdb.common.model.analysis.EuPathExternalAnalyzer">
       <shortDescription>
@@ -79,11 +79,6 @@
       <property name="iframeWidthPx">1000</property>
       <property name="iframeLengthPx">800</property>
     </stepAnalysisPlugin>
-
-    <!-- ============================================================================= -->
-    <!-- ========== PLUGINS BELOW ARE FOR TESTING AND SHOULD NOT BE REMOVED ========== -->
-    <!-- ============================================================================= -->
-
 
   </stepAnalysisPlugins>
 
