@@ -79,7 +79,24 @@
       <property name="iframeWidthPx">1000</property>
       <property name="iframeLengthPx">800</property>
     </stepAnalysisPlugin>
-
+    <stepAnalysisPlugin
+        name="correlation_app" displayName="Correlation"
+        customThumbnail="wdkCustomization/images/correlation_120.png"
+        releaseVersion="1" hasParameters="false"
+        analysisViewName="eupathExternalAnalysisResult"
+        analyzerClass="org.eupathdb.common.model.analysis.EuPathExternalAnalyzer">
+      <shortDescription>
+        <![CDATA[
+          Shiny application to calculate the differential abundance.
+        ]]>
+      </shortDescription>
+      <description/>
+      <property name="externalAppUrl"><![CDATA[/shiny/correlation_app]]></property>
+      <property name="tablesToExtract">Characteristics,TaxaRelativeAbundance</property>
+      <property name="addHeader">true</property>
+      <property name="iframeWidthPx">1000</property>
+      <property name="iframeLengthPx">800</property>
+    </stepAnalysisPlugin>
   </stepAnalysisPlugins>
 
 </wdkModel>
