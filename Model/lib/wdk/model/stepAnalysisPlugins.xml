@@ -87,7 +87,7 @@
         analyzerClass="org.eupathdb.common.model.analysis.EuPathExternalAnalyzer">
       <shortDescription>
         <![CDATA[
-          Shiny application to calculate the differential abundance.
+          Shiny application to calculate the correlation between sample details and taxon.
         ]]>
       </shortDescription>
       <description/>
