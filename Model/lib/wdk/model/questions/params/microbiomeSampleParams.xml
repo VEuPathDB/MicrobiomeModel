@@ -103,7 +103,7 @@
             <sql>
               <![CDATA[
                 select property, spec_property, spec_value as spec_value
-                from (select distinct property as property, spec_property, spec_value
+                from (select distinct property as property, spec_property, spec_value, taxon_level
                       from apidbTuning.TaxonAbundanceSpec
                       where property
                             in (  select distinct term_id as property
@@ -116,8 +116,8 @@
                                   where dataset_name in ($$metadata_datasets$$)
                                     and lower(category) != 'species'
                                )
+                      order by taxon_level
                      )
-                order by taxon_level
               ]]>
             </sql>
         </sqlQuery>
