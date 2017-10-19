@@ -9,7 +9,7 @@
 
     <question name="MicrobiomeSampleByMetadata"
               searchCategory="Other Attributes"
-              shortDisplayName="Metadata"
+              shortDisplayName="Samples"
               queryRef="sampleIds.SampleByMetadata"
               displayName="Sample Details"
               recordClassRef="SampleRecordClasses.MicrobiomeSampleRecordClass"
@@ -29,7 +29,7 @@
 
    <question name="MicrobiomeSampleByTaxonAbundance"
               searchCategory="Other Attributes"
-              shortDisplayName="Metadata"
+              shortDisplayName="Samples"
               queryRef="sampleIds.SampleByTaxonAbundance"
               displayName="Taxon Abundance"
               recordClassRef="SampleRecordClasses.MicrobiomeSampleRecordClass"
