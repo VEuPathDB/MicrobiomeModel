@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+ <!DOCTYPE xml [
+  <!ENTITY nbsp "&#160;">
+  <!ENTITY lt   "&#60;">
+  <!ENTITY gt   "&#62;">
+]>
+
+<wdkModel>
+
+  <xmlRecordClassSet name="XmlRecordClasses">
+    
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+  <!-- News -->
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+    <xmlRecordClass
+          name="NewsRecord"
+          type="News"
+          idPrefix="NEWS."
+          delimiter="@">
+            <xmlAttribute name="headline"/>
+            <xmlAttribute name="date"/>
+            <xmlAttribute name="item"/>
+            <xmlAttribute name="tag"/>
+            <xmlAttribute name="category"/>
+    </xmlRecordClass>
+
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+  <!-- WdkVerbiage -->
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+      <xmlRecordClass
+        	name="WdkVerbiageRecord"
+        	type="Verbiage"
+        	idPrefix="Verb."
+        	delimiter="@">
+            <xmlAttribute name="title"/>
+            <xmlAttribute name="content"/>
+         </xmlRecordClass>
+
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+  <!-- SiteVerbiage -->
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+        <xmlRecordClass
+        	name="SiteVerbiageRecord"
+        	type="Verbiage"
+        	idPrefix="Verb."
+        	delimiter="@">
+            <xmlAttribute name="title"/>
+            <xmlAttribute name="content"/>
+         </xmlRecordClass>
+
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+  <!-- StrategiesHelp -->
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+        <xmlRecordClass 
+        	name="StrategiesHelpRecord"
+        	type="StrategiesHelp"
+        	idPrefix="StrategiesHelp."
+        	delimiter="@">
+            <xmlAttribute name="title"/>
+            <xmlAttribute name="tip"/>
+            <xmlAttribute name="image"/>
+            <xmlAttribute name="showTipAsDidYouKnow"/>
+            <xmlAttribute name="body"/>
+         </xmlRecordClass>
+
+    </xmlRecordClassSet>
+
+</wdkModel>
+

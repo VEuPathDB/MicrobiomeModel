@@ -1,0 +1,46 @@
+<wdkModel>
+
+  <xmlQuestionSet name="XmlQuestions" displayName="">
+  
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+  <!-- News -->
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+  
+    <xmlQuestion name="News"
+                  displayName="@PROJECT_ID@ News"
+                  recordClassRef="XmlRecordClasses.NewsRecord"
+                  xmlDataURL="@PROJECT_ID@/news.xml">
+    </xmlQuestion>
+
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+  <!-- WdkVerbiage -->
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+      <xmlQuestion name="WdkVerbiage"
+                 displayName="Verbiage"
+                 recordClassRef="XmlRecordClasses.WdkVerbiageRecord"
+                 xmlDataURL="verbiage.xml">
+       </xmlQuestion>
+
+ <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+ <!-- SiteVerbiage -->
+ <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+      <xmlQuestion name="SiteVerbiage"
+                 displayName="Verbiage"
+                 recordClassRef="XmlRecordClasses.SiteVerbiageRecord"
+                 xmlDataURL="siteVerbiage.xml">
+       </xmlQuestion>
+
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+  <!-- Strategies Help -->
+  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+        <xmlQuestion name="StrategiesHelp" 
+                  displayName="Strategies Help"
+                  recordClassRef="XmlRecordClasses.StrategiesHelpRecord"
+                  xmlDataURL="siteHelp.xml">
+        </xmlQuestion>
+        
+    </xmlQuestionSet>
+</wdkModel>
