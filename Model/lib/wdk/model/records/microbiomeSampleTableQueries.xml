@@ -102,7 +102,7 @@ select distinct  sd.name
  , dsp.category
  , dbms_lob.substr( dsp.summary, 4000, 1 ) as summary
 from apidbtuning.sampledownstream sd
-   , apidbtuning.protocolappnoderesults panr
+   , apidbtuning.PanResults panr
    , study.study s
    , study.studylink sl
    , apidbtuning.externaldbdatasetpresenter edp
