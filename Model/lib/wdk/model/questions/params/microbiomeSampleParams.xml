@@ -30,35 +30,27 @@
             <suggest selectMode="all" />
        </flatVocabParam>
 
-       <filterParam name="samples_filter_metadata" includeProjects="MicrobiomeDB" 
-                      queryRef="samplesVQ.SamplesWithMetadata"
+       <filterParamNew name="samples_filter_metadata" includeProjects="MicrobiomeDB" 
                       metadataQueryRef="samplesVQ.SamplesMetadata"
-                      metadataSpecQueryRef="samplesVQ.MetadataSpec"
+                      ontologyQueryRef="samplesVQ.MetadataSpec"
                       prompt="Samples"
-                      multiPick="true"
-                      dependedParamRef="sampleParams.metadata_datasets"
-                      quote="true"
-                      suppressNode="true">
+                      dependedParamRef="sampleParams.metadata_datasets">
          <help>
               Select reference samples. 
          </help>
          <!-- <suggest selectMode="all" /> -->
-       </filterParam>
+       </filterParamNew>
 
-       <filterParam name="samples_filter_taxon" includeProjects="MicrobiomeDB" 
-                      queryRef="samplesVQ.SamplesWithMetadata"
+       <filterParamNew name="samples_filter_taxon" includeProjects="MicrobiomeDB" 
                       metadataQueryRef="samplesVQ.SamplesTaxon"
-                      metadataSpecQueryRef="samplesVQ.SamplesTaxonSpec"
+                      ontologyQueryRef="samplesVQ.SamplesTaxonSpec"
                       prompt="Taxon Relative Abundance"
-                      multiPick="true"
-                      dependedParamRef="sampleParams.metadata_datasets"
-                      quote="true"
-                      suppressNode="true">
+                      dependedParamRef="sampleParams.metadata_datasets">
          <help>
               Select reference samples. 
          </help>
          <!-- <suggest selectMode="all" /> -->
-       </filterParam>
+       </filterParamNew>
     
   </paramSet>
 
@@ -80,15 +72,22 @@
 
         <sqlQuery name="SamplesTaxon" doNotTest="1" includeProjects="MicrobiomeDB">
           <paramRef ref="sampleParams.metadata_datasets"/>
-          <column name="term" />
-          <column name="value"/>
-          <column name="property" />
+          <column name="ontology_term_name"/>
+          <column name="internal"/>
+          <column name="internal_for_counts"/>
+          <column name="number_value"/>
+          <column name="date_value"/>
+          <column name="string_value"/>
           <sql>
             <![CDATA[
-                select distinct pan_name as term, term_id as property, round(value,2) as value, taxon_level
-                from apidbtuning.taxonabundance
+                select protocol_app_node_id as internal,
+                       protocol_app_node_id as internal_for_counts,
+                       term_id as ontology_term_name,
+                       cast(value as number) as number_value,
+                       cast(null as date) as date_value,
+                       cast(null as varchar2(1)) as string_value
+                from apidbTuning.TaxonAbundance
                 where dataset_name in ($$metadata_datasets$$)
-                and lower(category) != 'species'
 --                and value is not null
                 order by taxon_level
             ]]>
@@ -97,27 +96,36 @@
 
     <sqlQuery name="SamplesTaxonSpec" doNotTest="1" includeProjects="MicrobiomeDB"> 
             <paramRef ref="sampleParams.metadata_datasets"/>
-            <column name="property" />
-            <column name="spec_property"/>
-            <column name="spec_value" />
+            <column name="ontology_term_name"/>
+            <column name="parent_ontology_term_name"/>
+            <column name="display_name"/>
+            <column name="description"/>
+            <column name="type"/>
+            <column name="units"/>
+            <column name="precision"/>
+            <column name="is_range"/>
             <sql>
               <![CDATA[
-                select property, spec_property, spec_value as spec_value
-                from (select distinct property as property, spec_property, spec_value, taxon_level
-                      from apidbTuning.TaxonAbundanceSpec
-                      where property
-                            in (  select distinct term_id as property
-                                  from apidbtuning.taxonabundance
-                                  where dataset_name in ($$metadata_datasets$$)
-                                    and lower(category) != 'species'
-                                union 
-                                  select distinct category as property
-                                  from apidbtuning.taxonabundance 
-                                  where dataset_name in ($$metadata_datasets$$)
-                                    and lower(category) != 'species'
-                               )
-                      order by taxon_level
-                     )
+                  select distinct -- unneeded only because of UNION
+                         category as ontology_term_name,
+                         cast(null as varchar2(1)) as parent_ontology_term_name,
+                         category as display_name,
+                         'taxonomic rank' as description,
+                         'string' as type, cast(null as varchar2(1)) as units,
+                         1 as precision, 0 as is_range,
+                         taxon_level * 2 - 1 as ordering
+                  from apidbTuning.TaxonAbundance
+                  where dataset_name in ($$metadata_datasets$$)
+                union
+                  select term_id as ontology_term_name,
+                         category as parent_ontology_term_name,
+                         term as display_name,
+                         cast(null as varchar2(1)) as description,
+                         'number' as type, null as units, 1 as precision, 1 as is_range,
+                         taxon_level * 2 as ordering
+                  from apidbTuning.TaxonAbundance
+                  where dataset_name in ($$metadata_datasets$$)
+                order by ordering
               ]]>
             </sql>
         </sqlQuery>
@@ -147,55 +155,67 @@
 
         <sqlQuery name="SamplesMetadata" doNotTest="1" excludeProjects="EuPathDB">
           <paramRef ref="sampleParams.metadata_datasets"/>
-          <column name="term" />
-          <column name="value"/>
-          <column name="property" />
+          <column name="ontology_term_name"/>
+          <column name="internal"/>
+          <column name="internal_for_counts"/>
+          <column name="number_value"/>
+          <column name="date_value"/>
+          <column name="string_value"/>
           <sql>
             <![CDATA[
-                     select * from (
-                select pan_name as term, term as property, value
-                from apidbTuning.panCharacteristicMetadata
-                where dataset_name in ($$metadata_datasets$$)
-              union
-                select pan_name as term, term as property, value
-                from apidbTuning.panProtocolMetadata
-                where dataset_name in ($$metadata_datasets$$)
-              union
-                select pan_name as term, term_name as property, value
-                from apidbTuning.fallbackmetadata
-                where dataset_name in ($$metadata_datasets$$)
-                ) 
-                where property in (select distinct property
-                                   from apidbTuning.MetadataSpec
-                                   where dataset_name in ($$metadata_datasets$$)
-                                     and spec_property = 'parent'
-                                  )
-                  and term not like '%[alpha_diversity]%'
-                                                     
+            select md.pan_id as internal, md.pan_id as internal_for_counts,
+                   md.property as ontology_term_name,
+                   cast(case
+                          when pt.type = 'number' and apidb.is_number(md.value) = 1
+                            then apidb.parse_and_round_number(md.value)
+                          else null
+                        end as number) as number_value,
+                  case
+                    when pt.type = 'string'
+                      then md.value
+                    else cast(null as varchar2(10))
+                  end as string_value,
+                  cast(case
+                         when pt.type = 'date'
+                           then apidb.parse_date(md.value)
+                         else null
+                       end as date) as date_value
+               from (  select pan_id, property, value
+                       from apidbtuning.InferredChars
+                       where dataset_name in ($$metadata_datasets$$)
+                     union
+                       select pan_id, property, value
+                       from apidbtuning.InferredParams
+                       where dataset_name in ($$metadata_datasets$$)
+                     union
+                       select pan_id, property, value
+                       from apidbtuning.DefaultChars
+                       where dataset_name in ($$metadata_datasets$$)
+                    ) md,
+                    (select property, max(type) as type
+                     from apidbTuning.PropertyType
+                     group by property) pt
+               where pt.property = md.property
             ]]>
             </sql>
         </sqlQuery>
 
     <sqlQuery name="MetadataSpec" doNotTest="1" excludeProjects="EuPathDB"> 
             <paramRef ref="sampleParams.metadata_datasets"/>
-            <column name="property" />
-            <column name="spec_property"/>
-            <column name="spec_value" />
+            <column name="ontology_term_name"/>
+            <column name="parent_ontology_term_name"/>
+            <column name="display_name"/>
+            <column name="description"/>
+            <column name="type"/>
+            <column name="units"/>
+            <column name="precision"/>
+            <column name="is_range"/>
             <sql>
               <![CDATA[
-                 select property,
-                            spec_property,
-                            decode(spec_value,'Thing',null,spec_value) as spec_value
-                            from (
-                select distinct property, spec_property, spec_value
-                from apidbTuning.MetadataSpec
-                where dataset_name in ($$metadata_datasets$$))
-                 where property in ( select distinct property
-                                                  from apidbTuning.MetadataSpec
-                                                  where dataset_name in ($$metadata_datasets$$)
-                                                    and spec_property = 'parent'
-                                   )
-                   and property != 'Thing'
+                select distinct ontology_term_name, parent_ontology_term_name, display_name,
+                       description, type, units, precision, is_range
+                from apidbTuning.Ontology
+                where dataset_name in ($$metadata_datasets$$)
               ]]>
             </sql>
         </sqlQuery>
