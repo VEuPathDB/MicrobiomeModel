@@ -20,7 +20,7 @@
         <sql>
             <![CDATA[
                 SELECT distinct s.name as name, '@PROJECT_ID@' as project_id
-                FROM   ApidbTuning.SampleAttributes s,
+                FROM   ApidbTuning.Samples s,
                        ($$sample_id$$) ds
                  WHERE lower(s.name) = lower(ds.name)
             ]]>
@@ -31,16 +31,16 @@
     <sqlQuery name="SampleByMetadata" doNotTest="true" excludeProjects="EuPathDB"
               displayName="Metadata">
       <paramRef ref="sampleParams.metadata_datasets" visible="false"/>
-       <paramRef ref="sampleParams.samples_filter_metadata" quote="false" prompt="Samples"/>
+       <paramRef ref="sampleParams.samples_filter_metadata" prompt="Samples"/>
         <column name="name"/>
         <column name="project_id"/>
         <sql>
             <![CDATA[
               SELECT distinct s.name as name, '@PROJECT_ID@' as project_id
-              FROM   ApidbTuning.SampleAttributes s, APIDBTUNING.SAMPLEDOWNSTREAM sds
-              WHERE sds.OUTPUT_PROTOCOL_APP_NODE_ID in ($$samples_filter_metadata$$)
+              FROM   apidbTuning.Samples s, apidbTuning.SampleProcess sds
+              WHERE sds.output_pan_id in ($$samples_filter_metadata$$)
                    AND sds.OUTPUT_ISA_TYPE = 'Data'
-                   AND s.PROTOCOL_APP_NODE_ID = sds.PROTOCOL_APP_NODE_ID
+                   AND s.pan_id = sds.protocol_app_node_id
                ORDER BY s.name
             ]]>
         </sql>
@@ -50,16 +50,16 @@
     <sqlQuery name="SampleByTaxonAbundance" doNotTest="true" excludeProjects="EuPathDB"
               displayName="Metadata">
       <paramRef ref="sampleParams.metadata_datasets"/>
-       <paramRef ref="sampleParams.samples_filter_taxon" quote="false" prompt="Samples"/>
+       <paramRef ref="sampleParams.samples_filter_taxon" prompt="Samples"/>
         <column name="name"/>
         <column name="project_id"/>
         <sql>
             <![CDATA[
               SELECT distinct s.name as name, '@PROJECT_ID@' as project_id
-              FROM   ApidbTuning.SampleAttributes s, APIDBTUNING.SAMPLEDOWNSTREAM sds
-              WHERE sds.OUTPUT_PROTOCOL_APP_NODE_ID in ($$samples_filter_taxon$$)
-                   AND sds.OUTPUT_ISA_TYPE = 'Data'
-                   AND s.PROTOCOL_APP_NODE_ID = sds.PROTOCOL_APP_NODE_ID
+              FROM   apidbTuning.Samples s, apidbTuning.SampleProcess sds
+              WHERE sds.output_pan_id in ($$samples_filter_taxon$$)
+                   AND sds.output_isa_type = 'Data'
+                   AND s.pan_id = sds.protocol_app_node_id
                ORDER BY s.name
             ]]>
         </sql>
