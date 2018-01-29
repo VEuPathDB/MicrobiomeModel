@@ -32,6 +32,7 @@
 
        <filterParamNew name="samples_filter_metadata" includeProjects="MicrobiomeDB" 
                       metadataQueryRef="samplesVQ.SamplesMetadata"
+                      backgroundRef="samplesVQ.SamplesMetadata"
                       ontologyQueryRef="samplesVQ.MetadataSpec"
                       prompt="Samples"
                       dependedParamRef="sampleParams.metadata_datasets">
@@ -43,6 +44,7 @@
 
        <filterParamNew name="samples_filter_taxon" includeProjects="MicrobiomeDB" 
                       metadataQueryRef="samplesVQ.SamplesTaxon"
+                      backgroundRef="samplesVQ.SamplesTaxon"
                       ontologyQueryRef="samplesVQ.SamplesTaxonSpec"
                       prompt="Taxon Relative Abundance"
                       dependedParamRef="sampleParams.metadata_datasets">
@@ -74,14 +76,12 @@
           <paramRef ref="sampleParams.metadata_datasets"/>
           <column name="ontology_term_name"/>
           <column name="internal"/>
-          <column name="internal_for_counts"/>
           <column name="number_value"/>
           <column name="date_value"/>
           <column name="string_value"/>
           <sql>
             <![CDATA[
                 select protocol_app_node_id as internal,
-                       protocol_app_node_id as internal_for_counts,
                        term_id as ontology_term_name,
                        cast(value as number) as number_value,
                        cast(null as date) as date_value,
@@ -157,13 +157,12 @@
           <paramRef ref="sampleParams.metadata_datasets"/>
           <column name="ontology_term_name"/>
           <column name="internal"/>
-          <column name="internal_for_counts"/>
           <column name="number_value"/>
           <column name="date_value"/>
           <column name="string_value"/>
           <sql>
             <![CDATA[
-            select md.pan_id as internal, md.pan_id as internal_for_counts,
+            select md.pan_id as internal,
                    md.property as ontology_term_name,
                    cast(case
                           when pt.type = 'number' and apidb.is_number(md.value) = 1
