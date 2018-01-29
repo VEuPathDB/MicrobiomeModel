@@ -32,7 +32,7 @@
 
        <filterParamNew name="samples_filter_metadata" includeProjects="MicrobiomeDB" 
                       metadataQueryRef="samplesVQ.SamplesMetadata"
-                      backgroundRef="samplesVQ.SamplesMetadata"
+                      backgroundQueryRef="samplesVQ.SamplesMetadata"
                       ontologyQueryRef="samplesVQ.MetadataSpec"
                       prompt="Samples"
                       dependedParamRef="sampleParams.metadata_datasets">
@@ -44,7 +44,7 @@
 
        <filterParamNew name="samples_filter_taxon" includeProjects="MicrobiomeDB" 
                       metadataQueryRef="samplesVQ.SamplesTaxon"
-                      backgroundRef="samplesVQ.SamplesTaxon"
+                      backgroundQueryRef="samplesVQ.SamplesTaxon"
                       ontologyQueryRef="samplesVQ.SamplesTaxonSpec"
                       prompt="Taxon Relative Abundance"
                       dependedParamRef="sampleParams.metadata_datasets">
