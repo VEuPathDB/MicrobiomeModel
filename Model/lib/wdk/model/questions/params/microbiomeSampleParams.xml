@@ -30,7 +30,7 @@
             <suggest selectMode="all" />
        </flatVocabParam>
 
-       <filterParamNew name="samples_filter_metadata" includeProjects="MicrobiomeDB" 
+       <filterParam name="samples_filter_metadata" includeProjects="MicrobiomeDB" 
                       metadataQueryRef="samplesVQ.SamplesMetadata"
                       backgroundQueryRef="samplesVQ.SamplesMetadata"
                       ontologyQueryRef="samplesVQ.MetadataSpec"
@@ -40,9 +40,9 @@
               Select reference samples. 
          </help>
          <!-- <suggest selectMode="all" /> -->
-       </filterParamNew>
+       </filterParam>
 
-       <filterParamNew name="samples_filter_taxon" includeProjects="MicrobiomeDB" 
+       <filterParam name="samples_filter_taxon" includeProjects="MicrobiomeDB" 
                       metadataQueryRef="samplesVQ.SamplesTaxon"
                       backgroundQueryRef="samplesVQ.SamplesTaxon"
                       ontologyQueryRef="samplesVQ.SamplesTaxonSpec"
@@ -52,7 +52,7 @@
               Select reference samples. 
          </help>
          <!-- <suggest selectMode="all" /> -->
-       </filterParamNew>
+       </filterParam>
     
   </paramSet>
 
