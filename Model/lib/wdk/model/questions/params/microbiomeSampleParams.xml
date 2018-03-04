@@ -130,6 +130,7 @@
             </sql>
         </sqlQuery>
 
+<!--
     <sqlQuery name="SamplesWithMetadata" excludeProjects="EuPathDB">
          <paramRef ref="sampleParams.metadata_datasets"/>
          <column name="internal"/>
@@ -152,6 +153,7 @@
             where term not like '%[alpha_diversity]%' 
           </sql>
         </sqlQuery>
+-->
 
         <sqlQuery name="SamplesMetadata" doNotTest="1" excludeProjects="EuPathDB">
           <paramRef ref="sampleParams.metadata_datasets"/>
@@ -182,14 +184,17 @@
                from (  select pan_id, property, value
                        from apidbtuning.InferredChars
                        where dataset_name in ($$metadata_datasets$$)
+                         and pan_name not like '% [alpha_diversity] (OTU)'
                      union
                        select pan_id, property, value
                        from apidbtuning.InferredParams
                        where dataset_name in ($$metadata_datasets$$)
+                         and pan_name not like '% [alpha_diversity] (OTU)'
                      union
                        select pan_id, property, value
                        from apidbtuning.DefaultChars
                        where dataset_name in ($$metadata_datasets$$)
+                         and pan_name not like '% [alpha_diversity] (OTU)'
                     ) md,
                     (select property, max(type) as type
                      from apidbTuning.PropertyType
