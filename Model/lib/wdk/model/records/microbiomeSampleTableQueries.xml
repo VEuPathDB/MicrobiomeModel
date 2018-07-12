@@ -13,15 +13,15 @@
             <![CDATA[
 SELECT distinct
   scm.pan_name AS name
-, scm.category AS material_type
-, scm.term AS property
+, scm.ancestor_pan_type AS material_type
+, scm.property AS property
 , scm.value
 , mt.type
 , mt.filter
 FROM 
-  ApidbTuning.SampleCharMetadata scm, ApidbTuning.MetadataType mt
+  ApidbTuning.InferredChars scm, ApidbTuning.PropertyType mt
 WHERE
-  scm.term = mt.property
+  scm.property = mt.property
             ]]>
             </sql>
     </sqlQuery>
@@ -55,13 +55,13 @@ FROM
             <![CDATA[
 SELECT
   name
-, input
+, input_name as input
 , nvl(input_material_type,  input_isa_type) as input_type
 , protocol
-, output
+, output_name as output
 , nvl(nvl(output_material_type, output_isa_type), 'Data') as output_type
 from
- apidbtuning.sampledownstream
+ apidbtuning.sampleprocess
             ]]>
             </sql>
     </sqlQuery>
@@ -101,13 +101,13 @@ select distinct  sd.name
  , dsp.display_name
  , dsp.category
  , dbms_lob.substr( dsp.summary, 4000, 1 ) as summary
-from apidbtuning.sampledownstream sd
+from apidbtuning.sampleprocess sd
    , apidbtuning.PanResults panr
    , study.study s
    , study.studylink sl
    , apidbtuning.externaldbdatasetpresenter edp
    , apidbtuning.datasetpresenter dsp
-where sd.output_protocol_app_node_id = panr.pan_id
+where sd.output_pan_id = panr.pan_id
 and panr.pan_id = sl.protocol_app_node_id
 and sl.study_id = s.study_id
 and s.external_database_release_id = edp.external_database_release_id

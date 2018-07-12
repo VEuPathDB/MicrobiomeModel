@@ -139,12 +139,12 @@
          <sql>
            select * from (
               select pan_name as term, pan_name as display, protocol_app_node_id as internal
-              from apidbTuning.panCharacteristicMetadata
+              from apidbTuning.InferredChars
               where dataset_name in ($$metadata_datasets$$)
               and pan_name not like '%[alpha_diversity]%'
               union
               select pan_name as term, pan_name as display, protocol_app_node_id as internal
-              from apidbTuning.panProtocolMetadata
+              from apidbTuning.InferredParams
               where dataset_name in ($$metadata_datasets$$)
               union
               select pan_name as term, pan_name as display, protocol_app_node_id as internal

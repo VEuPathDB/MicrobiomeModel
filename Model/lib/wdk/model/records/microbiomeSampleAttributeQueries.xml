@@ -15,8 +15,8 @@
                 <column name="Simpson"/ -->
            <sql>
             <![CDATA[
-             select name, type, description
-             from apidbTuning.SampleAttributes
+             select name, pan_type as type, description
+             from apidbTuning.Samples
 	    ]]>
            </sql>
 	</sqlQuery>
@@ -29,7 +29,7 @@
 SELECT 
  sa.name, sa.name as old_name
 FROM
-  apidbTuning.SampleAttributes sa
+  apidbTuning.Samples sa
 	    ]]>
            </sql>
 	</sqlQuery>
