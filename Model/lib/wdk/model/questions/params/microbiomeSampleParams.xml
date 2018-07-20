@@ -30,6 +30,34 @@
             <suggest selectMode="all" />
        </flatVocabParam>
 
+       <filterParam name="datasets_filter" includeProjects="MicrobiomeDB" 
+                      metadataQueryRef="samplesVQ.DatasetMetaData"
+                      backgroundQueryRef="samplesVQ.DatasetMetaData"
+                      ontologyQueryRef="samplesVQ.DatasetOntology"
+                      prompt="Samples"
+                      countPredictsAnswerCount="true"
+                      trimMetadataTerms="false"
+                      dependedParamRef="">
+         <help>
+              Select reference samples. 
+         </help>
+         <!-- <suggest selectMode="all" /> -->
+       </filterParam>
+
+       <filterParam name="samples_taxon_wiz" includeProjects="MicrobiomeDB" 
+                      metadataQueryRef="samplesVQ.SamplesTaxonWiz"
+                      backgroundQueryRef="samplesVQ.SamplesTaxonBkgWiz"
+                      ontologyQueryRef="samplesVQ.TaxonOntology"
+                      prompt="Samples"
+                      countPredictsAnswerCount="true"
+                      trimMetadataTerms="false"
+                      dependedParamRef="sampleParams.datasets_filter">
+         <help>
+              Select reference samples. 
+         </help>
+         <!-- <suggest selectMode="all" /> -->
+       </filterParam>
+
        <filterParam name="samples_filter_metadata" includeProjects="MicrobiomeDB" 
                       metadataQueryRef="samplesVQ.SamplesMetadata"
                       backgroundQueryRef="samplesVQ.SamplesMetadata"
@@ -47,7 +75,7 @@
                       backgroundQueryRef="samplesVQ.SamplesTaxon"
                       ontologyQueryRef="samplesVQ.SamplesTaxonSpec"
                       prompt="Taxon Relative Abundance"
-                      dependedParamRef="sampleParams.metadata_datasets">
+                      dependedParamRef="">
          <help>
               Select reference samples. 
          </help>
@@ -73,7 +101,6 @@
         </sqlQuery>
 
         <sqlQuery name="SamplesTaxon" doNotTest="1" includeProjects="MicrobiomeDB">
-          <paramRef ref="sampleParams.metadata_datasets"/>
           <column name="ontology_term_name"/>
           <column name="internal"/>
           <column name="number_value"/>
@@ -81,21 +108,23 @@
           <column name="string_value"/>
           <sql>
             <![CDATA[
-                select protocol_app_node_id as internal,
-                       term_id as ontology_term_name,
-                       cast(value as number) as number_value,
-                       cast(null as date) as date_value,
-                       cast(null as varchar2(1)) as string_value
-                from apidbTuning.TaxonAbundance
-                where dataset_name in ($$metadata_datasets$$)
---                and value is not null
-                order by taxon_level
+                     select distinct protocol_app_node_id as internal, 'dataset' as ontology_term_name, 
+                     cast(null as number) as number_value, cast(null as date) as date_value, ds.string_value 
+                     from apidbTuning.TaxonAbundance ta, (
+                     select distinct dsp.name AS dataset_name, display_name as string_value from apidbTuning.DatasetPresenter dsp where dsp.name like 'otu_%_RSRC') ds
+                     where ds.dataset_name = ta.dataset_name
+                     UNION
+                     select protocol_app_node_id as internal,
+                     term_id as ontology_term_name,
+                     cast(value as number) as number_value,
+                     cast(null as date) as date_value,
+                     cast(null as varchar2(1)) as string_value
+                     from apidbTuning.TaxonAbundance
             ]]>
             </sql>
         </sqlQuery>
 
-    <sqlQuery name="SamplesTaxonSpec" doNotTest="1" includeProjects="MicrobiomeDB"> 
-            <paramRef ref="sampleParams.metadata_datasets"/>
+        <sqlQuery name="DatasetOntology" doNotTest="1" includeProjects="MicrobiomeDB"> 
             <column name="ontology_term_name"/>
             <column name="parent_ontology_term_name"/>
             <column name="display_name"/>
@@ -106,16 +135,57 @@
             <column name="is_range"/>
             <sql>
               <![CDATA[
-                  select distinct -- unneeded only because of UNION
+                       select 'dataset' AS ontology_term_name,
+                       'dummy' as parent_ontology_term_name,
+                       'Dataset' as display_name, 'Study name' as description, 'string' as type, 
+                       cast(null as varchar2(1)) as units,
+                       1 as precision, 0 as is_range
+                       from dual
+                       union
+                       select 'dummy' as ontology_term_name, null as parent_ontology_term_name, 'dummy' as display_name, null as description,  null as type, null as units,
+                       null as precision, 0 as is_range from dual
+              ]]>
+            </sql>
+        </sqlQuery>
+
+
+        <sqlQuery name="DatasetMetaData" doNotTest="1" includeProjects="MicrobiomeDB" isCacheable="false">
+          <column name="ontology_term_name"/>
+          <column name="internal"/>
+          <column name="number_value"/>
+          <column name="date_value"/>
+          <column name="string_value"/>
+          <sql>
+            <![CDATA[
+                     select distinct protocol_app_node_id as internal, 'dataset' as ontology_term_name, 
+                     cast(null as number) as number_value, cast(null as date) as date_value, ds.string_value 
+                     from apidbTuning.TaxonAbundance ta, (
+                     select distinct dsp.name AS dataset_name, display_name as string_value from apidbTuning.DatasetPresenter dsp where dsp.name like 'otu_%_RSRC') ds
+                     where ds.dataset_name = ta.dataset_name
+            ]]>
+            </sql>
+        </sqlQuery>
+
+        <sqlQuery name="TaxonOntology" doNotTest="1" includeProjects="MicrobiomeDB"> 
+            <column name="ontology_term_name"/>
+            <column name="parent_ontology_term_name"/>
+            <column name="display_name"/>
+            <column name="description"/>
+            <column name="type"/>
+            <column name="units"/>
+            <column name="precision"/>
+            <column name="is_range"/>
+            <sql>
+              <![CDATA[
+             select distinct -- unneeded only because of UNION
                          category as ontology_term_name,
                          cast(null as varchar2(1)) as parent_ontology_term_name,
                          category as display_name,
                          'taxonomic rank' as description,
-                         'string' as type, cast(null as varchar2(1)) as units,
+                         cast(null as varchar2(1)) as type, cast(null as varchar2(1)) as units,
                          1 as precision, 0 as is_range,
                          taxon_level * 2 - 1 as ordering
                   from apidbTuning.TaxonAbundance
-                  where dataset_name in ($$metadata_datasets$$)
                 union
                   select term_id as ontology_term_name,
                          category as parent_ontology_term_name,
@@ -124,8 +194,97 @@
                          'number' as type, null as units, 1 as precision, 1 as is_range,
                          taxon_level * 2 as ordering
                   from apidbTuning.TaxonAbundance
-                  where dataset_name in ($$metadata_datasets$$)
-                order by ordering
+                  order by ordering, display_name
+              ]]>
+            </sql>
+        </sqlQuery>
+
+        <sqlQuery name="SamplesTaxonWiz" doNotTest="1" includeProjects="MicrobiomeDB">
+          <paramRef ref="sampleParams.datasets_filter"/>
+          <column name="ontology_term_name"/>
+          <column name="internal"/>
+          <column name="number_value"/>
+          <column name="date_value"/>
+          <column name="string_value"/>
+          <sql>
+            <![CDATA[
+                     select protocol_app_node_id as internal,
+                     term_id as ontology_term_name,
+                     cast(value as number) as number_value,
+                     cast(null as date) as date_value,
+                     cast(null as varchar2(1)) as string_value
+                     from apidbTuning.TaxonAbundance
+                     where protocol_app_node_id in ($$datasets_filter$$)
+            ]]>
+            </sql>
+        </sqlQuery>
+
+        <sqlQuery name="SamplesTaxonBkgWiz" doNotTest="1" includeProjects="MicrobiomeDB">
+          <column name="ontology_term_name"/>
+          <column name="internal"/>
+          <column name="number_value"/>
+          <column name="date_value"/>
+          <column name="string_value"/>
+          <sql>
+            <![CDATA[
+                     select protocol_app_node_id as internal,
+                     term_id as ontology_term_name,
+                     cast(value as number) as number_value,
+                     cast(null as date) as date_value,
+                     cast(null as varchar2(1)) as string_value
+                     from apidbTuning.TaxonAbundance
+            ]]>
+            </sql>
+        </sqlQuery>
+
+    <sqlQuery name="SamplesTaxonSpec" doNotTest="1" includeProjects="MicrobiomeDB"> 
+            <column name="ontology_term_name"/>
+            <column name="parent_ontology_term_name"/>
+            <column name="display_name"/>
+            <column name="description"/>
+            <column name="type"/>
+            <column name="units"/>
+            <column name="precision"/>
+            <column name="is_range"/>
+            <sql>
+              <![CDATA[
+             select 'dummy' as ontology_term_name, null as parent_ontology_term_name, 'dummy' as display_name, null as description,  null as type, null as units,
+             null as precision, 0 as is_range, -1 as ordering from dual
+             UNION
+             select 'dataset' AS ontology_term_name,
+             'dummy' as parent_ontology_term_name,
+             'Dataset' as display_name, 'Study name' as description, 'string' as type, 
+             cast(null as varchar2(1)) as units,
+             1 as precision, 0 as is_range,
+             0 as ordering
+             from dual
+             UNION
+             select 'Taxonomy' ontology_term_name,
+             'dummy' as parent_ontology_term_name,
+             'Taxonomy' as display_name, 'Taxonomy' as description, cast(null as varchar2(1)) as type, 
+             cast(null as varchar2(1)) as units,
+             1 as precision, 0 as is_range,
+             0.5 as ordering
+             from dual
+             UNION
+             select distinct -- unneeded only because of UNION
+                         category as ontology_term_name,
+                         'Taxonomy' as parent_ontology_term_name,
+                         category as display_name,
+                         'taxonomic rank' as description,
+                         cast(null as varchar2(1)) as type, cast(null as varchar2(1)) as units,
+                         1 as precision, 0 as is_range,
+                         taxon_level * 2 - 1 as ordering
+                  from apidbTuning.TaxonAbundance
+                union
+                  select term_id as ontology_term_name,
+                         category as parent_ontology_term_name,
+                         term as display_name,
+                         cast(null as varchar2(1)) as description,
+                         'number' as type, null as units, 1 as precision, 1 as is_range,
+                         taxon_level * 2 as ordering
+                  from apidbTuning.TaxonAbundance
+                  order by ordering, display_name
               ]]>
             </sql>
         </sqlQuery>
@@ -227,5 +386,24 @@
  
   </querySet>
 
+  <groupSet name="microbiomeGroups">
+    
+    <group name="dataset" displayName="Dataset" displayType="ShowHide">
+      <description>
+        <![CDATA[
+                 Choose the datasets you want to include in your search.
+        ]]>
+      </description>
+    </group>
+
+    <group name="samples" displayName="Samples" displayType="ShowHide">
+      <description>
+        <![CDATA[
+                 Choose the taxa you want to include in your search.
+        ]]>
+      </description>
+    </group>
+
+  </groupSet>
 
 </wdkModel>

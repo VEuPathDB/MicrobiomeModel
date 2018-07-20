@@ -49,7 +49,6 @@
 
     <sqlQuery name="SampleByTaxonAbundance" doNotTest="true" excludeProjects="EuPathDB"
               displayName="Metadata">
-      <paramRef ref="sampleParams.metadata_datasets"/>
        <paramRef ref="sampleParams.samples_filter_taxon" prompt="Samples"/>
         <column name="name"/>
         <column name="project_id"/>
@@ -58,6 +57,25 @@
               SELECT distinct s.name as name, '@PROJECT_ID@' as project_id
               FROM   apidbTuning.Samples s, apidbTuning.SampleProcess sds
               WHERE sds.output_pan_id in ($$samples_filter_taxon$$)
+                   AND sds.output_isa_type = 'Data'
+                   AND s.pan_id = sds.protocol_app_node_id
+               ORDER BY s.name
+            ]]>
+        </sql>
+
+    </sqlQuery>
+
+    <sqlQuery name="SampleByTaxonAbundanceWiz" doNotTest="true" excludeProjects="EuPathDB"
+              displayName="Metadata">
+      <paramRef ref="sampleParams.datasets_filter" groupRef="microbiomeGroups.dataset"/>
+      <paramRef ref="sampleParams.samples_taxon_wiz" prompt="Samples" groupRef="microbiomeGroups.samples"/>
+      <column name="name"/>
+      <column name="project_id"/>
+      <sql>
+            <![CDATA[
+              SELECT distinct s.name as name, '@PROJECT_ID@' as project_id
+              FROM   apidbTuning.Samples s, apidbTuning.SampleProcess sds
+              WHERE sds.output_pan_id in ($$samples_taxon_wiz$$)
                    AND sds.output_isa_type = 'Data'
                    AND s.pan_id = sds.protocol_app_node_id
                ORDER BY s.name

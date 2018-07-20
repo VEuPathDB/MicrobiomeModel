@@ -45,6 +45,32 @@
         ]]> 
        </description> 
 
+   </question>
+   <question name="MicrobiomeSampleByTaxonAbundanceWiz"
+              searchCategory="Other Attributes"
+              shortDisplayName="Abundance-Wiz"
+              queryRef="sampleIds.SampleByTaxonAbundanceWiz"
+              displayName="Taxon Abundance (Wizard)"
+              recordClassRef="SampleRecordClasses.MicrobiomeSampleRecordClass"
+              includeProjects="MicrobiomeDB">
+
+      <suggestion newBuild="23" includeProjects="EuPathDB" />
+        <summary>
+          Find Microbiomic Samples based on Taxon Abundance.
+        </summary> 
+        <description> 
+        <![CDATA[ 
+          Find microbiome samples based on Taxon Abundance
+        ]]> 
+       </description> 
+
+        <propertyList name="websiteProperties">
+          <value>useWizard</value>
+          <value>hideOperation</value>
+          <value>hideTitle</value>
+          <value>hideAttrDescr</value>
+        </propertyList>
+
     </question>
 
     <!--++++++++++++++++++++++++++++++++++++++++++++++++-->
