@@ -199,7 +199,7 @@
             </sql>
         </sqlQuery>
 
-        <sqlQuery name="SamplesTaxonWiz" doNotTest="1" includeProjects="MicrobiomeDB">
+        <sqlQuery name="SamplesTaxonWiz" doNotTest="1" includeProjects="MicrobiomeDB" isCacheable="false">
           <paramRef ref="sampleParams.datasets_filter"/>
           <column name="ontology_term_name"/>
           <column name="internal"/>
@@ -219,7 +219,7 @@
             </sql>
         </sqlQuery>
 
-        <sqlQuery name="SamplesTaxonBkgWiz" doNotTest="1" includeProjects="MicrobiomeDB">
+        <sqlQuery name="SamplesTaxonBkgWiz" doNotTest="1" includeProjects="MicrobiomeDB" isCacheable="false">
           <column name="ontology_term_name"/>
           <column name="internal"/>
           <column name="number_value"/>
