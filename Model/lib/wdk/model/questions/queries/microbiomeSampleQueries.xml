@@ -47,6 +47,25 @@
 
     </sqlQuery>
 
+    <sqlQuery name="SampleByMetadataWiz" doNotTest="true" excludeProjects="EuPathDB"
+              displayName="Metadata">
+      <paramRef ref="sampleParams.datasets_filter" groupRef="microbiomeGroups.dataset"/>
+       <paramRef ref="sampleParams.samples_filter_metadata_wiz"  groupRef="microbiomeGroups.samples_metadata"/>
+        <column name="name"/>
+        <column name="project_id"/>
+        <sql>
+            <![CDATA[
+              SELECT distinct s.name as name, '@PROJECT_ID@' as project_id
+              FROM   apidbTuning.Samples s, apidbTuning.SampleProcess sds
+              WHERE sds.output_pan_id in ($$samples_filter_metadata_wiz$$)
+                   AND sds.OUTPUT_ISA_TYPE = 'Data'
+                   AND s.pan_id = sds.protocol_app_node_id
+               ORDER BY s.name
+            ]]>
+        </sql>
+
+    </sqlQuery>
+
     <sqlQuery name="SampleByTaxonAbundance" doNotTest="true" excludeProjects="EuPathDB"
               displayName="Metadata">
        <paramRef ref="sampleParams.samples_filter_taxon" prompt="Samples"/>
@@ -68,7 +87,7 @@
     <sqlQuery name="SampleByTaxonAbundanceWiz" doNotTest="true" excludeProjects="EuPathDB"
               displayName="Metadata">
       <paramRef ref="sampleParams.datasets_filter" groupRef="microbiomeGroups.dataset"/>
-      <paramRef ref="sampleParams.samples_taxon_wiz" prompt="Samples" groupRef="microbiomeGroups.samples"/>
+      <paramRef ref="sampleParams.samples_taxon_wiz" prompt="Samples" groupRef="microbiomeGroups.samples_metadata"/>
       <column name="name"/>
       <column name="project_id"/>
       <sql>

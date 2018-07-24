@@ -27,6 +27,33 @@
 
     </question>
 
+    <question name="MicrobiomeSampleByMetadataWiz"
+              searchCategory="Other Attributes"
+              shortDisplayName="Details-Wiz"
+              queryRef="sampleIds.SampleByMetadataWiz"
+              displayName="Sample Details (Wizard)"
+              recordClassRef="SampleRecordClasses.MicrobiomeSampleRecordClass"
+              includeProjects="MicrobiomeDB">
+
+      <suggestion newBuild="23" includeProjects="EuPathDB" />
+        <summary>
+          Find Microbiomic Samples based on Sample details.
+        </summary> 
+        <description> 
+        <![CDATA[ 
+          Find microbiome samples based on sample characteristics
+        ]]> 
+       </description> 
+
+        <propertyList name="websiteProperties">
+          <value>useWizard</value>
+          <value>hideOperation</value>
+          <value>hideTitle</value>
+          <value>hideAttrDescr</value>
+        </propertyList>
+
+    </question>
+
    <question name="MicrobiomeSampleByTaxonAbundance"
               searchCategory="Other Attributes"
               shortDisplayName="Abundance"
