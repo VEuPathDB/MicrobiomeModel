@@ -50,6 +50,7 @@
     <sqlQuery name="SampleByMetadataWiz" doNotTest="true" excludeProjects="EuPathDB"
               displayName="Metadata">
       <paramRef ref="sampleParams.datasets_filter" groupRef="microbiomeGroups.dataset"/>
+      <paramRef ref="sampleParams.env_feature_filter" groupRef="microbiomeGroups.env_feature"/> 
        <paramRef ref="sampleParams.samples_filter_metadata_wiz"  groupRef="microbiomeGroups.samples_metadata"/>
         <column name="name"/>
         <column name="project_id"/>
