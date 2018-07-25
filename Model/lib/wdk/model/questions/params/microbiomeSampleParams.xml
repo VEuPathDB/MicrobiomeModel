@@ -30,10 +30,11 @@
             <suggest selectMode="all" />
        </flatVocabParam>
 
-       <filterParam name="datasets_filter" includeProjects="MicrobiomeDB" 
-                      metadataQueryRef="samplesVQ.DatasetMetaData"
-                      backgroundQueryRef="samplesVQ.DatasetMetaData"
-                      ontologyQueryRef="samplesVQ.DatasetOntology"
+
+       <filterParam name="env_feature_filter" includeProjects="MicrobiomeDB" 
+                      metadataQueryRef="samplesVQ.EnvFeatureMetadata"
+                      backgroundQueryRef="samplesVQ.EnvFeatureMetadata"
+                      ontologyQueryRef="samplesVQ.EnvFeatureOntology"
                       prompt="Samples"
                       countPredictsAnswerCount="true"
                       trimMetadataTerms="false"
@@ -44,14 +45,14 @@
          <!-- <suggest selectMode="all" /> -->
        </filterParam>
 
-       <filterParam name="env_feature_filter" includeProjects="MicrobiomeDB" 
-                      metadataQueryRef="samplesVQ.EnvFeatureMetadata"
-                      backgroundQueryRef="samplesVQ.EnvFeatureMetadataBkg"
-                      ontologyQueryRef="samplesVQ.EnvFeatureOntology"
+       <filterParam name="datasets_filter" includeProjects="MicrobiomeDB" 
+                      metadataQueryRef="samplesVQ.DatasetMetaData"
+                      backgroundQueryRef="samplesVQ.DatasetMetaDataBkg"
+                      ontologyQueryRef="samplesVQ.DatasetOntology"
                       prompt="Samples"
                       countPredictsAnswerCount="true"
                       trimMetadataTerms="false"
-                      dependedParamRef="sampleParams.datasets_filter">
+                      dependedParamRef="sampleParams.env_feature_filter">
          <help>
               Select reference samples. 
          </help>
@@ -79,7 +80,7 @@
                       prompt="Samples"
                       countPredictsAnswerCount="true"
                       trimMetadataTerms="true"
-                      dependedParamRef="sampleParams.env_feature_filter">
+                      dependedParamRef="sampleParams.datasets_filter">
          <help>
               Select reference samples. 
          </help>
@@ -152,29 +153,7 @@
             </sql>
         </sqlQuery>
 
-        <sqlQuery name="DatasetOntology" doNotTest="1" includeProjects="MicrobiomeDB"> 
-            <column name="ontology_term_name"/>
-            <column name="parent_ontology_term_name"/>
-            <column name="display_name"/>
-            <column name="description"/>
-            <column name="type"/>
-            <column name="units"/>
-            <column name="precision"/>
-            <column name="is_range"/>
-            <sql>
-              <![CDATA[
-                       select 'IAO_0000100' AS ontology_term_name,
-                       'dummy' as parent_ontology_term_name,
-                       'Dataset' as display_name, 'Study name' as description, 'string' as type, 
-                       cast(null as varchar2(1)) as units,
-                       1 as precision, 0 as is_range
-                       from dual
-                       union
-                       select 'dummy' as ontology_term_name, null as parent_ontology_term_name, 'dummy' as display_name, null as description,  null as type, null as units,
-                       null as precision, 0 as is_range from dual
-              ]]>
-            </sql>
-        </sqlQuery>
+
 
         <sqlQuery name="EnvFeatureOntology" doNotTest="1" includeProjects="MicrobiomeDB"> 
             <column name="ontology_term_name"/>
@@ -200,7 +179,49 @@
             </sql>
         </sqlQuery>
 
+        <sqlQuery name="EnvFeatureMetadata" doNotTest="1" includeProjects="MicrobiomeDB" isCacheable="false">
+          <column name="ontology_term_name"/>
+          <column name="internal"/>
+          <column name="number_value"/>
+          <column name="date_value"/>
+          <column name="string_value"/>
+          <sql>
+            <![CDATA[
+                     select distinct pan_id as internal, property_source_id as ontology_term_name, 
+                     number_value, date_value, string_value 
+                     from apidbtuning.metadata
+                     where property_source_id = 'MiXS_env_feature'
+                     and dataset_name like 'otu_%_RSRC'
+            ]]>
+            </sql>
+        </sqlQuery>
+
+        <sqlQuery name="DatasetOntology" doNotTest="1" includeProjects="MicrobiomeDB"> 
+            <column name="ontology_term_name"/>
+            <column name="parent_ontology_term_name"/>
+            <column name="display_name"/>
+            <column name="description"/>
+            <column name="type"/>
+            <column name="units"/>
+            <column name="precision"/>
+            <column name="is_range"/>
+            <sql>
+              <![CDATA[
+                       select 'IAO_0000100' AS ontology_term_name,
+                       'dummy' as parent_ontology_term_name,
+                       'Dataset' as display_name, 'Study name' as description, 'string' as type, 
+                       cast(null as varchar2(1)) as units,
+                       1 as precision, 0 as is_range
+                       from dual
+                       union
+                       select 'dummy' as ontology_term_name, null as parent_ontology_term_name, 'dummy' as display_name, null as description,  null as type, null as units,
+                       null as precision, 0 as is_range from dual
+              ]]>
+            </sql>
+        </sqlQuery>
+
         <sqlQuery name="DatasetMetaData" doNotTest="1" includeProjects="MicrobiomeDB" isCacheable="false">
+          <paramRef ref="sampleParams.env_feature_filter"/>
           <column name="ontology_term_name"/>
           <column name="internal"/>
           <column name="number_value"/>
@@ -212,11 +233,57 @@
                      number_value, date_value, string_value 
                      from apidbtuning.metadata
                      where property_source_id = 'IAO_0000100'
+                     and pan_id in ($$env_feature_filter$$)
+                     and dataset_name like 'otu_%_RSRC'
             ]]>
             </sql>
         </sqlQuery>
 
-        <sqlQuery name="EnvFeatureMetadata" doNotTest="1" includeProjects="MicrobiomeDB" isCacheable="false">
+        <sqlQuery name="DatasetMetaDataBkg" doNotTest="1" includeProjects="MicrobiomeDB" isCacheable="false">
+          <column name="ontology_term_name"/>
+          <column name="internal"/>
+          <column name="number_value"/>
+          <column name="date_value"/>
+          <column name="string_value"/>
+          <sql>
+            <![CDATA[
+                     select distinct pan_id as internal, property_source_id as ontology_term_name, 
+                     number_value, date_value, string_value 
+                     from apidbtuning.metadata
+                     where property_source_id = 'IAO_0000100'
+                     and dataset_name like 'otu_%_RSRC'
+            ]]>
+            </sql>
+        </sqlQuery>
+
+
+        <!-- NOTE:  this ontology query filters the terms based on a depended param -->
+        
+        <sqlQuery name="MetadataOntology" doNotTest="1" excludeProjects="EuPathDB"> 
+          <paramRef ref="sampleParams.datasets_filter"/>
+          <column name="ontology_term_name"/>
+          <column name="parent_ontology_term_name"/>
+          <column name="display_name"/>
+          <column name="description"/>
+          <column name="type"/>
+          <column name="units"/>
+          <column name="precision"/>
+          <column name="is_range"/>
+          <sql>
+            <![CDATA[
+                     select distinct ontology_term_source_id as ontology_term_name, parent_ontology_term_source_id as parent_ontology_term_name, display_name,
+                     description, type, units, precision, is_range
+                     from apidbTuning.Ontology
+                     where ontology_term_source_id in (
+                     select distinct property_source_id 
+                     from apidbtuning.metadata
+                     where pan_id in ($$datasets_filter$$)
+                     )
+            ]]>
+          </sql>
+        </sqlQuery>
+
+        <sqlQuery name="SamplesMetadataWiz" doNotTest="1" excludeProjects="EuPathDB" isCacheable="false">
           <paramRef ref="sampleParams.datasets_filter"/>
           <column name="ontology_term_name"/>
           <column name="internal"/>
@@ -225,27 +292,9 @@
           <column name="string_value"/>
           <sql>
             <![CDATA[
-                     select distinct pan_id as internal, property_source_id as ontology_term_name, 
-                     number_value, date_value, string_value 
+                     select distinct pan_id as internal, property_source_id as ontology_term_name, string_value,number_value,date_value 
                      from apidbtuning.metadata
-                     where property_source_id = 'MiXS_env_feature'
-                     and pan_id in ($$datasets_filter$$)
-            ]]>
-            </sql>
-        </sqlQuery>
-
-        <sqlQuery name="EnvFeatureMetadataBkg" doNotTest="1" includeProjects="MicrobiomeDB" isCacheable="false">
-          <column name="ontology_term_name"/>
-          <column name="internal"/>
-          <column name="number_value"/>
-          <column name="date_value"/>
-          <column name="string_value"/>
-          <sql>
-            <![CDATA[
-                     select distinct pan_id as internal, property_source_id as ontology_term_name, 
-                     number_value, date_value, string_value 
-                     from apidbtuning.metadata
-                     where property_source_id = 'MiXS_env_feature'
+                     where pan_id in ($$datasets_filter$$)
             ]]>
             </sql>
         </sqlQuery>
@@ -398,21 +447,6 @@
         </sqlQuery>
 -->
 
-        <sqlQuery name="SamplesMetadataWiz" doNotTest="1" excludeProjects="EuPathDB" isCacheable="false">
-          <paramRef ref="sampleParams.env_feature_filter"/>
-          <column name="ontology_term_name"/>
-          <column name="internal"/>
-          <column name="number_value"/>
-          <column name="date_value"/>
-          <column name="string_value"/>
-          <sql>
-            <![CDATA[
-                     select distinct pan_id as internal, property_source_id as ontology_term_name, string_value,number_value,date_value 
-                     from apidbtuning.metadata
-                     where pan_id in ($$env_feature_filter$$)
-            ]]>
-            </sql>
-        </sqlQuery>
 
         <sqlQuery name="SamplesMetadata" doNotTest="1" excludeProjects="EuPathDB">
           <paramRef ref="sampleParams.metadata_datasets"/>
@@ -483,29 +517,6 @@
             </sql>
         </sqlQuery>
 
-        <sqlQuery name="MetadataOntology" doNotTest="1" excludeProjects="EuPathDB"> 
-          <paramRef ref="sampleParams.env_feature_filter"/>
-            <column name="ontology_term_name"/>
-            <column name="parent_ontology_term_name"/>
-            <column name="display_name"/>
-            <column name="description"/>
-            <column name="type"/>
-            <column name="units"/>
-            <column name="precision"/>
-            <column name="is_range"/>
-            <sql>
-              <![CDATA[
-                select distinct ontology_term_source_id as ontology_term_name, parent_ontology_term_source_id as parent_ontology_term_name, display_name,
-                       description, type, units, precision, is_range
-                from apidbTuning.Ontology
-                where ontology_term_source_id in (
-                select distinct property_source_id 
-                     from apidbtuning.metadata
-                     where pan_id in ($$env_feature_filter$$)
-                     )
-              ]]>
-            </sql>
-        </sqlQuery>
 
  
   </querySet>

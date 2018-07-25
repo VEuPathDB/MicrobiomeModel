@@ -7,6 +7,7 @@
     <!--Metadata -->
     <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
 
+<!--
     <question name="MicrobiomeSampleByMetadata"
               searchCategory="Other Attributes"
               shortDisplayName="Details"
@@ -15,7 +16,7 @@
               recordClassRef="SampleRecordClasses.MicrobiomeSampleRecordClass"
               includeProjects="MicrobiomeDB">
 
-      <suggestion newBuild="23" includeProjects="EuPathDB" />
+      <suggestion newBuild="23" includeProjects="DoNotUse" />
         <summary>
           Find Microbiomic Samples based on Sample details.
         </summary> 
@@ -26,12 +27,13 @@
        </description> 
 
     </question>
+-->
 
     <question name="MicrobiomeSampleByMetadataWiz"
               searchCategory="Other Attributes"
-              shortDisplayName="Details-Wiz"
+              shortDisplayName="Details"
               queryRef="sampleIds.SampleByMetadataWiz"
-              displayName="Sample Details (Wizard)"
+              displayName="Sample Details"
               recordClassRef="SampleRecordClasses.MicrobiomeSampleRecordClass"
               includeProjects="MicrobiomeDB">
 
@@ -54,6 +56,7 @@
 
     </question>
 
+<!--
    <question name="MicrobiomeSampleByTaxonAbundance"
               searchCategory="Other Attributes"
               shortDisplayName="Abundance"
@@ -62,7 +65,7 @@
               recordClassRef="SampleRecordClasses.MicrobiomeSampleRecordClass"
               includeProjects="MicrobiomeDB">
 
-      <suggestion newBuild="23" includeProjects="EuPathDB" />
+      <suggestion newBuild="23" includeProjects="DoNotUse" />
         <summary>
           Find Microbiomic Samples based on Taxon Abundance.
         </summary> 
@@ -73,11 +76,13 @@
        </description> 
 
    </question>
+-->
+
    <question name="MicrobiomeSampleByTaxonAbundanceWiz"
               searchCategory="Other Attributes"
-              shortDisplayName="Abundance-Wiz"
+              shortDisplayName="Abundance"
               queryRef="sampleIds.SampleByTaxonAbundanceWiz"
-              displayName="Taxon Abundance (Wizard)"
+              displayName="Taxon Abundance"
               recordClassRef="SampleRecordClasses.MicrobiomeSampleRecordClass"
               includeProjects="MicrobiomeDB">
 
