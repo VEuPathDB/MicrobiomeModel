@@ -29,7 +29,7 @@
     </question>
 -->
 
-    <question name="MicrobiomeSampleByMetadataWiz"
+    <question name="MicrobiomeSampleByMetadata"
               searchCategory="Other Attributes"
               shortDisplayName="Details"
               queryRef="sampleIds.SampleByMetadataWiz"
@@ -78,7 +78,7 @@
    </question>
 -->
 
-   <question name="MicrobiomeSampleByTaxonAbundanceWiz"
+   <question name="MicrobiomeSampleByTaxonAbundance"
               searchCategory="Other Attributes"
               shortDisplayName="Abundance"
               queryRef="sampleIds.SampleByTaxonAbundanceWiz"

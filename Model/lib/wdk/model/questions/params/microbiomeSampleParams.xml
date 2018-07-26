@@ -259,7 +259,7 @@
 
         <!-- NOTE:  this ontology query filters the terms based on a depended param -->
         
-        <sqlQuery name="MetadataOntology" doNotTest="1" excludeProjects="EuPathDB"> 
+        <sqlQuery name="MetadataOntology" doNotTest="1" excludeProjects="EuPathDB" isCacheable="false"> 
           <paramRef ref="sampleParams.datasets_filter"/>
           <column name="ontology_term_name"/>
           <column name="parent_ontology_term_name"/>
@@ -271,14 +271,17 @@
           <column name="is_range"/>
           <sql>
             <![CDATA[
-                     select distinct ontology_term_source_id as ontology_term_name, parent_ontology_term_source_id as parent_ontology_term_name, display_name,
-                     description, type, units, precision, is_range
+select distinct ontology_term_source_id as ontology_term_name, parent_ontology_term_source_id as parent_ontology_term_name, display_name,
+                     description, type, units, precision, is_range 
                      from apidbTuning.Ontology
-                     where ontology_term_source_id in (
-                     select distinct property_source_id 
-                     from apidbtuning.metadata
-                     where pan_id in ($$datasets_filter$$)
-                     )
+                       CONNECT BY ontology_term_source_id = PRIOR parent_ontology_term_source_id
+                       START WITH ontology_term_source_id in (
+                         select distinct property_source_id 
+                         from apidbtuning.metadata
+                         where pan_id in ($$datasets_filter$$)
+                       )
+                     order by display_name
+                     
             ]]>
           </sql>
         </sqlQuery>
