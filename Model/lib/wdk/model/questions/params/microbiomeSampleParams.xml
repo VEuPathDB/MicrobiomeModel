@@ -80,7 +80,7 @@
                       prompt="Samples"
                       countPredictsAnswerCount="true"
                       trimMetadataTerms="true"
-                      dependedParamRef="sampleParams.datasets_filter">
+                      dependedParamRef="sampleParams.datasets_filter,sampleParams.env_feature_filter">
          <help>
               Select reference samples. 
          </help>
@@ -261,6 +261,7 @@
         
         <sqlQuery name="MetadataOntology" doNotTest="1" excludeProjects="EuPathDB" isCacheable="false"> 
           <paramRef ref="sampleParams.datasets_filter"/>
+          <paramRef ref="sampleParams.env_feature_filter"/>
           <column name="ontology_term_name"/>
           <column name="parent_ontology_term_name"/>
           <column name="display_name"/>
@@ -278,7 +279,7 @@ select distinct ontology_term_source_id as ontology_term_name, parent_ontology_t
                        START WITH ontology_term_source_id in (
                          select distinct property_source_id 
                          from apidbtuning.metadata
-                         where pan_id in ($$datasets_filter$$)
+                         where pan_id in ($$datasets_filter$$ INTERSECT $$env_feature_filter$$)
                        )
                      order by display_name
                      
