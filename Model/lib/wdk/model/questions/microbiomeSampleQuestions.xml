@@ -7,10 +7,32 @@
     <!--Metadata -->
     <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
 
+<!--
     <question name="MicrobiomeSampleByMetadata"
               searchCategory="Other Attributes"
               shortDisplayName="Details"
               queryRef="sampleIds.SampleByMetadata"
+              displayName="Sample Details"
+              recordClassRef="SampleRecordClasses.MicrobiomeSampleRecordClass"
+              includeProjects="MicrobiomeDB">
+
+      <suggestion newBuild="23" includeProjects="DoNotUse" />
+        <summary>
+          Find Microbiomic Samples based on Sample details.
+        </summary> 
+        <description> 
+        <![CDATA[ 
+          Find microbiome samples based on sample characteristics
+        ]]> 
+       </description> 
+
+    </question>
+-->
+
+    <question name="MicrobiomeSampleByMetadata"
+              searchCategory="Other Attributes"
+              shortDisplayName="Details"
+              queryRef="sampleIds.SampleByMetadataWiz"
               displayName="Sample Details"
               recordClassRef="SampleRecordClasses.MicrobiomeSampleRecordClass"
               includeProjects="MicrobiomeDB">
@@ -25,12 +47,41 @@
         ]]> 
        </description> 
 
+        <propertyList name="websiteProperties">
+          <value>useWizard</value>
+          <value>hideOperation</value>
+          <value>hideTitle</value>
+          <value>hideAttrDescr</value>
+        </propertyList>
+
     </question>
 
+<!--
    <question name="MicrobiomeSampleByTaxonAbundance"
               searchCategory="Other Attributes"
               shortDisplayName="Abundance"
               queryRef="sampleIds.SampleByTaxonAbundance"
+              displayName="Taxon Abundance"
+              recordClassRef="SampleRecordClasses.MicrobiomeSampleRecordClass"
+              includeProjects="MicrobiomeDB">
+
+      <suggestion newBuild="23" includeProjects="DoNotUse" />
+        <summary>
+          Find Microbiomic Samples based on Taxon Abundance.
+        </summary> 
+        <description> 
+        <![CDATA[ 
+          Find microbiome samples based on Taxon Abundance
+        ]]> 
+       </description> 
+
+   </question>
+-->
+
+   <question name="MicrobiomeSampleByTaxonAbundance"
+              searchCategory="Other Attributes"
+              shortDisplayName="Abundance"
+              queryRef="sampleIds.SampleByTaxonAbundanceWiz"
               displayName="Taxon Abundance"
               recordClassRef="SampleRecordClasses.MicrobiomeSampleRecordClass"
               includeProjects="MicrobiomeDB">
@@ -44,6 +95,13 @@
           Find microbiome samples based on Taxon Abundance
         ]]> 
        </description> 
+
+        <propertyList name="websiteProperties">
+          <value>useWizard</value>
+          <value>hideOperation</value>
+          <value>hideTitle</value>
+          <value>hideAttrDescr</value>
+        </propertyList>
 
     </question>
 
