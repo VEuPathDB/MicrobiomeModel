@@ -75,7 +75,7 @@
 
        <filterParam name="samples_filter_metadata_wiz" includeProjects="MicrobiomeDB" 
                       metadataQueryRef="samplesVQ.SamplesMetadataWiz"
-                      backgroundQueryRef="samplesVQ.SamplesMetadataWiz" 
+                      backgroundQueryRef="samplesVQ.SamplesMetadataWizBkg" 
                       ontologyQueryRef="samplesVQ.MetadataOntology"
                       prompt="Samples"
                       countPredictsAnswerCount="true"
@@ -272,6 +272,7 @@
           <column name="is_range"/>
           <sql>
             <![CDATA[
+select * from (
 select distinct ontology_term_source_id as ontology_term_name, parent_ontology_term_source_id as parent_ontology_term_name, display_name,
                      description, type, units, precision, is_range 
                      from apidbTuning.Ontology
@@ -280,9 +281,9 @@ select distinct ontology_term_source_id as ontology_term_name, parent_ontology_t
                          select distinct property_source_id 
                          from apidbtuning.metadata
                          where pan_id in ($$datasets_filter$$ INTERSECT $$env_feature_filter$$)
-                       )
+                         )
+                         ) where ontology_term_name not in ('MiXS_env_feature','IAO_0000100','EUPATH_0000606','MICRO_0000494')
                      order by display_name
-                     
             ]]>
           </sql>
         </sqlQuery>
@@ -299,10 +300,25 @@ select distinct ontology_term_source_id as ontology_term_name, parent_ontology_t
                      select distinct pan_id as internal, property_source_id as ontology_term_name, string_value,number_value,date_value 
                      from apidbtuning.metadata
                      where pan_id in ($$datasets_filter$$)
+                     and dataset_name like 'otu_%_RSRC'
             ]]>
             </sql>
         </sqlQuery>
 
+        <sqlQuery name="SamplesMetadataWizBkg" doNotTest="1" excludeProjects="EuPathDB" isCacheable="false">
+          <column name="ontology_term_name"/>
+          <column name="internal"/>
+          <column name="number_value"/>
+          <column name="date_value"/>
+          <column name="string_value"/>
+          <sql>
+            <![CDATA[
+                     select distinct pan_id as internal, property_source_id as ontology_term_name, string_value,number_value,date_value 
+                     from apidbtuning.metadata
+                     where dataset_name like 'otu_%_RSRC'
+            ]]>
+            </sql>
+        </sqlQuery>
         <sqlQuery name="TaxonOntology" doNotTest="1" includeProjects="MicrobiomeDB"> 
             <column name="ontology_term_name"/>
             <column name="parent_ontology_term_name"/>
