@@ -282,7 +282,7 @@ select distinct ontology_term_source_id as ontology_term_name, parent_ontology_t
                          from apidbtuning.metadata
                          where pan_id in ($$datasets_filter$$ INTERSECT $$env_feature_filter$$)
                          )
-                         ) where ontology_term_name not in ('MiXS_env_feature','IAO_0000100','EUPATH_0000606','MICRO_0000494')
+                         ) where ontology_term_name not in ('MiXS_env_feature','IAO_0000100','EUPATH_0000606','MICRO_0000494','OBI_0001898')
                      order by display_name
             ]]>
           </sql>
