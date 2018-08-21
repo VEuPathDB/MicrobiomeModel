@@ -168,7 +168,7 @@
               <![CDATA[
                        select 'MiXS_env_feature' AS ontology_term_name,
                        'dummy' as parent_ontology_term_name,
-                       'Environment' as display_name, 'Environment where the sample was collected' as description, 'string' as type, 
+                       'Habitat' as display_name, 'Habitat where the sample was collected' as description, 'string' as type, 
                        cast(null as varchar2(1)) as units,
                        1 as precision, 0 as is_range
                        from dual
@@ -282,7 +282,7 @@ select distinct ontology_term_source_id as ontology_term_name, parent_ontology_t
                          from apidbtuning.metadata
                          where pan_id in ($$datasets_filter$$ INTERSECT $$env_feature_filter$$)
                          )
-                         ) where ontology_term_name not in ('MiXS_env_feature','IAO_0000100','EUPATH_0000606','MICRO_0000494')
+                         ) where ontology_term_name not in ('MiXS_env_feature','IAO_0000100','EUPATH_0000606','MICRO_0000494','OBI_0001898')
                      order by display_name
             ]]>
           </sql>
@@ -551,10 +551,10 @@ select distinct ontology_term_source_id as ontology_term_name, parent_ontology_t
       </description>
     </group>
 
-    <group name="env_feature" displayName="Environment" displayType="ShowHide">
+    <group name="env_feature" displayName="Habitat" displayType="ShowHide">
       <description>
         <![CDATA[
-                 Choose the environmental feature where the sample was isolated you want to include in your search.
+                 Choose the habitat where the sample you want to include in your search was isolated.
         ]]>
       </description>
     </group>
