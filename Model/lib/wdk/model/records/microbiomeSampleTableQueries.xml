@@ -11,17 +11,15 @@
             <column name="filter"/>
            <sql>
             <![CDATA[
-SELECT distinct
-  scm.pan_name AS name
-, scm.ancestor_pan_type AS material_type
-, scm.property AS property
-, scm.value
-, mt.type
-, mt.filter
-FROM 
-  ApidbTuning.InferredChars scm, ApidbTuning.PropertyType mt
-WHERE
-  scm.property = mt.property
+select distinct
+  m.pan_name as name
+, m.category as material_type
+, m.property
+, m.string_value as value
+, pt.type
+, pt.filter
+from apidbTuning.Metadata m, apidbTuning.PropertyType pt
+where m.property_source_id = pt.property_source_id
             ]]>
             </sql>
     </sqlQuery>
