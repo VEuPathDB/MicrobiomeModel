@@ -10,6 +10,7 @@ public class Microbiome16S extends DatasetInjector {
   public void injectTemplates() {
       injectTemplate("sampleMetadataDatasetsParamQuery");
       injectTemplate("sampleMetadataQuestion");
+      injectTemplate("sampleMetadataQuestionCategory");
   }
 
   @Override

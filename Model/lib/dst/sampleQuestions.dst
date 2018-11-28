@@ -1,4 +1,12 @@
 [templateStart] 
+name=sampleMetadataQuestionCategory
+anchorFile=MicrobiomeModel/Model/lib/wdk/ontology/individuals.txt
+prop=datasetName
+ >templateTextStart<
+SampleRecordClasses.MicrobiomeSampleRecordClass.SampleQuestions.SamplesByMetadata_${datasetName}	http://edamontology.org/topic_3050 	Biodiversity	SampleRecordClasses.MicrobiomeSampleRecordClass	search	SampleQuestions.SamplesByMetadata_${datasetName}					1	menu	webservice	
+>templateTextEnd<
+
+[templateStart] 
 name=sampleMetadataQuestion
 anchorFile=MicrobiomeModel/Model/lib/wdk/model/questions/microbiomeSampleQuestions.xml
 prop=datasetName
