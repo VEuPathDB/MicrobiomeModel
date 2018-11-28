@@ -12,7 +12,7 @@
     <!-- Popset ID -->  
     <!-- ************************************************************ -->
  
-    <sqlQuery name="SampleBySampleId" doNotTest="true" excludeProjects="EuPathDB"
+    <sqlQuery name="SampleBySampleId" doNotTest="true"
               displayName="ID">
       <paramRef ref="sampleParams.sample_id"/>
         <column name="name"/>
@@ -28,7 +28,7 @@
 
     </sqlQuery>
  
-    <sqlQuery name="SampleByMetadata" doNotTest="true" excludeProjects="EuPathDB"
+    <sqlQuery name="SampleByMetadata" doNotTest="true"
               displayName="Metadata">
       <paramRef ref="sampleParams.metadata_datasets" visible="false"/>
        <paramRef ref="sampleParams.samples_filter_metadata" prompt="Samples"/>
@@ -47,7 +47,7 @@
 
     </sqlQuery>
 
-    <sqlQuery name="SampleByMetadataWiz" doNotTest="true" excludeProjects="EuPathDB"
+    <sqlQuery name="SampleByMetadataWiz" doNotTest="true"
               displayName="Metadata">
       <paramRef ref="sampleParams.env_feature_filter" groupRef="microbiomeGroups.env_feature"/> 
       <paramRef ref="sampleParams.datasets_filter" groupRef="microbiomeGroups.dataset"/>
@@ -66,7 +66,7 @@
       </sql>
     </sqlQuery>
 
-    <sqlQuery name="SampleByTaxonAbundance" doNotTest="true" excludeProjects="EuPathDB"
+    <sqlQuery name="SampleByTaxonAbundance" doNotTest="true"
               displayName="Metadata">
        <paramRef ref="sampleParams.samples_filter_taxon" prompt="Samples"/>
         <column name="name"/>
@@ -84,7 +84,7 @@
 
     </sqlQuery>
 
-    <sqlQuery name="SampleByTaxonAbundanceWiz" doNotTest="true" excludeProjects="EuPathDB"
+    <sqlQuery name="SampleByTaxonAbundanceWiz" doNotTest="true"
               displayName="Metadata">
       <paramRef ref="sampleParams.env_feature_filter" groupRef="microbiomeGroups.env_feature"/> 
       <paramRef ref="sampleParams.datasets_filter" groupRef="microbiomeGroups.dataset"/>

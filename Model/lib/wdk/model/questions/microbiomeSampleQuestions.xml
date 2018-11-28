@@ -1,7 +1,7 @@
 <wdkModel>
 
   <questionSet name="SampleQuestions"
-               displayName="Search for microbiomic samples" includeProjects="MicrobiomeDB">
+               displayName="Search for microbiomic samples">
 
     <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
     <!--Metadata -->
@@ -29,15 +29,16 @@
     </question>
 -->
 
+
+
+
+
     <question name="MicrobiomeSampleByMetadata"
               searchCategory="Other Attributes"
               shortDisplayName="Details"
               queryRef="sampleIds.SampleByMetadataWiz"
               displayName="Sample Details"
-              recordClassRef="SampleRecordClasses.MicrobiomeSampleRecordClass"
-              includeProjects="MicrobiomeDB">
-
-      <suggestion newBuild="23" includeProjects="EuPathDB" />
+              recordClassRef="SampleRecordClasses.MicrobiomeSampleRecordClass">
         <summary>
           Find Microbiomic Samples based on Sample details.
         </summary> 
@@ -83,10 +84,9 @@
               shortDisplayName="Abundance"
               queryRef="sampleIds.SampleByTaxonAbundanceWiz"
               displayName="Taxon Abundance"
-              recordClassRef="SampleRecordClasses.MicrobiomeSampleRecordClass"
-              includeProjects="MicrobiomeDB">
+              recordClassRef="SampleRecordClasses.MicrobiomeSampleRecordClass">
 
-      <suggestion newBuild="23" includeProjects="EuPathDB" />
+
         <summary>
           Find Microbiomic Samples based on Taxon Abundance.
         </summary> 
@@ -105,31 +105,9 @@
 
     </question>
 
-    <!--++++++++++++++++++++++++++++++++++++++++++++++++-->
-    <!-- Id -->
-    <!--++++++++++++++++++++++++++++++++++++++++++++++++-->
 
-<!-- commented out
-    <question name="MicrobiomeSampleBySampleId" 
-              searchCategory="Other Attributes"
-              displayName="Sample ID(s)"
-              shortDisplayName="Sample IDs"
-              queryRef="sampleIds.SampleBySampleId" 
-              recordClassRef="SampleRecordClasses.MicrobiomeSampleRecordClass"
-              noSummaryOnSingleRecord="true" includeProjects="MicrobiomeDB">
+      <!-- TEMPLATE_ANCHOR sampleMetadataQuestion -->
 
-      <suggestion newBuild="23" includeProjects="TrichDB" />
-             <summary>
-               Find Samples by ID.
-             </summary>
-             
-
-            <description includeProjects="MicrobiomeDB">
-              Find samples from Microbiome datasets by their sample id
-            </description>
-           
-   </question>
--->
 
 
   </questionSet> 

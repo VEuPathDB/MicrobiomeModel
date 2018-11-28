@@ -8,10 +8,14 @@ public class Microbiome16S extends DatasetInjector {
 
   @Override
   public void injectTemplates() {
+      injectTemplate("sampleMetadataDatasetsParamQuery");
+      injectTemplate("sampleMetadataQuestion");
   }
 
   @Override
   public void addModelReferences() {
+      addWdkReference("SampleRecordClasses.MicrobiomeSampleRecordClass", "question",
+                      "SampleQuestions.SamplesByMetadata_" + getDatasetName());
   }
 
 
@@ -19,7 +23,13 @@ public class Microbiome16S extends DatasetInjector {
   public String[][] getPropertiesDeclaration() {
 
       String [][] declaration = {
-          //                                 {"isPublic", ""},
+          {"studyCategories", ""},
+          {"projectAvailability", ""},
+          {"studyAccess", ""},
+          {"policyUrl", ""},
+          {"cardHeadline", ""},
+          {"cardPoints", ""},
+          {"cardQuestions", ""},
       };
 
     return declaration;
