@@ -3,13 +3,21 @@
   <modelVersion>4.0.0</modelVersion>
 
   <name>Microbiome Model</name>
-  <groupId>org.microbiomedb</groupId>
-  <artifactId>microbiome-model</artifactId>
+  <groupId>org.mbio</groupId>
+  <artifactId>mbio-model</artifactId>
   <packaging>pom</packaging>
+  
+  <modules>
+    <module>Model</module>
+  </modules>
 
   <dependencyManagement>
     <dependencies>
-     
+	    <dependency>
+	      <groupId>org.eupathdb</groupId>
+		    <artifactId>ebrc-model-common-datasetpresenter</artifactId>
+		    <version>${project.version}</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 
