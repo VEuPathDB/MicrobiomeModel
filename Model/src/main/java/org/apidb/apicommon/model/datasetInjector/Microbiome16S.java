@@ -9,14 +9,22 @@ public class Microbiome16S extends DatasetInjector {
   @Override
   public void injectTemplates() {
       injectTemplate("sampleMetadataDatasetsParamQuery");
+
       injectTemplate("sampleMetadataQuestion");
       injectTemplate("sampleMetadataQuestionCategory");
+
+      injectTemplate("taxonAbundanceQuestion");
+      injectTemplate("taxonAbundanceQuestionCategory");
+
   }
 
   @Override
   public void addModelReferences() {
       addWdkReference("SampleRecordClasses.MicrobiomeSampleRecordClass", "question",
                       "SampleQuestions.SamplesByMetadata_" + getDatasetName());
+
+      addWdkReference("SampleRecordClasses.MicrobiomeSampleRecordClass", "question",
+                      "SampleQuestions.SamplesByTaxonAbundance_" + getDatasetName());
   }
 
 

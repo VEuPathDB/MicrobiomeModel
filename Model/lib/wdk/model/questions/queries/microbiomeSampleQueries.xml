@@ -68,6 +68,7 @@
 
     <sqlQuery name="SampleByTaxonAbundance" doNotTest="true"
               displayName="Metadata">
+       <paramRef ref="sampleParams.metadata_datasets" visible="false"/>
        <paramRef ref="sampleParams.samples_filter_taxon" prompt="Samples"/>
         <column name="name"/>
         <column name="project_id"/>

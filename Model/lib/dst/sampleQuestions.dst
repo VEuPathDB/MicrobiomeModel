@@ -1,4 +1,37 @@
 [templateStart] 
+name=taxonAbundanceQuestionCategory
+anchorFile=MicrobiomeModel/Model/lib/wdk/ontology/individuals.txt
+prop=datasetName
+ >templateTextStart<
+SampleRecordClasses.MicrobiomeSampleRecordClass.SampleQuestions.SamplesByTaxonAbundance_${datasetName}	http://edamontology.org/topic_3050 	Biodiversity	SampleRecordClasses.MicrobiomeSampleRecordClass	search	SampleQuestions.SamplesByTaxonAbundance_${datasetName}					1	menu	webservice	
+>templateTextEnd<
+
+[templateStart] 
+name=taxonAbundanceQuestion
+anchorFile=MicrobiomeModel/Model/lib/wdk/model/questions/microbiomeSampleQuestions.xml
+prop=datasetName
+prop=datasetDisplayName
+prop=datasetShortDisplayName
+ >templateTextStart<
+    <question name="SamplesByTaxonAbundance_${datasetName}"
+              shortDisplayName="${datasetShortDisplayName} (taxa)"
+              queryRef="sampleIds.SampleByTaxonAbundance"
+              displayName="${datasetDisplayName} Taxon Abundance"
+              recordClassRef="SampleRecordClasses.MicrobiomeSampleRecordClass">
+      <paramRef ref="sampleParams.metadata_datasets" queryRef="samplesVQ.MicrobiomeDatasets_${datasetName}" visible="false"/>
+        <summary>
+          Find Microbiomic Samples based on Sample details.
+        </summary> 
+        <description> 
+        <![CDATA[ 
+          Find microbiome samples based on sample characteristics
+        ]]> 
+       </description> 
+    </question>
+>templateTextEnd<
+
+
+[templateStart] 
 name=sampleMetadataQuestionCategory
 anchorFile=MicrobiomeModel/Model/lib/wdk/ontology/individuals.txt
 prop=datasetName
@@ -17,8 +50,7 @@ prop=datasetShortDisplayName
               shortDisplayName="${datasetShortDisplayName} (smpl details)"
               queryRef="sampleIds.SampleByMetadata"
               displayName="${datasetDisplayName} Sample Details"
-              recordClassRef="SampleRecordClasses.MicrobiomeSampleRecordClass"
-              includeProjects="MicrobiomeDB">
+              recordClassRef="SampleRecordClasses.MicrobiomeSampleRecordClass">
       <paramRef ref="sampleParams.metadata_datasets" queryRef="samplesVQ.MicrobiomeDatasets_${datasetName}" visible="false"/>
         <summary>
           Find Microbiomic Samples based on Sample details.
