@@ -35,7 +35,7 @@
 
     <question name="MicrobiomeSampleByMetadata"
               searchCategory="Other Attributes"
-              iconName="mbio-sampleDetails_dark"
+              iconName="mbio-sampleDetails_light"
               shortDisplayName="Details"
               queryRef="sampleIds.SampleByMetadataWiz"
               displayName="Sample Details"
@@ -82,7 +82,7 @@
 
    <question name="MicrobiomeSampleByTaxonAbundance"
               searchCategory="Other Attributes"
-              iconName="mbio-taxaQuery_dark"
+              iconName="mbio-taxaQuery_light"
               shortDisplayName="Abundance"
               queryRef="sampleIds.SampleByTaxonAbundanceWiz"
               displayName="Taxon Abundance"
