@@ -1,0 +1,84 @@
+[templateStart] 
+name=taxonAbundanceQuestionCategory
+anchorFile=MicrobiomeModel/Model/lib/wdk/ontology/individuals.txt
+prop=datasetName
+ >templateTextStart<
+SampleRecordClasses.MicrobiomeSampleRecordClass.SampleQuestions.SamplesByTaxonAbundance_${datasetName}	http://edamontology.org/topic_3050 	Biodiversity	SampleRecordClasses.MicrobiomeSampleRecordClass	search	SampleQuestions.SamplesByTaxonAbundance_${datasetName}					1	menu	webservice	
+>templateTextEnd<
+
+[templateStart] 
+name=taxonAbundanceQuestion
+anchorFile=MicrobiomeModel/Model/lib/wdk/model/questions/microbiomeSampleQuestions.xml
+prop=datasetName
+prop=datasetDisplayName
+prop=datasetShortDisplayName
+ >templateTextStart<
+    <question name="SamplesByTaxonAbundance_${datasetName}"
+              iconName="mbio-taxaQuery_light"
+              shortDisplayName="${datasetShortDisplayName} (taxa)"
+              queryRef="sampleIds.SampleByTaxonAbundance"
+              displayName="${datasetDisplayName} Taxon Abundance"
+              recordClassRef="SampleRecordClasses.MicrobiomeSampleRecordClass">
+      <paramRef ref="sampleParams.metadata_datasets" queryRef="samplesVQ.MicrobiomeDatasets_${datasetName}" visible="false"/>
+        <summary>
+          Find Microbiomic Samples based on Sample details.
+        </summary> 
+        <description> 
+        <![CDATA[ 
+          Find microbiome samples based on sample characteristics
+        ]]> 
+       </description> 
+    </question>
+>templateTextEnd<
+
+
+[templateStart] 
+name=sampleMetadataQuestionCategory
+anchorFile=MicrobiomeModel/Model/lib/wdk/ontology/individuals.txt
+prop=datasetName
+ >templateTextStart<
+SampleRecordClasses.MicrobiomeSampleRecordClass.SampleQuestions.SamplesByMetadata_${datasetName}	http://edamontology.org/topic_3050 	Biodiversity	SampleRecordClasses.MicrobiomeSampleRecordClass	search	SampleQuestions.SamplesByMetadata_${datasetName}					1	menu	webservice	
+>templateTextEnd<
+
+[templateStart] 
+name=sampleMetadataQuestion
+anchorFile=MicrobiomeModel/Model/lib/wdk/model/questions/microbiomeSampleQuestions.xml
+prop=datasetName
+prop=datasetDisplayName
+prop=datasetShortDisplayName
+ >templateTextStart<
+    <question name="SamplesByMetadata_${datasetName}"
+              iconName="mbio-sampleDetails_light"
+              shortDisplayName="${datasetShortDisplayName} (smpl details)"
+              queryRef="sampleIds.SampleByMetadata"
+              displayName="${datasetDisplayName} Sample Details"
+              recordClassRef="SampleRecordClasses.MicrobiomeSampleRecordClass">
+      <paramRef ref="sampleParams.metadata_datasets" queryRef="samplesVQ.MicrobiomeDatasets_${datasetName}" visible="false"/>
+        <summary>
+          Find Microbiomic Samples based on Sample details.
+        </summary> 
+        <description> 
+        <![CDATA[ 
+          Find microbiome samples based on sample characteristics
+        ]]> 
+       </description> 
+    </question>
+>templateTextEnd<
+
+[templateStart] 
+name=sampleMetadataDatasetsParamQuery
+anchorFile=MicrobiomeModel/Model/lib/wdk/model/questions/params/microbiomeSampleParams.xml
+prop=datasetName
+ >templateTextStart<
+       <sqlQuery name="MicrobiomeDatasets_${datasetName}">
+             <column name="internal"/>
+             <column name="term"/>
+             <column name="display"/>
+          <sql>
+             select distinct dsp.name AS internal, dsp.dataset_presenter_id as term,
+                    display_name AS display
+             from apidbTuning.DatasetPresenter dsp
+             where dsp.name = '${datasetName}'
+          </sql>
+        </sqlQuery>
+>templateTextEnd<

@@ -1,0 +1,44 @@
+ <!ELEMENT datasetPresenters (datasetPresenter*, internalDataset*)>
+ <!ELEMENT datasetPresenter (displayName, shortDisplayName?, shortAttribution?, displayCategory?, summary, description, usage?, protocol?, caveat?, acknowledgement?, releasePolicy?, history*, primaryContactId, contactId*, link*, pubmedId*, wdkReference*, templateInjector?)>
+ <!ELEMENT displayName (#PCDATA)>
+ <!ELEMENT shortDisplayName (#PCDATA)>
+ <!ELEMENT displayCategory (#PCDATA)>
+ <!ELEMENT summary (#PCDATA)>
+ <!ELEMENT description (#PCDATA)>
+ <!ELEMENT usage (#PCDATA)>
+ <!ELEMENT protocol (#PCDATA)>
+ <!ELEMENT caveat (#PCDATA)>
+ <!ELEMENT acknowledgement (#PCDATA)>
+ <!ELEMENT releasePolicy (#PCDATA)>
+ <!ELEMENT history (#PCDATA)>
+ <!ELEMENT primaryContactId (#PCDATA)>
+ <!ELEMENT contactId (#PCDATA)>
+ <!ELEMENT link (text?,description?,url)>
+ <!ELEMENT text (#PCDATA)>
+ <!ELEMENT description (#PCDATA)>
+ <!ELEMENT url (#PCDATA)>
+ <!ELEMENT pubmedId (#PCDATA)>
+ <!ELEMENT wdkReference (#PCDATA)>
+ <!ELEMENT templateInjector (prop*)>
+ <!ELEMENT prop (#PCDATA)>
+ <!ELEMENT internalDataset (#PCDATA)>
+<!ATTLIST datasetPresenter name CDATA #REQUIRED>
+<!ATTLIST datasetPresenter projectName CDATA #IMPLIED>
+<!ATTLIST datasetPresenter datasetNamePattern CDATA #IMPLIED>
+<!ATTLIST datasetPresenter override CDATA #IMPLIED>
+<!ATTLIST history 
+          buildNumber CDATA #REQUIRED
+          genomeSource CDATA #IMPLIED
+          genomeVersion CDATA #IMPLIED
+          annotationSource CDATA #IMPLIED
+          annotationVersion CDATA #IMPLIED
+>
+<!ATTLIST wdkReference
+          recordClass CDATA #REQUIRED
+          type CDATA #REQUIRED
+          name CDATA #REQUIRED
+>
+<!ATTLIST templateInjector className CDATA #REQUIRED>
+<!ATTLIST internalDataset name CDATA #REQUIRED>
+<!ATTLIST internalDataset datasetNamePattern CDATA #IMPLIED>
+<!ATTLIST prop name CDATA #REQUIRED>

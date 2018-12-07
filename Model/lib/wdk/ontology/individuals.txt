@@ -7,6 +7,7 @@ SampleRecordClasses.MicrobiomeSampleRecordClass.Protocols	http://edamontology.or
 SampleRecordClasses.MicrobiomeSampleRecordClass.ProcessedSample	http://edamontology.org/topic_3050 	Biodiversity	SampleRecordClasses.MicrobiomeSampleRecordClass	table	ProcessedSample					3	record	download	
 SampleRecordClasses.MicrobiomeSampleRecordClass.TaxaRelativeAbundance	http://edamontology.org/topic_3050 	Biodiversity	SampleRecordClasses.MicrobiomeSampleRecordClass	table	TaxaRelativeAbundance					4	record	download	
 SampleRecordClasses.MicrobiomeSampleRecordClass.Datasets	http://edamontology.org/topic_3050 	Biodiversity	SampleRecordClasses.MicrobiomeSampleRecordClass	table	Datasets					1	record	download	
-SampleRecordClasses.MicrobiomeSampleRecordClass.SampleQuestions.SampleBySampleID	http://edamontology.org/topic_3050 	Biodiversity	SampleRecordClasses.MicrobiomeSampleRecordClass	search	SampleQuestions.MicrobiomeSampleBySampleId					2	menu	webservice	
 SampleRecordClasses.MicrobiomeSampleRecordClass.SampleQuestions.SampleByMetadata	http://edamontology.org/topic_3050 	Biodiversity	SampleRecordClasses.MicrobiomeSampleRecordClass	search	SampleQuestions.MicrobiomeSampleByMetadata					1	menu	webservice	
 SampleRecordClasses.MicrobiomeSampleRecordClass.SampleQuestions.SampleByTaxonAbundance	http://edamontology.org/topic_3050 	Biodiversity	SampleRecordClasses.MicrobiomeSampleRecordClass	search	SampleQuestions.MicrobiomeSampleByTaxonAbundance 					3	menu	webservice	
+## TEMPLATE_ANCHOR sampleMetadataQuestionCategory
+## TEMPLATE_ANCHOR taxonAbundanceQuestionCategory

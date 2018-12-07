@@ -16,7 +16,7 @@
       <datasetParam name="sample_id" prompt="Sample ID" 
                       recordClassRef="SampleRecordClasses.MicrobiomeSampleRecordClass" >
             <help>Input a comma delimited set of  Sample IDs, or upload a file. Wildcards (*) are allowed.</help>
-             <suggest includeProjects="MicrobiomeDB"
+             <suggest 
                      default="EUSMPL0020-1-26"/>
           </datasetParam>
 
@@ -31,7 +31,7 @@
        </flatVocabParam>
 
 
-       <filterParam name="env_feature_filter" includeProjects="MicrobiomeDB" 
+       <filterParam name="env_feature_filter"  
                       metadataQueryRef="samplesVQ.EnvFeatureMetadata"
                       backgroundQueryRef="samplesVQ.EnvFeatureMetadata"
                       ontologyQueryRef="samplesVQ.EnvFeatureOntology"
@@ -45,7 +45,7 @@
          <!-- <suggest selectMode="all" /> -->
        </filterParam>
 
-       <filterParam name="datasets_filter" includeProjects="MicrobiomeDB" 
+       <filterParam name="datasets_filter"  
                       metadataQueryRef="samplesVQ.DatasetMetaData"
                       backgroundQueryRef="samplesVQ.DatasetMetaDataBkg"
                       ontologyQueryRef="samplesVQ.DatasetOntology"
@@ -59,7 +59,7 @@
          <!-- <suggest selectMode="all" /> -->
        </filterParam>
 
-       <filterParam name="samples_taxon_wiz" includeProjects="MicrobiomeDB" 
+       <filterParam name="samples_taxon_wiz"  
                       metadataQueryRef="samplesVQ.SamplesTaxonWiz"
                       backgroundQueryRef="samplesVQ.SamplesTaxonBkgWiz"
                       ontologyQueryRef="samplesVQ.TaxonOntology"
@@ -73,7 +73,7 @@
          <!-- <suggest selectMode="all" /> -->
        </filterParam>
 
-       <filterParam name="samples_filter_metadata_wiz" includeProjects="MicrobiomeDB" 
+       <filterParam name="samples_filter_metadata_wiz"  
                       metadataQueryRef="samplesVQ.SamplesMetadataWiz"
                       backgroundQueryRef="samplesVQ.SamplesMetadataWizBkg" 
                       ontologyQueryRef="samplesVQ.MetadataOntology"
@@ -87,7 +87,7 @@
          <!-- <suggest selectMode="all" /> -->
        </filterParam>
 
-       <filterParam name="samples_filter_metadata" includeProjects="MicrobiomeDB" 
+       <filterParam name="samples_filter_metadata"  
                       metadataQueryRef="samplesVQ.SamplesMetadata"
                       backgroundQueryRef="samplesVQ.SamplesMetadata"
                       ontologyQueryRef="samplesVQ.MetadataSpec"
@@ -99,29 +99,35 @@
          <!-- <suggest selectMode="all" /> -->
        </filterParam>
 
-       <filterParam name="samples_filter_taxon" includeProjects="MicrobiomeDB" 
+       <filterParam name="samples_filter_taxon"  
                       metadataQueryRef="samplesVQ.SamplesTaxon"
-                      backgroundQueryRef="samplesVQ.SamplesTaxon"
-                      ontologyQueryRef="samplesVQ.SamplesTaxonSpec"
-                      prompt="Taxon Relative Abundance"
-                      dependedParamRef="">
+                      backgroundQueryRef="samplesVQ.SamplesTaxonBkg"
+                      ontologyQueryRef="samplesVQ.SamplesTaxonOntology"
+                      prompt="Samples"
+                      countPredictsAnswerCount="true"
+                      trimMetadataTerms="true"
+                      dependedParamRef="sampleParams.metadata_datasets">
          <help>
               Select reference samples. 
          </help>
          <!-- <suggest selectMode="all" /> -->
        </filterParam>
-    
+
   </paramSet>
 
   <querySet name="samplesVQ" queryType="vocab" isCacheable="true">
 
 
-       <sqlQuery name="MicrobiomeDatasets" excludeProjects="EuPathDB">
+      <!-- TEMPLATE_ANCHOR sampleMetadataDatasetsParamQuery -->
+
+
+
+       <sqlQuery name="MicrobiomeDatasets">
              <column name="internal"/>
              <column name="term"/>
              <column name="display"/>
           <sql>
-             select distinct dsp.name AS internal, dsp.name as term,
+             select distinct dsp.name AS internal, dsp.dataset_presenter_id as term,
                     display_name AS display
              from apidbTuning.DatasetPresenter dsp
              where dsp.name like 'otu_%_RSRC'
@@ -129,33 +135,10 @@
           </sql>
         </sqlQuery>
 
-        <sqlQuery name="SamplesTaxon" doNotTest="1" includeProjects="MicrobiomeDB">
-          <column name="ontology_term_name"/>
-          <column name="internal"/>
-          <column name="number_value"/>
-          <column name="date_value"/>
-          <column name="string_value"/>
-          <sql>
-            <![CDATA[
-                     select distinct protocol_app_node_id as internal, 'dataset' as ontology_term_name, 
-                     cast(null as number) as number_value, cast(null as date) as date_value, ds.string_value 
-                     from apidbTuning.TaxonAbundance ta, (
-                     select distinct dsp.name AS dataset_name, display_name as string_value from apidbTuning.DatasetPresenter dsp where dsp.name like 'otu_%_RSRC') ds
-                     where ds.dataset_name = ta.dataset_name
-                     UNION
-                     select protocol_app_node_id as internal,
-                     term_id as ontology_term_name,
-                     cast(value as number) as number_value,
-                     cast(null as date) as date_value,
-                     cast(null as varchar2(1)) as string_value
-                     from apidbTuning.TaxonAbundance
-            ]]>
-            </sql>
-        </sqlQuery>
 
 
 
-        <sqlQuery name="EnvFeatureOntology" doNotTest="1" includeProjects="MicrobiomeDB"> 
+        <sqlQuery name="EnvFeatureOntology" doNotTest="1" > 
             <column name="ontology_term_name"/>
             <column name="parent_ontology_term_name"/>
             <column name="display_name"/>
@@ -179,7 +162,7 @@
             </sql>
         </sqlQuery>
 
-        <sqlQuery name="EnvFeatureMetadata" doNotTest="1" includeProjects="MicrobiomeDB" isCacheable="false">
+        <sqlQuery name="EnvFeatureMetadata" doNotTest="1"  isCacheable="false">
           <column name="ontology_term_name"/>
           <column name="internal"/>
           <column name="number_value"/>
@@ -196,7 +179,7 @@
             </sql>
         </sqlQuery>
 
-        <sqlQuery name="DatasetOntology" doNotTest="1" includeProjects="MicrobiomeDB"> 
+        <sqlQuery name="DatasetOntology" doNotTest="1" > 
             <column name="ontology_term_name"/>
             <column name="parent_ontology_term_name"/>
             <column name="display_name"/>
@@ -220,7 +203,7 @@
             </sql>
         </sqlQuery>
 
-        <sqlQuery name="DatasetMetaData" doNotTest="1" includeProjects="MicrobiomeDB" isCacheable="false">
+        <sqlQuery name="DatasetMetaData" doNotTest="1"  isCacheable="false">
           <paramRef ref="sampleParams.env_feature_filter"/>
           <column name="ontology_term_name"/>
           <column name="internal"/>
@@ -239,7 +222,7 @@
             </sql>
         </sqlQuery>
 
-        <sqlQuery name="DatasetMetaDataBkg" doNotTest="1" includeProjects="MicrobiomeDB" isCacheable="false">
+        <sqlQuery name="DatasetMetaDataBkg" doNotTest="1"  isCacheable="false">
           <column name="ontology_term_name"/>
           <column name="internal"/>
           <column name="number_value"/>
@@ -259,7 +242,7 @@
 
         <!-- NOTE:  this ontology query filters the terms based on a depended param -->
         
-        <sqlQuery name="MetadataOntology" doNotTest="1" excludeProjects="EuPathDB" isCacheable="false"> 
+        <sqlQuery name="MetadataOntology" doNotTest="1" isCacheable="false"> 
           <paramRef ref="sampleParams.datasets_filter"/>
           <paramRef ref="sampleParams.env_feature_filter"/>
           <column name="ontology_term_name"/>
@@ -288,7 +271,7 @@ select distinct ontology_term_source_id as ontology_term_name, parent_ontology_t
           </sql>
         </sqlQuery>
 
-        <sqlQuery name="SamplesMetadataWiz" doNotTest="1" excludeProjects="EuPathDB" isCacheable="false">
+        <sqlQuery name="SamplesMetadataWiz" doNotTest="1" isCacheable="false">
           <paramRef ref="sampleParams.datasets_filter"/>
           <column name="ontology_term_name"/>
           <column name="internal"/>
@@ -305,7 +288,7 @@ select distinct ontology_term_source_id as ontology_term_name, parent_ontology_t
             </sql>
         </sqlQuery>
 
-        <sqlQuery name="SamplesMetadataWizBkg" doNotTest="1" excludeProjects="EuPathDB" isCacheable="false">
+        <sqlQuery name="SamplesMetadataWizBkg" doNotTest="1" isCacheable="false">
           <column name="ontology_term_name"/>
           <column name="internal"/>
           <column name="number_value"/>
@@ -319,7 +302,7 @@ select distinct ontology_term_source_id as ontology_term_name, parent_ontology_t
             ]]>
             </sql>
         </sqlQuery>
-        <sqlQuery name="TaxonOntology" doNotTest="1" includeProjects="MicrobiomeDB"> 
+        <sqlQuery name="TaxonOntology" doNotTest="1" > 
             <column name="ontology_term_name"/>
             <column name="parent_ontology_term_name"/>
             <column name="display_name"/>
@@ -352,7 +335,68 @@ select distinct ontology_term_source_id as ontology_term_name, parent_ontology_t
             </sql>
         </sqlQuery>
 
-        <sqlQuery name="SamplesTaxonWiz" doNotTest="1" includeProjects="MicrobiomeDB" isCacheable="false">
+
+
+        <sqlQuery name="SamplesTaxonOntology" doNotTest="1" > 
+            <paramRef ref="sampleParams.metadata_datasets"/>
+            <column name="ontology_term_name"/>
+            <column name="parent_ontology_term_name"/>
+            <column name="display_name"/>
+            <column name="description"/>
+            <column name="type"/>
+            <column name="units"/>
+            <column name="precision"/>
+            <column name="is_range"/>
+            <sql>
+              <![CDATA[
+             select distinct -- unneeded only because of UNION
+                         category as ontology_term_name,
+                         cast(null as varchar2(1)) as parent_ontology_term_name,
+                         category as display_name,
+                         'taxonomic rank' as description,
+                         cast(null as varchar2(1)) as type, cast(null as varchar2(1)) as units,
+                         1 as precision, 0 as is_range,
+                         taxon_level * 2 - 1 as ordering
+                  from apidbTuning.TaxonAbundance
+                  where dataset_name = $$metadata_datasets$$
+                union
+                  select term_id as ontology_term_name,
+                         category as parent_ontology_term_name,
+                         term as display_name,
+                         cast(null as varchar2(1)) as description,
+                         'number' as type, null as units, 1 as precision, 1 as is_range,
+                         taxon_level * 2 as ordering
+                  from apidbTuning.TaxonAbundance
+                  where dataset_name = $$metadata_datasets$$
+                  order by ordering, display_name
+              ]]>
+            </sql>
+        </sqlQuery>
+
+
+
+        <sqlQuery name="SamplesTaxon" doNotTest="1"  isCacheable="false">
+          <paramRef ref="sampleParams.metadata_datasets"/>
+          <column name="ontology_term_name"/>
+          <column name="internal"/>
+          <column name="number_value"/>
+          <column name="date_value"/>
+          <column name="string_value"/>
+          <sql>
+            <![CDATA[
+                     select protocol_app_node_id as internal,
+                     term_id as ontology_term_name,
+                     cast(value as number) as number_value,
+                     cast(null as date) as date_value,
+                     cast(null as varchar2(1)) as string_value
+                     from apidbTuning.TaxonAbundance
+                     where dataset_name = $$metadata_datasets$$
+            ]]>
+            </sql>
+        </sqlQuery>
+
+
+        <sqlQuery name="SamplesTaxonWiz" doNotTest="1"  isCacheable="false">
           <paramRef ref="sampleParams.datasets_filter"/>
           <column name="ontology_term_name"/>
           <column name="internal"/>
@@ -372,7 +416,29 @@ select distinct ontology_term_source_id as ontology_term_name, parent_ontology_t
             </sql>
         </sqlQuery>
 
-        <sqlQuery name="SamplesTaxonBkgWiz" doNotTest="1" includeProjects="MicrobiomeDB" isCacheable="false">
+
+
+        <sqlQuery name="SamplesTaxonBkg" doNotTest="1"  isCacheable="false">
+          <paramRef ref="sampleParams.metadata_datasets"/>
+          <column name="ontology_term_name"/>
+          <column name="internal"/>
+          <column name="number_value"/>
+          <column name="date_value"/>
+          <column name="string_value"/>
+          <sql>
+            <![CDATA[
+                     select protocol_app_node_id as internal,
+                     term_id as ontology_term_name,
+                     cast(value as number) as number_value,
+                     cast(null as date) as date_value,
+                     cast(null as varchar2(1)) as string_value
+                     from apidbTuning.TaxonAbundance
+                     where dataset_name = $$metadata_datasets$$
+            ]]>
+            </sql>
+        </sqlQuery>
+
+        <sqlQuery name="SamplesTaxonBkgWiz" doNotTest="1"  isCacheable="false">
           <column name="ontology_term_name"/>
           <column name="internal"/>
           <column name="number_value"/>
@@ -390,7 +456,7 @@ select distinct ontology_term_source_id as ontology_term_name, parent_ontology_t
             </sql>
         </sqlQuery>
 
-    <sqlQuery name="SamplesTaxonSpec" doNotTest="1" includeProjects="MicrobiomeDB"> 
+    <sqlQuery name="SamplesTaxonSpec" doNotTest="1" > 
             <column name="ontology_term_name"/>
             <column name="parent_ontology_term_name"/>
             <column name="display_name"/>
@@ -443,7 +509,7 @@ select distinct ontology_term_source_id as ontology_term_name, parent_ontology_t
         </sqlQuery>
 
 <!--
-    <sqlQuery name="SamplesWithMetadata" excludeProjects="EuPathDB">
+    <sqlQuery name="SamplesWithMetadata">
          <paramRef ref="sampleParams.metadata_datasets"/>
          <column name="internal"/>
          <column name="term"/>
@@ -468,7 +534,7 @@ select distinct ontology_term_source_id as ontology_term_name, parent_ontology_t
 -->
 
 
-        <sqlQuery name="SamplesMetadata" doNotTest="1" excludeProjects="EuPathDB">
+        <sqlQuery name="SamplesMetadata" doNotTest="1">
           <paramRef ref="sampleParams.metadata_datasets"/>
           <column name="ontology_term_name"/>
           <column name="internal"/>
@@ -517,7 +583,7 @@ select distinct ontology_term_source_id as ontology_term_name, parent_ontology_t
             </sql>
         </sqlQuery>
 
-    <sqlQuery name="MetadataSpec" doNotTest="1" excludeProjects="EuPathDB"> 
+    <sqlQuery name="MetadataSpec" doNotTest="1">
             <paramRef ref="sampleParams.metadata_datasets"/>
             <column name="ontology_term_name"/>
             <column name="parent_ontology_term_name"/>

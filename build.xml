@@ -129,44 +129,6 @@
 
   </target>  
 
-  <!-- ooooooooooooooooooTemporary till TRICH is in Workflow  ooooooooooooooooooooooooo -->
-
-<target name="MicrobiomeModel/Datasources-Installation" depends="ProjectTree">
-    <property name="loadresources" value="${targetDir}/lib/xml"/>
-    <property name="cache" value="${targetDir}/config/.cache/datasources"/>
-    <property name="datasources" value="${targetDir}/lib/xml"/>
-    <mkdir dir="${cache}"/>
-    <mkdir dir="${datasources}"/>
-    <copy todir="${loadresources}">
-      <fileset dir="${projectsDir}/MicrobiomeModel/Model/lib/xml">
-        <include name="*Resources.xml"/>
-      </fileset>
-    </copy>
-    <echo message="Running updateResourcesWithPubmed"/>
-    <apply executable="${targetDir}/bin/updateResourcesWithPubmed" 
-           dest="${cache}"
-           verbose="true">
-        <srcfile/>
-        <targetfile/>
-        <fileset dir="${loadresources}">
-          <include name="*trichResources.xml"/>
-        </fileset>
-        <mapper type="glob" from="*.xml" to="*-pubmed.xml"/>
-    </apply>
-    <copy todir="${datasources}">
-      <fileset dir="${cache}">
-        <include name="*-pubmed.xml"/>
-      </fileset>
-    </copy>
-
-    <ant target="buildInfo">
-      <property name="component" value="updateResourcesWithPubmed"/>
-    </ant>
-
-  </target>
-
-
-
   <!-- oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo -->
   <!-- oooooooooooooooooooooooooo  Distributable  ooooooooooooooooooooooooo -->
   <!-- oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo -->
