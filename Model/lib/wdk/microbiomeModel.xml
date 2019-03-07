@@ -10,7 +10,7 @@
 
   <constant name="releaseDate">17 February 2018 14:45</constant>
   <constant name="buildNumber">11</constant>
-  <constant name="releaseVersion">%%buildNumber%%</constant>
+  <constant name="releaseVersion">11</constant>
  
 
   <constant name="attributesReporterDisplayName">Tab delimited (Excel) - choose columns to make a custom table</constant>
