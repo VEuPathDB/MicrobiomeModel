@@ -19,8 +19,6 @@
       <property name="externalAppUrl"><![CDATA[/shiny/abundance_app]]></property>
       <property name="tablesToExtract">Characteristics,TaxaRelativeAbundance</property>
       <property name="addHeader">true</property>
-      <property name="iframeWidthPx">1000</property>
-      <property name="iframeLengthPx">800</property>
     </stepAnalysisPlugin>
 
     <stepAnalysisPlugin
@@ -38,8 +36,6 @@
       <property name="externalAppUrl"><![CDATA[/shiny/alpha_diversity]]></property>
       <property name="tablesToExtract">Characteristics,TaxaRelativeAbundance</property>
       <property name="addHeader">true</property>
-      <property name="iframeWidthPx">1000</property>
-      <property name="iframeLengthPx">800</property>
     </stepAnalysisPlugin>
 
     <stepAnalysisPlugin
@@ -57,8 +53,6 @@
       <property name="externalAppUrl"><![CDATA[/shiny/beta_diversity]]></property>
       <property name="tablesToExtract">Characteristics,TaxaRelativeAbundance</property>
       <property name="addHeader">true</property>
-      <property name="iframeWidthPx">1000</property>
-      <property name="iframeLengthPx">800</property>
     </stepAnalysisPlugin>
 
     <stepAnalysisPlugin
@@ -76,8 +70,6 @@
       <property name="externalAppUrl"><![CDATA[/shiny/differential_abundance]]></property>
       <property name="tablesToExtract">Characteristics,TaxaRelativeAbundance</property>
       <property name="addHeader">true</property>
-      <property name="iframeWidthPx">1000</property>
-      <property name="iframeLengthPx">800</property>
     </stepAnalysisPlugin>
     <stepAnalysisPlugin
         name="correlation_app" displayName="Correlation"
@@ -94,8 +86,6 @@
       <property name="externalAppUrl"><![CDATA[/shiny/correlation_app]]></property>
       <property name="tablesToExtract">Characteristics,TaxaRelativeAbundance</property>
       <property name="addHeader">true</property>
-      <property name="iframeWidthPx">1000</property>
-      <property name="iframeLengthPx">800</property>
     </stepAnalysisPlugin>
   </stepAnalysisPlugins>
 
