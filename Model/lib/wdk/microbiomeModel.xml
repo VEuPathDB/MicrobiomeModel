@@ -10,15 +10,12 @@
 
   <constant name="releaseDate">25 April 2019 12:29</constant>
   <constant name="buildNumber">12</constant>
-  <constant name="releaseVersion">%%buildNumber%%</constant>
- 
 
   <constant name="attributesReporterDisplayName">Tab delimited (Excel) - choose columns to make a custom table</constant>
   <constant name="tableReporterDisplayName">Tab delimited (Excel) - choose a pre-configured table</constant>
   <constant name="fullReporterDisplayName">Text: choose from columns and/or tables</constant>
-  
 
-  <modelName  displayName="MicrobiomeDB" version="%%releaseVersion%%" releaseDate="%%releaseDate%%" buildNumber="%%buildNumber%%" />
+  <modelName  displayName="MicrobiomeDB" version="%%buildNumber%%" releaseDate="%%releaseDate%%" buildNumber="%%buildNumber%%" />
 
   <exampleStratsAuthor name="EuPathDB Example"/>
 
