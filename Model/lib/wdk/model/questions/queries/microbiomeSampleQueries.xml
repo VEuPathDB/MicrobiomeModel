@@ -105,6 +105,8 @@
 
     </sqlQuery>
 
+      <!-- TEMPLATE_ANCHOR sampleMetadataQueryWithClinepi -->
+
     </querySet>
 
 </wdkModel>

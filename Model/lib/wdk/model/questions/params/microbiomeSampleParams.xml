@@ -113,6 +113,8 @@
          <!-- <suggest selectMode="all" /> -->
        </filterParam>
 
+      <!-- TEMPLATE_ANCHOR sampleMetadataParamsWithClinepi -->
+
   </paramSet>
 
   <querySet name="samplesVQ" queryType="vocab" isCacheable="true">
@@ -120,6 +122,7 @@
 
       <!-- TEMPLATE_ANCHOR sampleMetadataDatasetsParamQuery -->
 
+      <!-- TEMPLATE_ANCHOR sampleMetadataParamQueriessWithClinepi -->
 
 
        <sqlQuery name="MicrobiomeDatasets">
