@@ -160,7 +160,7 @@ select * from (
                 UNION
 select * from (
 select o.ontology_term_source_id as ontology_term_name, 
-CASE WHEN o.ontology_term_source_id = 'EUPATH_0000609' THEN 'EUPATH_0000738' ELSE o.parent_ontology_term_source_id END as parent_ontology_term_name, 
+o.parent_ontology_term_source_id as parent_ontology_term_name, 
 nvl(o.display_name,o.ontology_term_name) as display_name, o.description, 
 /*CASE WHEN o.ontology_term_source_id in ('EUPATH_0000321','EUPATH_0010011','EUPATH_0010351','EUPATH_0010357','EUPATH_0010378','EUPATH_0010379','EUPATH_0010380','EUPATH_0010383','EUPATH_0010389','EUPATH_0010390','EUPATH_0010391','EUPATH_0010393','EUPATH_0010394','EUPATH_0010395','EUPATH_0010040','NCBITaxon_10239','NCBITaxon_2','NCBITaxon_2759') AND o.type is null THEN 'multiFilter' ELSE o.type END as type, */ o.type,
 o.units, o.precision, o.is_range, 
