@@ -66,6 +66,143 @@ prop=datasetShortDisplayName
 >templateTextEnd<
 
 [templateStart] 
+name=sampleMetadataQuestionWithClinepi
+anchorFile=MicrobiomeModel/Model/lib/wdk/model/questions/microbiomeSampleQuestions.xml
+prop=datasetName
+prop=datasetDisplayName
+prop=datasetShortDisplayName
+ >templateTextStart<
+    <question name="SamplesByMetadata_${datasetName}"
+              iconName="mbio-sampleDetails_light"
+              shortDisplayName="${datasetShortDisplayName} (smpl details)"
+              queryRef="sampleIds.SampleByMetadata_${datasetName}"
+              displayName="${datasetDisplayName} Sample Details"
+              recordClassRef="SampleRecordClasses.MicrobiomeSampleRecordClass">
+        <summary>
+          Find Microbiomic Samples based on Sample details.
+        </summary> 
+        <description> 
+        <![CDATA[ 
+          Find microbiome samples based on sample characteristics
+        ]]> 
+       </description> 
+    </question>
+>templateTextEnd<
+
+[templateStart] 
+name=sampleMetadataQueryWithClinepi
+anchorFile=MicrobiomeModel/Model/lib/wdk/model/questions/queries/microbiomeSampleQueries.xml
+prop=datasetName
+prop=clinepiTablePrefix
+>templateTextStart<
+    <sqlQuery name="SampleByMetadata_${datasetName}" doNotTest="true"
+              displayName="Metadata">
+       <paramRef ref="sampleParams.samples_filter_metadata_${clinepiTablePrefix}" prompt="Samples"/>
+        <column name="name"/>
+        <column name="project_id"/>
+        <sql>
+            <![CDATA[
+              SELECT distinct s.name as name, '@PROJECT_ID@' as project_id
+              FROM   apidbTuning.Samples s, apidbTuning.SampleProcess sds
+              WHERE sds.output_pan_id in ($$samples_filter_metadata_${clinepiTablePrefix}$$)
+                   AND sds.OUTPUT_ISA_TYPE = 'Data'
+                   AND s.pan_id = sds.protocol_app_node_id
+               ORDER BY s.name
+            ]]>
+        </sql>
+
+    </sqlQuery>
+>templateTextEnd<
+
+[templateStart] 
+name=sampleMetadataParamsWithClinepi
+anchorFile=MicrobiomeModel/Model/lib/wdk/model/questions/params/microbiomeSampleParams.xml
+prop=datasetName
+prop=clinepiTablePrefix
+>templateTextStart<
+       <filterParam name="samples_filter_metadata_${clinepiTablePrefix}"  
+                      metadataQueryRef="samplesVQ.SamplesMetadata_${clinepiTablePrefix}"
+                      backgroundQueryRef="samplesVQ.SamplesMetadata_${clinepiTablePrefix}"
+                      ontologyQueryRef="samplesVQ.SamplesOntology_${clinepiTablePrefix}"
+                      prompt="Samples"
+                      dependedParamRef="">
+         <help>
+              Select reference samples. 
+         </help>
+         <!-- <suggest selectMode="all" /> -->
+       </filterParam>
+
+>templateTextEnd<
+
+[templateStart] 
+name=sampleMetadataParamQueriessWithClinepi
+anchorFile=MicrobiomeModel/Model/lib/wdk/model/questions/params/microbiomeSampleParams.xml
+prop=datasetName
+prop=clinepiTablePrefix
+>templateTextStart<
+        <sqlQuery name="SamplesOntology_${clinepiTablePrefix}" doNotTest="1">
+            <column name="ontology_term_name"/>
+            <column name="parent_ontology_term_name"/>
+            <column name="display_name"/>
+            <column name="description"/>
+            <column name="type"/>
+            <column name="units"/>
+            <column name="precision"/>
+            <column name="is_range"/>
+            <sql>
+               <![CDATA[
+select * from (
+                select distinct ontology_term_source_id as ontology_term_name, parent_ontology_term_source_id as parent_ontology_term_name, display_name,
+                       description, type, units, precision, is_range, display_order
+                from apidbTuning.Ontology
+                where dataset_name = '${datasetName}'
+                and ontology_term_source_id not in ('EUPATH_0010367','EUPATH_0000609')
+                UNION
+select * from (
+select o.ontology_term_source_id as ontology_term_name, 
+o.parent_ontology_term_source_id as parent_ontology_term_name, 
+nvl(o.display_name,o.ontology_term_name) as display_name, o.description, 
+/*CASE WHEN o.ontology_term_source_id in ('EUPATH_0000321','EUPATH_0010011','EUPATH_0010351','EUPATH_0010357','EUPATH_0010378','EUPATH_0010379','EUPATH_0010380','EUPATH_0010383','EUPATH_0010389','EUPATH_0010390','EUPATH_0010391','EUPATH_0010393','EUPATH_0010394','EUPATH_0010395','EUPATH_0010040','NCBITaxon_10239','NCBITaxon_2','NCBITaxon_2759') AND o.type is null THEN 'multiFilter' ELSE o.type END as type, */ o.type,
+o.units, o.precision, o.is_range, 
+CASE WHEN o.ontology_term_source_id = 'EUPATH_0000609' THEN 0.1 ELSE o.display_order END as display_order
+from ApidbTuning.${clinepiTablePrefix}Ontology@mbio2clin o
+     CONNECT BY o.parent_ontology_term_source_id = PRIOR o.ontology_term_source_id
+     START WITH o.ontology_term_source_id in  ('EUPATH_0000738','EUPATH_0000609')
+) where ontology_term_name not in ('OBI_0001616','EUPATH_0000094','EUPATH_0010049','EUPATH_0010048','EUPATH_0010373','EUPATH_0000725','EUPATH_0010226')
+) order by display_order, display_name
+              ]]>
+            </sql>
+        </sqlQuery>
+
+        <sqlQuery name="SamplesMetadata_${clinepiTablePrefix}" doNotTest="1">
+                  <column name="ontology_term_name"/>
+                  <column name="internal"/>
+                  <column name="number_value"/>
+                  <column name="date_value"/>
+                  <column name="string_value"/>
+            <sql>
+               <![CDATA[
+ select distinct pan_id as internal, property_source_id as ontology_term_name, string_value,number_value,date_value 
+                     from apidbtuning.metadata
+                     where dataset_name = '${datasetName}'
+                     UNION ALL
+select distinct sp.output_pan_id as internal, o.ontology_term_name, o.string_value, o.number_value, o.date_value
+from ApidbTuning.${clinepiTablePrefix}ObservationMD@mbio2clin o, apidbTuning.SampleProcess sp, apidbTuning.Samples sa,
+(select distinct sub_observation_id, number_value as splid from apidbtuning.${clinepiTablePrefix}ObservationMD@mbio2clin where ontology_term_name = 'OBI_0001616') idmap
+where sa.pan_id = sp.protocol_app_node_id
+AND sp.output_isa_type = 'Data'
+and idmap.splid = sa.EUPATH_0009017
+and idmap.sub_observation_id = o.sub_observation_id
+              ]]>
+            </sql>
+        </sqlQuery>
+
+
+>templateTextEnd<
+
+
+
+[templateStart] 
 name=sampleMetadataDatasetsParamQuery
 anchorFile=MicrobiomeModel/Model/lib/wdk/model/questions/params/microbiomeSampleParams.xml
 prop=datasetName
