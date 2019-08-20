@@ -5,14 +5,14 @@
     <executionConfig threadPoolSize="25" fileStoreDirectory="@STEP_ANALYSIS_JOB_DIR@"/>
 
     <stepAnalysisPlugin
-        name="otu_abundance" displayName="OTU abundance"
+        name="otu_abundance" displayName="Relative abundance"
         customThumbnail="wdkCustomization/images/OTU_abundance_120.png"
         releaseVersion="1" hasParameters="false"
         analysisViewName="eupathExternalAnalysisResult"
         analyzerClass="org.eupathdb.common.model.analysis.EuPathExternalAnalyzer">
       <shortDescription>
         <![CDATA[
-          Shiny application to display graphs of OTU abundance for each sample in the result
+          Shiny application to display graphs of relative abundance for each sample in the result set
         ]]>
       </shortDescription>
       <description/>
