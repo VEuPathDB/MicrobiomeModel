@@ -8,73 +8,6 @@
   <import file="${projectsDir}/CBIL/build.xml" />
   <import file="${projectsDir}/ReFlow/build.xml" />
   <import file="${projectsDir}/EbrcModelCommon/build.xml" />
-  
-
-  <!-- oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo -->
-  <!-- oooooooooooooooooooooooooo    Checkout    oooooooooooooooooooooooooo -->
-  <!-- oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo -->
-
-  <target name="MicrobiomeModel-ChildCheckout">
-    <available file="${projectsDir}/CBIL" type="dir" property="CBIL.present" />
-    <available file="${projectsDir}/ReFlow" type="dir" property="ReFlow.present" />
-    <available file="${projectsDir}/EbrcModelCommon" type="dir" property="EbrcModelCommon.present" />
-    <available file="${projectsDir}/WDK" type="dir" property="WDK.present" />
-    <antcall target="CBIL-Checkout" />
-    <antcall target="ReFlow-Checkout"/>
-    <antcall target="EbrcModelCommon-Checkout"/>
-    <antcall target="WDK-Checkout"/>
-  </target>
-  
-  <target name="CBIL-Checkout" unless="CBIL.present">
-    <ant target="defaultProjectCheckout" inheritAll="false">
-      <property name="svnurl" value="https://cbilsvn.pmacs.upenn.edu/svn/gus/CBIL" />
-      <property name="project" value="CBIL"/>
-      <property name="version" value="internal/api-build-9"/>
-    </ant>
-  </target>
-
-  <target name="ReFlow-Checkout" unless="ReFlow.present">
-    <ant target="defaultProjectCheckout" inheritAll="false">
-      <property name="svnurl" value="https://cbilsvn.pmacs.upenn.edu/svn/gus/ReFlow"/>
-      <property name="project" value="ReFlow"/>
-    </ant>
-  </target>
-
-  <target name="EbrcModelCommon-Checkout" unless="EbrcModelCommon.present">
-    <ant target="defaultProjectCheckout" inheritAll="false">
-      <property name="svnurl" value="https://cbilsvn.pmacs.upenn.edu/svn/gus/EbrcModelCommon"/>
-      <property name="project" value="EbrcModelCommon"/>
-    </ant>
-  </target>
-
-  <target name="WDK-Checkout" unless="WDK.present">
-   <ant target="defaultProjectCheckout" inheritAll="false">
-      <property name="svnurl" value="https://cbilsvn.pmacs.upenn.edu/svn/gus/WDK"/>
-      <property name="project" value="WDK"/>
-      <property name="version" value="WDK_version_1-28"/>
-    </ant>
-  </target>
-  
-
-  <!-- oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo -->
-  <!-- oooooooooooooooooooooooooo    Update    oooooooooooooooooooooooooo -->
-  <!-- oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo -->
-
-
-  <target name="MicrobiomeModel-ChildUpdate" >
-    <ant target="defaultProjectUpdate">
-      <property name="project" value="CBIL"/>
-    </ant>
-    <ant target="defaultProjectUpdate">
-      <property name="project" value="ReFlow"/>
-    </ant>
-    <ant target="defaultProjectUpdate">
-      <property name="project" value="EbrcModelCommon"/>
-    </ant>
-     <ant target="defaultProjectUpdate">
-      <property name="project" value="WDK"/>
-    </ant>
-  </target>
 
 
   <!-- oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo -->
@@ -85,34 +18,34 @@
                                             ReFlow-Installation,
                                             WDK-Installation,
                                             EbrcModelCommon-Installation,
-  	                                        MicrobiomeModel-MavenInstallation,
+                                            MicrobiomeModel-MavenInstallation,
                                             MicrobiomeModel/Model-Installation">
 
 
     <ant target="defaultProjectInstall">
-      <property name="project" value="MicrobiomeModel"/>
+      <property name="project" value="MicrobiomeModel" />
     </ant>
 
-  </target> 
-	
-	<target name="MicrobiomeModel-MavenInstallation">
-	  <ant target="mavenBuildProject">
-	  	<property name="project" value="MicrobiomeModel"/>
-	  </ant>
-	  <property name="alreadyBuilt" value="true"/>
-	</target>
-   
+  </target>
+
+  <target name="MicrobiomeModel-MavenInstallation">
+    <ant target="mavenBuildProject">
+      <property name="project" value="MicrobiomeModel" />
+    </ant>
+    <property name="alreadyBuilt" value="true" />
+  </target>
+
 
   <!-- oooooooooooooooooo  Installation Postprocess  ooooooooooooooooooooo -->
 
   <target name="MicrobiomeModel-Installation-postprocess">
-    <echo message="Postprocessing the MicrobiomeModel installation"/>
+    <echo message="Postprocessing the MicrobiomeModel installation" />
 
-    <replace dir="${targetDir}/bin" 
-             propertyFile="${targetDir}/config/replacements.prop" > 
+    <replace dir="${targetDir}/bin"
+             propertyFile="${targetDir}/config/replacements.prop">
       <include name="**/*" />
-      <replacefilter token="@perl@" property="perl"/>
-    </replace> 
+      <replacefilter token="@perl@" property="perl" />
+    </replace>
 
   </target>
 
@@ -123,11 +56,11 @@
   <target name="MicrobiomeModel/Model-Installation" depends="ProjectTree">
 
     <ant target="defaultComponentInstall">
-      <property name="project" value="MicrobiomeModel"/>
-      <property name="component" value="Model"/>
+      <property name="project" value="MicrobiomeModel" />
+      <property name="component" value="Model" />
     </ant>
 
-  </target>  
+  </target>
 
   <!-- oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo -->
   <!-- oooooooooooooooooooooooooo  Distributable  ooooooooooooooooooooooooo -->
@@ -136,11 +69,11 @@
   <target name="MicrobiomeModel-Distributable" depends="ProjectTree">
 
     <copy todir="${targetDir}">
-      <fileset dir="${projectsDir}" >
+      <fileset dir="${projectsDir}">
         <exclude name="**/CVS/*" />
       </fileset>
-    </copy>  
-  </target>  
+    </copy>
+  </target>
 
 
   <!-- oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo -->
@@ -148,7 +81,7 @@
   <!-- oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo -->
 
   <target name="ProjectTree" if="${checkout}">
-    <ant target="projectCheckOut"/>
-  </target>  
+    <ant target="projectCheckOut" />
+  </target>
 
 </project>
