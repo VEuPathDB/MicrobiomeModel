@@ -173,11 +173,11 @@
           <column name="string_value"/>
           <sql>
             <![CDATA[
-                     select distinct pan_id as internal, property_source_id as ontology_term_name, 
-                     number_value, date_value, string_value 
-                     from apidbtuning.metadata
-                     where property_source_id = 'MiXS_env_feature'
-                     and dataset_name like 'otu_%_RSRC'
+select sds.output_pan_id as internal, 'MiXS_env_feature' as ontology_term_name, 
+                     cast(null as number) as number_value, cast(null as date) as date_value, MiXS_env_feature as string_value
+                     from apidbtuning.samples s, apidbTuning.SampleProcess sds
+                     where sds.OUTPUT_ISA_TYPE = 'Data'
+                   AND s.pan_id = sds.protocol_app_node_id
             ]]>
             </sql>
         </sqlQuery>
