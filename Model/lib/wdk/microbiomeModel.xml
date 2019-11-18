@@ -11,9 +11,9 @@
   <constant name="releaseDate">1 January 1900 00:00</constant>
   <constant name="buildNumber">15</constant>
 
-  <constant name="attributesReporterDisplayName">Tab delimited (Excel) - choose columns to make a custom table</constant>
-  <constant name="tableReporterDisplayName">Tab delimited (Excel) - choose a pre-configured table</constant>
-  <constant name="fullReporterDisplayName">Text: choose from columns and/or tables</constant>
+  <constant name="attributesReporterDisplayName">Tab- or comma-delimited (openable in Excel) - choose columns to make a custom table</constant>
+  <constant name="tableReporterDisplayName">Tab- or comma-delimited (openable in Excel) - choose a pre-configured table</constant>
+  <constant name="fullReporterDisplayName">Text - choose from columns and/or tables</constant>
   
   <modelName  displayName="MicrobiomeDB" version="%%buildNumber%%" releaseDate="%%releaseDate%%" buildNumber="%%buildNumber%%" />
 
