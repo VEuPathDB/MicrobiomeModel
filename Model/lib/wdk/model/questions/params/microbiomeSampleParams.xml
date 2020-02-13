@@ -326,7 +326,7 @@ select distinct ontology_term_source_id as ontology_term_name, parent_ontology_t
                          taxon_level * 2 - 1 as ordering
                   from apidbTuning.TaxonAbundance
                 union
-                  select term_id as ontology_term_name,
+                  select category || ':' || term as ontology_term_name,
                          category as parent_ontology_term_name,
                          term as display_name,
                          cast(null as varchar2(1)) as description,
@@ -363,7 +363,7 @@ select distinct ontology_term_source_id as ontology_term_name, parent_ontology_t
                   from apidbTuning.TaxonAbundance
                   where dataset_name = $$metadata_datasets$$
                 union
-                  select term_id as ontology_term_name,
+                  select category || ':' || term as ontology_term_name,
                          category as parent_ontology_term_name,
                          term as display_name,
                          cast(null as varchar2(1)) as description,
@@ -388,7 +388,7 @@ select distinct ontology_term_source_id as ontology_term_name, parent_ontology_t
           <sql>
             <![CDATA[
                      select protocol_app_node_id as internal,
-                     term_id as ontology_term_name,
+                     category || ':' || term as ontology_term_name,
                      cast(value as number) as number_value,
                      cast(null as date) as date_value,
                      cast(null as varchar2(1)) as string_value
@@ -409,7 +409,7 @@ select distinct ontology_term_source_id as ontology_term_name, parent_ontology_t
           <sql>
             <![CDATA[
                      select protocol_app_node_id as internal,
-                     term_id as ontology_term_name,
+                     category || ':' || term as ontology_term_name,
                      cast(value as number) as number_value,
                      cast(null as date) as date_value,
                      cast(null as varchar2(1)) as string_value
@@ -431,7 +431,7 @@ select distinct ontology_term_source_id as ontology_term_name, parent_ontology_t
           <sql>
             <![CDATA[
                      select protocol_app_node_id as internal,
-                     term_id as ontology_term_name,
+                     category || ':' || term as ontology_term_name,
                      cast(value as number) as number_value,
                      cast(null as date) as date_value,
                      cast(null as varchar2(1)) as string_value
@@ -450,7 +450,7 @@ select distinct ontology_term_source_id as ontology_term_name, parent_ontology_t
           <sql>
             <![CDATA[
                      select protocol_app_node_id as internal,
-                     term_id as ontology_term_name,
+                     category || ':' || term as ontology_term_name,
                      cast(value as number) as number_value,
                      cast(null as date) as date_value,
                      cast(null as varchar2(1)) as string_value
@@ -499,7 +499,7 @@ select distinct ontology_term_source_id as ontology_term_name, parent_ontology_t
                          taxon_level * 2 - 1 as ordering
                   from apidbTuning.TaxonAbundance
                 union
-                  select term_id as ontology_term_name,
+                  select category || ':' || term as ontology_term_name,
                          category as parent_ontology_term_name,
                          term as display_name,
                          cast(null as varchar2(1)) as description,
