@@ -153,13 +153,13 @@
             <sql>
               <![CDATA[
                        select 'MiXS_env_feature' AS ontology_term_name,
-                       'dummy' as parent_ontology_term_name,
+                       'dummyEnv' as parent_ontology_term_name,
                        'Habitat' as display_name, 'Habitat where the sample was collected' as description, 'string' as type, 
                        cast(null as varchar2(1)) as units,
                        1 as precision, 0 as is_range
                        from dual
                        union
-                       select 'dummy' as ontology_term_name, null as parent_ontology_term_name, 'dummy' as display_name, null as description,  null as type, null as units,
+                       select 'dummyEnv' as ontology_term_name, null as parent_ontology_term_name, 'Environmental feature' as display_name, null as description,  null as type, null as units,
                        null as precision, 0 as is_range from dual
               ]]>
             </sql>
@@ -194,13 +194,13 @@ select sds.output_pan_id as internal, 'MiXS_env_feature' as ontology_term_name,
             <sql>
               <![CDATA[
                        select 'IAO_0000100' AS ontology_term_name,
-                       'dummy' as parent_ontology_term_name,
+                       'dummyDatasetParent' as parent_ontology_term_name,
                        'Dataset' as display_name, 'Study name' as description, 'string' as type, 
                        cast(null as varchar2(1)) as units,
                        1 as precision, 0 as is_range
                        from dual
                        union
-                       select 'dummy' as ontology_term_name, null as parent_ontology_term_name, 'dummy' as display_name, null as description,  null as type, null as units,
+                       select 'dummyDatasetParent' as ontology_term_name, null as parent_ontology_term_name, 'Data item' as display_name, null as description,  null as type, null as units,
                        null as precision, 0 as is_range from dual
               ]]>
             </sql>
@@ -470,11 +470,11 @@ select distinct ontology_term_source_id as ontology_term_name, parent_ontology_t
             <column name="is_range"/>
             <sql>
               <![CDATA[
-             select 'dummy' as ontology_term_name, null as parent_ontology_term_name, 'dummy' as display_name, null as description,  null as type, null as units,
+             select 'dummyDataSource' as ontology_term_name, null as parent_ontology_term_name, 'Data source' as display_name, null as description,  null as type, null as units,
              null as precision, 0 as is_range, -1 as ordering from dual
              UNION
              select 'dataset' AS ontology_term_name,
-             'dummy' as parent_ontology_term_name,
+             'dummyDataSource' as parent_ontology_term_name,
              'Dataset' as display_name, 'Study name' as description, 'string' as type, 
              cast(null as varchar2(1)) as units,
              1 as precision, 0 as is_range,
@@ -482,7 +482,7 @@ select distinct ontology_term_source_id as ontology_term_name, parent_ontology_t
              from dual
              UNION
              select 'Taxonomy' ontology_term_name,
-             'dummy' as parent_ontology_term_name,
+             'dummyDataSource' as parent_ontology_term_name,
              'Taxonomy' as display_name, 'Taxonomy' as description, cast(null as varchar2(1)) as type, 
              cast(null as varchar2(1)) as units,
              1 as precision, 0 as is_range,
