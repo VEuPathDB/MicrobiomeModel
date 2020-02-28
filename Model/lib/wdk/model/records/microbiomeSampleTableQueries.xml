@@ -89,14 +89,12 @@ from
             <column name="name"/>
             <column name="dataset_presenter_id"/>
             <column name="display_name"/>
-            <column name="category"/>
             <column name="summary"/>
            <sql>
             <![CDATA[
 select distinct  sd.name
  , edp.dataset_presenter_id
  , dsp.display_name
- , dsp.category
  , dbms_lob.substr( dsp.summary, 4000, 1 ) as summary
 from apidbtuning.sampleprocess sd
    , apidbtuning.PanResults panr

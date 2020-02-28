@@ -12,7 +12,7 @@
         analyzerClass="org.eupathdb.common.model.analysis.EuPathExternalAnalyzer">
       <shortDescription>
         <![CDATA[
-          Shiny application to display graphs of relative abundance for each sample in the result set
+          Compare relative abundance of taxa in the result set and across groups of samples
         ]]>
       </shortDescription>
       <description/>
@@ -29,7 +29,7 @@
         analyzerClass="org.eupathdb.common.model.analysis.EuPathExternalAnalyzer">
       <shortDescription>
         <![CDATA[
-          Shiny application to display alpha diversity plots for these samples
+          View plots of alpha diversity of samples in the result set
         ]]>
       </shortDescription>
       <description/>
@@ -46,7 +46,7 @@
         analyzerClass="org.eupathdb.common.model.analysis.EuPathExternalAnalyzer">
       <shortDescription>
         <![CDATA[
-          Shiny application to display beta diversity plots for these samples
+          View plots of beta diversity of samples in the result set
         ]]>
       </shortDescription>
       <description/>
@@ -63,7 +63,7 @@
         analyzerClass="org.eupathdb.common.model.analysis.EuPathExternalAnalyzer">
       <shortDescription>
         <![CDATA[
-          Shiny application to calculate the differential abundance.
+          Find taxa with the most differential abundance across a chosen pair of factors
         ]]>
       </shortDescription>
       <description/>
@@ -79,7 +79,7 @@
         analyzerClass="org.eupathdb.common.model.analysis.EuPathExternalAnalyzer">
       <shortDescription>
         <![CDATA[
-          Shiny application to calculate the correlation between sample details and taxon.
+          Calculate correlation between abundance patterns in the results by sample details and taxon
         ]]>
       </shortDescription>
       <description/>

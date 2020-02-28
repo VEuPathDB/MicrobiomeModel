@@ -510,33 +510,6 @@ select distinct ontology_term_source_id as ontology_term_name, parent_ontology_t
               ]]>
             </sql>
         </sqlQuery>
-
-<!--
-    <sqlQuery name="SamplesWithMetadata">
-         <paramRef ref="sampleParams.metadata_datasets"/>
-         <column name="internal"/>
-         <column name="term"/>
-         <column name="display"/>
-         <sql>
-           select * from (
-              select pan_name as term, pan_name as display, protocol_app_node_id as internal
-              from apidbTuning.InferredChars
-              where dataset_name in ($$metadata_datasets$$)
-              and pan_name not like '%[alpha_diversity]%'
-              union
-              select pan_name as term, pan_name as display, protocol_app_node_id as internal
-              from apidbTuning.InferredParams
-              where dataset_name in ($$metadata_datasets$$)
-              union
-              select pan_name as term, pan_name as display, protocol_app_node_id as internal
-              from apidbTuning.FallbackMetadata
-              where dataset_name in ($$metadata_datasets$$))
-            where term not like '%[alpha_diversity]%' 
-          </sql>
-        </sqlQuery>
--->
-
-
         <sqlQuery name="SamplesMetadata" doNotTest="1">
           <paramRef ref="sampleParams.metadata_datasets"/>
           <column name="ontology_term_name"/>
@@ -566,17 +539,14 @@ select distinct ontology_term_source_id as ontology_term_name, parent_ontology_t
                from (  select pan_id, property, value
                        from apidbtuning.InferredChars
                        where dataset_name in ($$metadata_datasets$$)
-                         and pan_name not like '% [alpha_diversity] (OTU)'
                      union
                        select pan_id, property, value
                        from apidbtuning.InferredParams
                        where dataset_name in ($$metadata_datasets$$)
-                         and pan_name not like '% [alpha_diversity] (OTU)'
                      union
                        select pan_id, property, value
                        from apidbtuning.DefaultChars
                        where dataset_name in ($$metadata_datasets$$)
-                         and pan_name not like '% [alpha_diversity] (OTU)'
                     ) md,
                     (select property, max(type) as type
                      from apidbTuning.PropertyType
