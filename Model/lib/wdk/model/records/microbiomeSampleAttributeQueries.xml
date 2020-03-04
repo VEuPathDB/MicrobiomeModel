@@ -5,7 +5,7 @@
 	 SELECT count(*) FROM ApidbTuning.sampleid
        </testRowCountSql>
 
-        <sqlQuery name="Bfmv">
+        <sqlQuery name="SampleDescription">
             <column name="name"/>
             <column name="description"/>
             <column name="type"/>      

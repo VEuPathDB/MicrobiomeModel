@@ -54,11 +54,8 @@
       <stepAnalysisRef name="beta_diversity" includeProjects="MicrobiomeDB"/>
       <stepAnalysisRef name="differential_abundance" includeProjects="MicrobiomeDB"/>
       <stepAnalysisRef name="correlation_app" includeProjects="MicrobiomeDB"/>
-      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <!-- BFMV attributes -->  
-      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
 
-      <attributeQueryRef ref="SampleAttributes.Bfmv">
+      <attributeQueryRef ref="SampleAttributes.SampleDescription">
         <textAttribute name="record_overview" internal="true">
           <text>
             <![CDATA[
