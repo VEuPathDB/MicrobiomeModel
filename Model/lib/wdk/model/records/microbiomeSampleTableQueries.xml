@@ -20,24 +20,21 @@ select distinct
 , pt.filter
 from apidbTuning.Metadata m, apidbTuning.PropertyType pt
 where m.property_source_id = pt.property_source_id
-            ]]>
-            </sql>
-    </sqlQuery>
-
-    <sqlQuery name="Protocols">
-            <column name="name"/>
-            <column name="protocol_name"  />
-            <column name="protocol_param_name"  />
-            <column name="value"  />
-           <sql>
-            <![CDATA[
-SELECT
-  pan_name as name
-, category as protocol_name
-, term AS protocol_param_name
-, value
-FROM
-  APIDBTUNING.sampleprotocolmetadata
+union
+select
+  s.name,
+  'user provided annotation' as material_type,
+  p.property,
+  sd.string_value as value,
+  p.type,
+  p.filter
+from 
+  ApiDBUserDatasets.UD_Sample s,
+  apidbUserDatasets.ud_SampleDetail sd,
+  apidbUserDatasets.ud_Property p
+where 
+  s.sample_id = sd.sample_id
+  and sd.property_id = p.property_id
             ]]>
             </sql>
     </sqlQuery>
@@ -60,6 +57,15 @@ SELECT
 , nvl(nvl(output_material_type, output_isa_type), 'Data') as output_type
 from
  apidbtuning.sampleprocess
+union
+select
+  s.name,
+  s.name as input, 
+  'external data item' as input_type,
+  'data upload' as protocol,
+  s.display_name || ' (OTU)' as output,
+  'data item' as output_type
+from ApiDBUserDatasets.UD_Sample s
             ]]>
             </sql>
     </sqlQuery>
@@ -78,9 +84,17 @@ from
       <column name="absolute_abundance"/>
         <sql>
           <![CDATA[
-            select name, ncbi_tax_id, kingdom, phylum, class, rank_order, 
-                   family, genus, species, relative_abundance, absolute_abundance
-            from apidbTuning.TaxonRelativeAbundance
+select name,
+  ncbi_tax_id, kingdom, phylum, class, rank_order, 
+  family, genus, species, relative_abundance, absolute_abundance
+from apidbTuning.TaxonRelativeAbundance
+union
+select s.name,
+  a.ncbi_tax_id,
+  nvl(a.kingdom, 'unassigned') as kingdom, nvl2(a.kingdom, a.phylum, a.lineage) as phylum, a.class, a.rank_order,
+  a.family, a.genus, a.species, a.relative_abundance, a.absolute_abundance
+from apidbUserDatasets.ud_Sample s, apidbUserDatasets.ud_Abundance a
+where s.sample_id = a.sample_id
           ]]>
         </sql>
     </sqlQuery>
@@ -92,10 +106,10 @@ from
             <column name="summary"/>
            <sql>
             <![CDATA[
-select distinct  sd.name
- , edp.dataset_presenter_id
- , dsp.display_name
- , dbms_lob.substr( dsp.summary, 4000, 1 ) as summary
+select distinct  sd.name,
+  'record/dataset/' || edp.dataset_presenter_id as dataset_uri,
+  dsp.display_name,
+  dbms_lob.substr( dsp.summary, 4000, 1 ) as summary
 from apidbtuning.sampleprocess sd
    , apidbtuning.PanResults panr
    , study.study s
@@ -107,6 +121,15 @@ and panr.pan_id = sl.protocol_app_node_id
 and sl.study_id = s.study_id
 and s.external_database_release_id = edp.external_database_release_id
 and edp.dataset_presenter_id = dsp.dataset_presenter_id
+union
+select s.name,
+  'workspace/datasets/' || ps.user_dataset_id as dataset_uri,
+  isd.name as display_name,
+  ps.name as summary
+from apidbUserDatasets.ud_Sample s, apidbUserDatasets.ud_ProfileSet ps,
+  ApiDBUserDatasets.InstalledUserDataset isd
+  where s.profile_set_id = ps.profile_set_id
+  and ps.user_dataset_id = isd.user_dataset_id
             ]]>
             </sql>
     </sqlQuery>

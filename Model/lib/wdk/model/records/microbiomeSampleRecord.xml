@@ -90,16 +90,6 @@
 	<columnAttribute name="filter" displayName="Filter" inReportMaker="true" internal="true" />
       </table>
 
-
-
-      <table name="Protocol Parameters" displayName="Protocols"
-	     queryRef="SampleTables.Protocols">
-	<columnAttribute name="protocol_name" displayName="Protocol Name"/>
-	<columnAttribute name="protocol_param_name" displayName="Parameter Name"/>
-	<columnAttribute name="value" displayName="Value"/>
-      </table>
-
-
       <table name="ProcessedSample" displayName="Processed Sample"
 	     queryRef="SampleTables.ProcessedSample">
 	<columnAttribute name="input" displayName="Input" />
@@ -143,14 +133,14 @@
 
       <table name="Datasets" displayName="Dataset"
 	     queryRef="SampleTables.Datasets">
-            <columnAttribute name="dataset_presenter_id" internal="true"/>
+            <columnAttribute name="dataset_uri" internal="true"/>
             <columnAttribute name="display_name" internal="true"/>
             <linkAttribute name="dataset_link" displayName="Dataset Name" inReportMaker="false">
                  <displayText>
                     <![CDATA[$$display_name$$]]>
                  </displayText>
                  <url>
-                   <![CDATA[@WEBAPP_BASE_URL@/record/dataset/$$dataset_presenter_id$$]]>
+                   <![CDATA[@WEBAPP_BASE_URL@/$$dataset_uri$$]]>
                  </url>
             </linkAttribute>
             <columnAttribute name="summary" displayName="Dataset Summary"/>

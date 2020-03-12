@@ -17,6 +17,9 @@
             <![CDATA[
              select name, pan_type as type, description
              from apidbTuning.Samples
+             union
+             select name, 'user provided sample' as type, display_name as description
+             from ApiDBUserDatasets.UD_Sample
 	    ]]>
            </sql>
 	</sqlQuery>
@@ -30,6 +33,12 @@ SELECT
  sa.name, sa.name as old_name
 FROM
   apidbTuning.Samples sa
+union
+SELECT 
+ usa.name, usa.name as old_name
+FROM
+ ApiDBUserDatasets.UD_Sample usa
+  
 	    ]]>
            </sql>
 	</sqlQuery>
