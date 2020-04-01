@@ -4,7 +4,7 @@
     <recordClass name="MicrobiomeSampleRecordClass" urlName="sample" displayName="Sample" doNotTest="true" includeProjects="MicrobiomeDB" iconName="mbio-sampleDetails_light">
 
       <!-- primary key definition -->
-      <primaryKey aliasQueryRef="SampleAttributes.Alias">
+      <primaryKey>
         <columnRef>name</columnRef>
       </primaryKey>
 
