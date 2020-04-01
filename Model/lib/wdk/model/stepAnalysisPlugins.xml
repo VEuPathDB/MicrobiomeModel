@@ -12,12 +12,12 @@
         analyzerClass="org.eupathdb.common.model.analysis.EuPathExternalAnalyzer">
       <shortDescription>
         <![CDATA[
-          Shiny application to display graphs of relative abundance for each sample in the result set
+          Compare relative abundance of taxa in the result set and across groups of samples
         ]]>
       </shortDescription>
       <description/>
       <property name="externalAppUrl"><![CDATA[/shiny/abundance_app]]></property>
-      <property name="tablesToExtract">Characteristics,TaxaRelativeAbundance</property>
+      <property name="tablesToExtract">Characteristics,Datasets,TaxaRelativeAbundance</property>
       <property name="addHeader">true</property>
     </stepAnalysisPlugin>
 
@@ -29,12 +29,12 @@
         analyzerClass="org.eupathdb.common.model.analysis.EuPathExternalAnalyzer">
       <shortDescription>
         <![CDATA[
-          Shiny application to display alpha diversity plots for these samples
+          View plots of alpha diversity of samples in the result set
         ]]>
       </shortDescription>
       <description/>
       <property name="externalAppUrl"><![CDATA[/shiny/alpha_diversity]]></property>
-      <property name="tablesToExtract">Characteristics,TaxaRelativeAbundance</property>
+      <property name="tablesToExtract">Characteristics,Datasets,TaxaRelativeAbundance</property>
       <property name="addHeader">true</property>
     </stepAnalysisPlugin>
 
@@ -46,12 +46,12 @@
         analyzerClass="org.eupathdb.common.model.analysis.EuPathExternalAnalyzer">
       <shortDescription>
         <![CDATA[
-          Shiny application to display beta diversity plots for these samples
+          View plots of beta diversity of samples in the result set
         ]]>
       </shortDescription>
       <description/>
       <property name="externalAppUrl"><![CDATA[/shiny/beta_diversity]]></property>
-      <property name="tablesToExtract">Characteristics,TaxaRelativeAbundance</property>
+      <property name="tablesToExtract">Characteristics,Datasets,TaxaRelativeAbundance</property>
       <property name="addHeader">true</property>
     </stepAnalysisPlugin>
 
@@ -63,12 +63,12 @@
         analyzerClass="org.eupathdb.common.model.analysis.EuPathExternalAnalyzer">
       <shortDescription>
         <![CDATA[
-          Shiny application to calculate the differential abundance.
+          Find taxa with the most differential abundance across a chosen pair of factors
         ]]>
       </shortDescription>
       <description/>
       <property name="externalAppUrl"><![CDATA[/shiny/differential_abundance]]></property>
-      <property name="tablesToExtract">Characteristics,TaxaRelativeAbundance</property>
+      <property name="tablesToExtract">Characteristics,Datasets,TaxaRelativeAbundance</property>
       <property name="addHeader">true</property>
     </stepAnalysisPlugin>
     <stepAnalysisPlugin
@@ -79,12 +79,12 @@
         analyzerClass="org.eupathdb.common.model.analysis.EuPathExternalAnalyzer">
       <shortDescription>
         <![CDATA[
-          Shiny application to calculate the correlation between sample details and taxon.
+          Calculate correlation between abundance patterns in the results by sample details and taxon
         ]]>
       </shortDescription>
       <description/>
       <property name="externalAppUrl"><![CDATA[/shiny/correlation_app]]></property>
-      <property name="tablesToExtract">Characteristics,TaxaRelativeAbundance</property>
+      <property name="tablesToExtract">Characteristics,Datasets,TaxaRelativeAbundance</property>
       <property name="addHeader">true</property>
     </stepAnalysisPlugin>
   </stepAnalysisPlugins>

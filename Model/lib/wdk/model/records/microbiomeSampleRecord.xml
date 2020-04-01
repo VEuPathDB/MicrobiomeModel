@@ -54,11 +54,8 @@
       <stepAnalysisRef name="beta_diversity" includeProjects="MicrobiomeDB"/>
       <stepAnalysisRef name="differential_abundance" includeProjects="MicrobiomeDB"/>
       <stepAnalysisRef name="correlation_app" includeProjects="MicrobiomeDB"/>
-      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-      <!-- BFMV attributes -->  
-      <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
 
-      <attributeQueryRef ref="SampleAttributes.Bfmv">
+      <attributeQueryRef ref="SampleAttributes.SampleDescription">
         <textAttribute name="record_overview" internal="true">
           <text>
             <![CDATA[
@@ -144,7 +141,7 @@
       </table>
 
 
-      <table name="Datasets" displayName="Datasets"
+      <table name="Datasets" displayName="Dataset"
 	     queryRef="SampleTables.Datasets">
             <columnAttribute name="dataset_presenter_id" internal="true"/>
             <columnAttribute name="display_name" internal="true"/>
@@ -156,7 +153,6 @@
                    <![CDATA[@WEBAPP_BASE_URL@/record/dataset/$$dataset_presenter_id$$]]>
                  </url>
             </linkAttribute>
-            <columnAttribute name="category" displayName="Dataset Category"/>
             <columnAttribute name="summary" displayName="Dataset Summary"/>
       </table>
 

@@ -1,17 +1,6 @@
 <wdkModel>
   <querySet name="sampleIds" queryType="id" isCacheable="true">
 
-   <!-- notes
-      
-      - changed ms_assay param names
-      - all components will have orfs so i changed the includes/excluded to reflect that
-
-    -->
-    
-    <!-- ************************************************************ -->
-    <!-- Popset ID -->  
-    <!-- ************************************************************ -->
- 
     <sqlQuery name="SampleBySampleId" doNotTest="true"
               displayName="ID">
       <paramRef ref="sampleParams.sample_id"/>

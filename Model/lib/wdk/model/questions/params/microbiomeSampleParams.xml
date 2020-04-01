@@ -153,13 +153,13 @@
             <sql>
               <![CDATA[
                        select 'MiXS_env_feature' AS ontology_term_name,
-                       'dummy' as parent_ontology_term_name,
+                       'dummyEnv' as parent_ontology_term_name,
                        'Habitat' as display_name, 'Habitat where the sample was collected' as description, 'string' as type, 
                        cast(null as varchar2(1)) as units,
                        1 as precision, 0 as is_range
                        from dual
                        union
-                       select 'dummy' as ontology_term_name, null as parent_ontology_term_name, 'dummy' as display_name, null as description,  null as type, null as units,
+                       select 'dummyEnv' as ontology_term_name, null as parent_ontology_term_name, 'Environmental feature' as display_name, null as description,  null as type, null as units,
                        null as precision, 0 as is_range from dual
               ]]>
             </sql>
@@ -194,13 +194,13 @@ select sds.output_pan_id as internal, 'MiXS_env_feature' as ontology_term_name,
             <sql>
               <![CDATA[
                        select 'IAO_0000100' AS ontology_term_name,
-                       'dummy' as parent_ontology_term_name,
+                       'dummyDatasetParent' as parent_ontology_term_name,
                        'Dataset' as display_name, 'Study name' as description, 'string' as type, 
                        cast(null as varchar2(1)) as units,
                        1 as precision, 0 as is_range
                        from dual
                        union
-                       select 'dummy' as ontology_term_name, null as parent_ontology_term_name, 'dummy' as display_name, null as description,  null as type, null as units,
+                       select 'dummyDatasetParent' as ontology_term_name, null as parent_ontology_term_name, 'Data item' as display_name, null as description,  null as type, null as units,
                        null as precision, 0 as is_range from dual
               ]]>
             </sql>
@@ -326,7 +326,7 @@ select distinct ontology_term_source_id as ontology_term_name, parent_ontology_t
                          taxon_level * 2 - 1 as ordering
                   from apidbTuning.TaxonAbundance
                 union
-                  select term_id as ontology_term_name,
+                  select category || ':' || term as ontology_term_name,
                          category as parent_ontology_term_name,
                          term as display_name,
                          cast(null as varchar2(1)) as description,
@@ -363,7 +363,7 @@ select distinct ontology_term_source_id as ontology_term_name, parent_ontology_t
                   from apidbTuning.TaxonAbundance
                   where dataset_name = $$metadata_datasets$$
                 union
-                  select term_id as ontology_term_name,
+                  select category || ':' || term as ontology_term_name,
                          category as parent_ontology_term_name,
                          term as display_name,
                          cast(null as varchar2(1)) as description,
@@ -388,7 +388,7 @@ select distinct ontology_term_source_id as ontology_term_name, parent_ontology_t
           <sql>
             <![CDATA[
                      select protocol_app_node_id as internal,
-                     term_id as ontology_term_name,
+                     category || ':' || term as ontology_term_name,
                      cast(value as number) as number_value,
                      cast(null as date) as date_value,
                      cast(null as varchar2(1)) as string_value
@@ -409,7 +409,7 @@ select distinct ontology_term_source_id as ontology_term_name, parent_ontology_t
           <sql>
             <![CDATA[
                      select protocol_app_node_id as internal,
-                     term_id as ontology_term_name,
+                     category || ':' || term as ontology_term_name,
                      cast(value as number) as number_value,
                      cast(null as date) as date_value,
                      cast(null as varchar2(1)) as string_value
@@ -431,7 +431,7 @@ select distinct ontology_term_source_id as ontology_term_name, parent_ontology_t
           <sql>
             <![CDATA[
                      select protocol_app_node_id as internal,
-                     term_id as ontology_term_name,
+                     category || ':' || term as ontology_term_name,
                      cast(value as number) as number_value,
                      cast(null as date) as date_value,
                      cast(null as varchar2(1)) as string_value
@@ -450,7 +450,7 @@ select distinct ontology_term_source_id as ontology_term_name, parent_ontology_t
           <sql>
             <![CDATA[
                      select protocol_app_node_id as internal,
-                     term_id as ontology_term_name,
+                     category || ':' || term as ontology_term_name,
                      cast(value as number) as number_value,
                      cast(null as date) as date_value,
                      cast(null as varchar2(1)) as string_value
@@ -470,11 +470,11 @@ select distinct ontology_term_source_id as ontology_term_name, parent_ontology_t
             <column name="is_range"/>
             <sql>
               <![CDATA[
-             select 'dummy' as ontology_term_name, null as parent_ontology_term_name, 'dummy' as display_name, null as description,  null as type, null as units,
+             select 'dummyDataSource' as ontology_term_name, null as parent_ontology_term_name, 'Data source' as display_name, null as description,  null as type, null as units,
              null as precision, 0 as is_range, -1 as ordering from dual
              UNION
              select 'dataset' AS ontology_term_name,
-             'dummy' as parent_ontology_term_name,
+             'dummyDataSource' as parent_ontology_term_name,
              'Dataset' as display_name, 'Study name' as description, 'string' as type, 
              cast(null as varchar2(1)) as units,
              1 as precision, 0 as is_range,
@@ -482,7 +482,7 @@ select distinct ontology_term_source_id as ontology_term_name, parent_ontology_t
              from dual
              UNION
              select 'Taxonomy' ontology_term_name,
-             'dummy' as parent_ontology_term_name,
+             'dummyDataSource' as parent_ontology_term_name,
              'Taxonomy' as display_name, 'Taxonomy' as description, cast(null as varchar2(1)) as type, 
              cast(null as varchar2(1)) as units,
              1 as precision, 0 as is_range,
@@ -499,7 +499,7 @@ select distinct ontology_term_source_id as ontology_term_name, parent_ontology_t
                          taxon_level * 2 - 1 as ordering
                   from apidbTuning.TaxonAbundance
                 union
-                  select term_id as ontology_term_name,
+                  select category || ':' || term as ontology_term_name,
                          category as parent_ontology_term_name,
                          term as display_name,
                          cast(null as varchar2(1)) as description,
@@ -510,33 +510,6 @@ select distinct ontology_term_source_id as ontology_term_name, parent_ontology_t
               ]]>
             </sql>
         </sqlQuery>
-
-<!--
-    <sqlQuery name="SamplesWithMetadata">
-         <paramRef ref="sampleParams.metadata_datasets"/>
-         <column name="internal"/>
-         <column name="term"/>
-         <column name="display"/>
-         <sql>
-           select * from (
-              select pan_name as term, pan_name as display, protocol_app_node_id as internal
-              from apidbTuning.InferredChars
-              where dataset_name in ($$metadata_datasets$$)
-              and pan_name not like '%[alpha_diversity]%'
-              union
-              select pan_name as term, pan_name as display, protocol_app_node_id as internal
-              from apidbTuning.InferredParams
-              where dataset_name in ($$metadata_datasets$$)
-              union
-              select pan_name as term, pan_name as display, protocol_app_node_id as internal
-              from apidbTuning.FallbackMetadata
-              where dataset_name in ($$metadata_datasets$$))
-            where term not like '%[alpha_diversity]%' 
-          </sql>
-        </sqlQuery>
--->
-
-
         <sqlQuery name="SamplesMetadata" doNotTest="1">
           <paramRef ref="sampleParams.metadata_datasets"/>
           <column name="ontology_term_name"/>
@@ -566,17 +539,14 @@ select distinct ontology_term_source_id as ontology_term_name, parent_ontology_t
                from (  select pan_id, property, value
                        from apidbtuning.InferredChars
                        where dataset_name in ($$metadata_datasets$$)
-                         and pan_name not like '% [alpha_diversity] (OTU)'
                      union
                        select pan_id, property, value
                        from apidbtuning.InferredParams
                        where dataset_name in ($$metadata_datasets$$)
-                         and pan_name not like '% [alpha_diversity] (OTU)'
                      union
                        select pan_id, property, value
                        from apidbtuning.DefaultChars
                        where dataset_name in ($$metadata_datasets$$)
-                         and pan_name not like '% [alpha_diversity] (OTU)'
                     ) md,
                     (select property, max(type) as type
                      from apidbTuning.PropertyType

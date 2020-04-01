@@ -66,7 +66,6 @@ from
 
     <sqlQuery name="TaxaRelativeAbundance">
       <column name="name"/>
-      <column name="taxon_id"/>
       <column name="ncbi_tax_id"/>
       <column name="kingdom"/>
       <column name="phylum"/>
@@ -79,7 +78,7 @@ from
       <column name="absolute_abundance"/>
         <sql>
           <![CDATA[
-            select name, taxon_id, ncbi_tax_id, kingdom, phylum, class, rank_order, 
+            select name, ncbi_tax_id, kingdom, phylum, class, rank_order, 
                    family, genus, species, relative_abundance, absolute_abundance
             from apidbTuning.TaxonRelativeAbundance
           ]]>
@@ -90,14 +89,12 @@ from
             <column name="name"/>
             <column name="dataset_presenter_id"/>
             <column name="display_name"/>
-            <column name="category"/>
             <column name="summary"/>
            <sql>
             <![CDATA[
 select distinct  sd.name
  , edp.dataset_presenter_id
  , dsp.display_name
- , dsp.category
  , dbms_lob.substr( dsp.summary, 4000, 1 ) as summary
 from apidbtuning.sampleprocess sd
    , apidbtuning.PanResults panr
