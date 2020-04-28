@@ -33,7 +33,9 @@ from
   apidbUserDatasets.ud_SampleDetail sd,
   apidbUserDatasets.ud_Property p
 where 
-  s.sample_id = sd.sample_id
+  s.user_dataset_id = sd.user_dataset_id
+  and s.sample_id = sd.sample_id
+  and sd.user_dataset_id = p.user_dataset_id
   and sd.property_id = p.property_id
             ]]>
             </sql>
@@ -123,13 +125,15 @@ and s.external_database_release_id = edp.external_database_release_id
 and edp.dataset_presenter_id = dsp.dataset_presenter_id
 union
 select s.name,
-  'workspace/datasets/' || ps.user_dataset_id as dataset_uri,
+  'workspace/datasets/' || isd.user_dataset_id as dataset_uri,
   isd.name as display_name,
-  ps.name as summary
-from apidbUserDatasets.ud_Sample s, apidbUserDatasets.ud_ProfileSet ps,
-  ApiDBUserDatasets.InstalledUserDataset isd
-  where s.profile_set_id = ps.profile_set_id
-  and ps.user_dataset_id = isd.user_dataset_id
+  pr.property_value as summary
+from apidbUserDatasets.ud_Sample s, 
+  ApiDBUserDatasets.InstalledUserDataset isd,
+  ApiDBUserDatasets.UD_Presenter pr
+  where s.user_dataset_id = isd.user_dataset_id
+  and isd.user_dataset_id = pr.user_dataset_id
+  and pr.property_name = 'dataset_summary'
             ]]>
             </sql>
     </sqlQuery>

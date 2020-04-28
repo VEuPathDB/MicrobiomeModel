@@ -34,7 +34,7 @@
     </question>
    <question name="MicrobiomeSampleByTaxonAbundance"
               searchCategory="Other Attributes"
-              iconName="mbio-taxaQuery_light"
+              iconName="ebrc-icon-taxaQuery_light"
               shortDisplayName="Abundance"
               queryRef="sampleIds.SampleByTaxonAbundanceWiz"
               displayName="Taxon Abundance"
@@ -79,7 +79,7 @@
        </description>
     </question>
     <question name="SamplesByTaxonAbundance_${datasetName}"
-              iconName="mbio-taxaQuery_light"
+              iconName="ebrc-icon-taxaQuery_light"
               shortDisplayName="${datasetShortDisplayName} (taxa)"
               queryRef="sampleIds.SampleByTaxonAbundance"
               displayName="${datasetDisplayName} Taxon Abundance"
@@ -102,7 +102,7 @@
               queryRef="sampleIds.UserSampleByMetadata"
               displayName="Sample Details"
               recordClassRef="SampleRecordClasses.MicrobiomeSampleRecordClass">
-      <paramRef ref="userDatasetParams.biom_datasets" queryRef="biomDatasetVQ.UserDataset"/>
+      <paramRef ref="userDatasetParams.biom_dataset" queryRef="biomDatasetVQ.UserDataset"/>
         <summary>
           Find Microbiomic Samples based on Sample details in an imported dataset.
         </summary> 
@@ -113,12 +113,12 @@
        </description> 
     </question>
     <question name="UserSampleByTaxonAbundance"
-              iconName="mbio-taxaQuery_light"
+              iconName="ebrc-icon-taxaQuery_light"
               shortDisplayName="Abundance"
               queryRef="sampleIds.UserSampleByTaxonAbundance"
               displayName="Taxon Abundance"
               recordClassRef="SampleRecordClasses.MicrobiomeSampleRecordClass">
-      <paramRef ref="userDatasetParams.biom_datasets" queryRef="biomDatasetVQ.UserDataset"/>
+      <paramRef ref="userDatasetParams.biom_dataset" queryRef="biomDatasetVQ.UserDataset"/>
         <summary>
           Find Microbiomic Samples based on Taxon Abundance in an imported dataset.
         </summary> 

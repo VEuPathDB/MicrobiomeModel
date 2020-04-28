@@ -103,7 +103,7 @@
 
     <sqlQuery name="UserSampleByMetadata" doNotTest="true"
               displayName="Metadata">
-       <paramRef ref="userDatasetParams.biom_datasets" />
+       <paramRef ref="userDatasetParams.biom_dataset" />
        <paramRef ref="sampleParamsUser.samples_filter_metadata_user" prompt="Samples"/>
         <column name="name"/>
         <column name="project_id"/>
@@ -119,7 +119,7 @@
     </sqlQuery>
     <sqlQuery name="UserSampleByTaxonAbundance" doNotTest="true"
               displayName="Metadata">
-       <paramRef ref="userDatasetParams.biom_datasets" />
+       <paramRef ref="userDatasetParams.biom_dataset" />
        <paramRef ref="sampleParamsUser.samples_filter_taxon_user" prompt="Samples"/>
         <column name="name"/>
         <column name="project_id"/>

@@ -14,7 +14,7 @@ prop=datasetDisplayName
 prop=datasetShortDisplayName
  >templateTextStart<
     <question name="SamplesByTaxonAbundance_${datasetName}"
-              iconName="mbio-taxaQuery_light"
+              iconName="ebrc-icon-taxaQuery_light"
               shortDisplayName="${datasetShortDisplayName} (taxa)"
               queryRef="sampleIds.SampleByTaxonAbundance"
               displayName="${datasetDisplayName} Taxon Abundance"
