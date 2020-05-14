@@ -14,7 +14,7 @@ prop=datasetDisplayName
 prop=datasetShortDisplayName
  >templateTextStart<
     <question name="SamplesByTaxonAbundance_${datasetName}"
-              iconName="mbio-taxaQuery_light"
+              iconName="ebrc-taxaQuery_light"
               shortDisplayName="${datasetShortDisplayName} (taxa)"
               queryRef="sampleIds.SampleByTaxonAbundance"
               displayName="${datasetDisplayName} Taxon Abundance"
@@ -48,7 +48,7 @@ prop=datasetDisplayName
 prop=datasetShortDisplayName
  >templateTextStart<
     <question name="SamplesByMetadata_${datasetName}"
-              iconName="mbio-sampleDetails_light"
+              iconName="ebrc-sampleDetails_light"
               shortDisplayName="${datasetShortDisplayName} (smpl details)"
               queryRef="sampleIds.SampleByMetadata"
               displayName="${datasetDisplayName} Sample Details"
@@ -73,7 +73,7 @@ prop=datasetDisplayName
 prop=datasetShortDisplayName
  >templateTextStart<
     <question name="SamplesByMetadata_${datasetName}"
-              iconName="mbio-sampleDetails_light"
+              iconName="ebrc-sampleDetails_light"
               shortDisplayName="${datasetShortDisplayName} (smpl details)"
               queryRef="sampleIds.SampleByMetadata_${datasetName}"
               displayName="${datasetDisplayName} Sample Details"
