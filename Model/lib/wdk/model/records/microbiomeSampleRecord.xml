@@ -1,7 +1,7 @@
 <wdkModel>
   <recordClassSet name="SampleRecordClasses">
 
-    <recordClass name="MicrobiomeSampleRecordClass" urlName="sample" displayName="Sample" doNotTest="true" includeProjects="MicrobiomeDB" iconName="ebrc-sampleDetails_light">
+    <recordClass name="MicrobiomeSampleRecordClass" urlName="sample" displayName="Sample" doNotTest="true" includeProjects="MicrobiomeDB" iconName="ebrc-icon-sampleDetails_light">
 
       <!-- primary key definition -->
       <primaryKey aliasQueryRef="SampleAttributes.Alias">

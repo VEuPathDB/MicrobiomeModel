@@ -35,7 +35,7 @@
 
     <question name="MicrobiomeSampleByMetadata"
               searchCategory="Other Attributes"
-              iconName="ebrc-sampleDetails_light"
+              iconName="ebrc-icon-sampleDetails_light"
               shortDisplayName="Details"
               queryRef="sampleIds.SampleByMetadataWiz"
               displayName="Sample Details"

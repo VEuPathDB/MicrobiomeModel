@@ -48,7 +48,7 @@ prop=datasetDisplayName
 prop=datasetShortDisplayName
  >templateTextStart<
     <question name="SamplesByMetadata_${datasetName}"
-              iconName="ebrc-sampleDetails_light"
+              iconName="ebrc-icon-sampleDetails_light"
               shortDisplayName="${datasetShortDisplayName} (smpl details)"
               queryRef="sampleIds.SampleByMetadata"
               displayName="${datasetDisplayName} Sample Details"
@@ -73,7 +73,7 @@ prop=datasetDisplayName
 prop=datasetShortDisplayName
  >templateTextStart<
     <question name="SamplesByMetadata_${datasetName}"
-              iconName="ebrc-sampleDetails_light"
+              iconName="ebrc-icon-sampleDetails_light"
               shortDisplayName="${datasetShortDisplayName} (smpl details)"
               queryRef="sampleIds.SampleByMetadata_${datasetName}"
               displayName="${datasetDisplayName} Sample Details"
