@@ -82,7 +82,7 @@
 
    <question name="MicrobiomeSampleByTaxonAbundance"
               searchCategory="Other Attributes"
-              iconName="ebrc-taxaQuery_light"
+              iconName="ebrc-icon-taxaQuery_light"
               shortDisplayName="Abundance"
               queryRef="sampleIds.SampleByTaxonAbundanceWiz"
               displayName="Taxon Abundance"
