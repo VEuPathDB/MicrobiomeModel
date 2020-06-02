@@ -7,35 +7,10 @@
     <!--Metadata -->
     <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
 
-<!--
-    <question name="MicrobiomeSampleByMetadata"
-              searchCategory="Other Attributes"
-              shortDisplayName="Details"
-              queryRef="sampleIds.SampleByMetadata"
-              displayName="Sample Details"
-              recordClassRef="SampleRecordClasses.MicrobiomeSampleRecordClass"
-              includeProjects="MicrobiomeDB">
-
-      <suggestion newBuild="23" includeProjects="DoNotUse" />
-        <summary>
-          Find Microbiomic Samples based on Sample details.
-        </summary> 
-        <description> 
-        <![CDATA[ 
-          Find microbiome samples based on sample characteristics
-        ]]> 
-       </description> 
-
-    </question>
--->
-
-
-
-
 
     <question name="MicrobiomeSampleByMetadata"
               searchCategory="Other Attributes"
-              iconName="ebrc-icon-sampleDetails_light"
+              iconName="mbio-sampleDetails_light"
               shortDisplayName="Details"
               queryRef="sampleIds.SampleByMetadataWiz"
               displayName="Sample Details"
@@ -57,29 +32,6 @@
         </propertyList>
 
     </question>
-
-<!--
-   <question name="MicrobiomeSampleByTaxonAbundance"
-              searchCategory="Other Attributes"
-              shortDisplayName="Abundance"
-              queryRef="sampleIds.SampleByTaxonAbundance"
-              displayName="Taxon Abundance"
-              recordClassRef="SampleRecordClasses.MicrobiomeSampleRecordClass"
-              includeProjects="MicrobiomeDB">
-
-      <suggestion newBuild="23" includeProjects="DoNotUse" />
-        <summary>
-          Find Microbiomic Samples based on Taxon Abundance.
-        </summary> 
-        <description> 
-        <![CDATA[ 
-          Find microbiome samples based on Taxon Abundance
-        ]]> 
-       </description> 
-
-   </question>
--->
-
    <question name="MicrobiomeSampleByTaxonAbundance"
               searchCategory="Other Attributes"
               iconName="ebrc-icon-taxaQuery_light"
@@ -107,6 +59,77 @@
 
     </question>
 
+<!--
+    Base UserSampleByMetadata on the templated question for each user
+
+    <question name="SamplesByMetadata_${datasetName}"
+              iconName="mbio-sampleDetails_light"
+              shortDisplayName="${datasetShortDisplayName} (smpl details)"
+              queryRef="sampleIds.SampleByMetadata"
+              displayName="${datasetDisplayName} Sample Details"
+              recordClassRef="SampleRecordClasses.MicrobiomeSampleRecordClass">
+      <paramRef ref="sampleParams.metadata_datasets" queryRef="samplesVQ.MicrobiomeDatasets_${datasetName}" visible="false"/>
+        <summary>
+          Find Microbiomic Samples based on Sample details.
+        </summary>
+        <description>
+        <![CDATA[
+          Find microbiome samples based on sample characteristics
+        ]]>
+       </description>
+    </question>
+    <question name="SamplesByTaxonAbundance_${datasetName}"
+              iconName="ebrc-icon-taxaQuery_light"
+              shortDisplayName="${datasetShortDisplayName} (taxa)"
+              queryRef="sampleIds.SampleByTaxonAbundance"
+              displayName="${datasetDisplayName} Taxon Abundance"
+              recordClassRef="SampleRecordClasses.MicrobiomeSampleRecordClass">
+      <paramRef ref="sampleParams.metadata_datasets" queryRef="samplesVQ.MicrobiomeDatasets_${datasetName}" visible="false"/>
+        <summary>
+          Find Microbiomic Samples based on Sample details.
+        </summary>
+        <description>
+        <![CDATA[
+          Find microbiome samples based on sample characteristics
+        ]]>
+       </description>
+    </question>
+
+ -->
+    <question name="UserSampleByMetadata"
+              iconName="mbio-sampleDetails_light"
+              shortDisplayName="Details"
+              queryRef="sampleIds.UserSampleByMetadata"
+              displayName="Sample Details"
+              recordClassRef="SampleRecordClasses.MicrobiomeSampleRecordClass">
+      <paramRef ref="userDatasetParams.biom_dataset" queryRef="biomDatasetVQ.UserDataset"/>
+        <summary>
+          Find Microbiomic Samples based on Sample details in an imported dataset.
+        </summary> 
+        <description> 
+        <![CDATA[ 
+          Find microbiome samples based on sample characteristics
+        ]]> 
+       </description> 
+    </question>
+    <question name="UserSampleByTaxonAbundance"
+              iconName="ebrc-icon-taxaQuery_light"
+              shortDisplayName="Abundance"
+              queryRef="sampleIds.UserSampleByTaxonAbundance"
+              displayName="Taxon Abundance"
+              recordClassRef="SampleRecordClasses.MicrobiomeSampleRecordClass">
+      <paramRef ref="userDatasetParams.biom_dataset" queryRef="biomDatasetVQ.UserDataset"/>
+        <summary>
+          Find Microbiomic Samples based on Taxon Abundance in an imported dataset.
+        </summary> 
+        <description> 
+        <![CDATA[ 
+          Find microbiome samples based on Taxon Abundance
+        ]]> 
+       </description> 
+    </question>
+
+   
 
       <!-- TEMPLATE_ANCHOR sampleMetadataQuestion -->
 

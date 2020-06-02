@@ -420,7 +420,7 @@ select distinct ontology_term_source_id as ontology_term_name, parent_ontology_t
         </sqlQuery>
 
 
-
+<!-- TODO duplicate of SamplesTaxon, delete me -->
         <sqlQuery name="SamplesTaxonBkg" doNotTest="1"  isCacheable="false">
           <paramRef ref="sampleParams.metadata_datasets"/>
           <column name="ontology_term_name"/>
@@ -615,5 +615,210 @@ select distinct ontology_term_source_id as ontology_term_name, parent_ontology_t
     </group>
 
   </groupSet>
+
+  <paramSet name="userDatasetParams">
+    <flatVocabParam name="biom_dataset"
+                    queryRef="biomDatasetVQ.UserDataset"
+                    prompt="Your Dataset"
+                    quote="false"
+                    multiPick="false" >
+         <help>A dataset that you have imported into your workspace as a BIOM file, and that is installed in @PROJECT_ID@ </help>
+    </flatVocabParam>
+  </paramSet>
+
+  <querySet name="biomDatasetVQ" queryType="vocab" isCacheable="false">
+        <sqlQuery name="UserDataset" isCacheable="false">
+           <paramRef ref="InternalParams.user_id"/>
+           <column name="internal"/>
+           <column name="term"/>
+           <column name="display"/>
+           <sql>
+           <![CDATA[
+           select term, internal, display
+           from (  
+             select iud.user_dataset_id as term, iud.user_dataset_id as internal,
+                  iud.name as display, 2 as ordering
+             from apidbUserDatasets.InstalledUserDataset iud
+             where iud.user_dataset_id
+                 in (select udac.user_dataset_id
+                     from apidbUserDatasets.UserDatasetAccessControl udac,
+                          apidbUserDatasets.UD_Sample s,
+                          apidbUserDatasets.UD_Abundance a
+                     where udac.user_id = $$user_id$$ -- enforce dataset access
+                       and udac.user_dataset_id = s.user_dataset_id
+                       and s.sample_id = a.sample_id
+                    )
+             and (iud.is_invalid is null or iud.is_invalid = 0)
+          ) order by ordering, display
+             ]]>
+           </sql>
+        </sqlQuery>
+  </querySet>
+
+  <paramSet name="sampleParamsUser">
+       <filterParam name="samples_filter_metadata_user"  
+                      metadataQueryRef="samplesVQUser.SamplesMetadataUser"
+                      backgroundQueryRef="samplesVQUser.SamplesMetadataUser"
+                      ontologyQueryRef="samplesVQUser.SamplesMetadataOntologyUser"
+                      prompt="Samples"
+                      dependedParamRef="userDatasetParams.biom_dataset">
+         <help>
+              Select reference samples. 
+         </help>
+         <!-- <suggest selectMode="all" /> -->
+       </filterParam>
+
+       <filterParam name="samples_filter_taxon_user"  
+                      metadataQueryRef="samplesVQUser.SamplesTaxonUser"
+                      backgroundQueryRef="samplesVQUser.SamplesTaxonUser"
+                      ontologyQueryRef="samplesVQUser.SamplesTaxonOntologyUser"
+                      prompt="Samples"
+                      countPredictsAnswerCount="true"
+                      trimMetadataTerms="true"
+                      dependedParamRef="userDatasetParams.biom_dataset">
+         <help>
+              Select reference samples. 
+         </help>
+         <!-- <suggest selectMode="all" /> -->
+       </filterParam>
+
+  </paramSet>
+
+
+  <querySet name="samplesVQUser" queryType="vocab" isCacheable="false">
+
+        <sqlQuery name="SamplesMetadataUser" doNotTest="1">
+          <paramRef ref="userDatasetParams.biom_dataset"/>
+          <column name="ontology_term_name"/>
+          <column name="internal"/>
+          <column name="number_value"/>
+          <column name="date_value"/>
+          <column name="string_value"/>
+          <sql>
+            <![CDATA[
+            select sd.sample_id as internal,
+                   pt.property as ontology_term_name,
+                   sd.number_value,
+                   sd.date_value,
+                   sd.string_value
+            from 
+                 apidbUserDatasets.UD_Property pt,
+                 apidbUserDatasets.UD_SampleDetail sd
+            where 
+              pt.user_dataset_id in ($$biom_dataset$$)
+              and pt.property_id = sd.property_id
+            ]]>
+            </sql>
+        </sqlQuery>
+        <sqlQuery name="SamplesMetadataOntologyUser" doNotTest="1">
+            <paramRef ref="userDatasetParams.biom_dataset"/>
+            <column name="ontology_term_name"/>
+            <column name="parent_ontology_term_name"/>
+            <column name="display_name"/>
+            <column name="description"/>
+            <column name="type"/>
+            <column name="units"/>
+            <column name="precision"/>
+            <column name="is_range"/>
+            <sql>
+              <![CDATA[
+                select distinct 
+                   pt.parent_source_id as ontology_term_name,
+                   cast(null as varchar2(1)) as parent_ontology_term_name,
+                   pt.parent as display_name,
+                   'property type' as description,
+                   cast(null as varchar2(1)) as type,
+                   cast(null as varchar2(1)) as units,
+                   1 as precision,
+                   0 as is_range
+                 from 
+                      apidbUserDatasets.UD_Property pt
+            where 
+                  pt.user_dataset_id in ($$biom_dataset$$)
+                union
+                select pt.property as ontology_term_name,
+                       pt.parent_source_id as parent_ontology_term_name,
+                       pt.property as display_name,
+                       pt.property as description,
+                       pt.type,
+                       cast(null as varchar2(1)) units,
+                       1 as precision,
+                       DECODE(pt.filter, 'range', 1, 0) as is_range
+                 from 
+                      apidbUserDatasets.UD_Property pt
+            where 
+                  pt.user_dataset_id in ($$biom_dataset$$)
+              ]]>
+            </sql>
+        </sqlQuery>
+
+        <sqlQuery name="SamplesTaxonUser" doNotTest="1"  >
+          <paramRef ref="userDatasetParams.biom_dataset"/>
+          <column name="internal"/>
+          <column name="ontology_term_name"/>
+          <column name="number_value"/>
+          <column name="date_value"/>
+          <column name="string_value"/>
+          <sql>
+            <![CDATA[
+            select aa.sample_id as internal,
+                   aa.taxon_level_name || ':' || aa.taxon_name as ontology_term_name,
+                   cast(aa.relative_abundance as number) as number_value,
+                   cast(null as date) as date_value,
+                   cast(null as varchar2(1)) as string_value
+            from 
+                 apidbUserDatasets.UD_AggregatedAbundance aa
+            where 
+              aa.user_dataset_id in ($$biom_dataset$$)
+            ]]>
+            </sql>
+        </sqlQuery>
+
+        <sqlQuery name="SamplesTaxonOntologyUser" doNotTest="1" > 
+            <paramRef ref="userDatasetParams.biom_dataset"/>
+            <column name="ontology_term_name"/>
+            <column name="parent_ontology_term_name"/>
+            <column name="display_name"/>
+            <column name="description"/>
+            <column name="type"/>
+            <column name="units"/>
+            <column name="precision"/>
+            <column name="is_range"/>
+            <sql>
+              <![CDATA[
+            select distinct -- unneeded only because of UNION
+                   aa.taxon_level_name as ontology_term_name,
+                   cast(null as varchar2(1)) as parent_ontology_term_name,
+                   INITCAP(aa.taxon_level_name) as display_name,
+                   'taxonomic rank' as description,
+                   cast(null as varchar2(1)) as type,
+                   cast(null as varchar2(1)) as units,
+                   1 as precision,
+                   0 as is_range,
+                   aa.taxon_level * 2 - 1 as ordering
+            from 
+                 apidbUserDatasets.UD_AggregatedAbundance aa
+            where 
+              aa.user_dataset_id in ($$biom_dataset$$)
+            union 
+            select aa.taxon_level_name || ':' || aa.taxon_name as ontology_term_name,  
+                   aa.taxon_level_name as parent_ontology_term_name,
+                   aa.taxon_name as display_name,
+                   cast(null as varchar2(1)) as description,
+                   'number' as type,
+                   cast(null as varchar2(1)) as units,
+                   1 as precision,
+                   1 as is_range,
+                   aa.taxon_level * 2 as ordering
+            from 
+                 apidbUserDatasets.UD_AggregatedAbundance aa
+            where 
+              aa.user_dataset_id in ($$biom_dataset$$)
+            order by ordering, display_name
+              ]]>
+            </sql>
+        </sqlQuery>
+
+  </querySet>
 
 </wdkModel>

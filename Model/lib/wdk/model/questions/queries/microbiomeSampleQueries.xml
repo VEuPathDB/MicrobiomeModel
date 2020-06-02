@@ -1,4 +1,5 @@
 <wdkModel>
+
   <querySet name="sampleIds" queryType="id" isCacheable="true">
 
     <sqlQuery name="SampleBySampleId" doNotTest="true"
@@ -12,11 +13,17 @@
                 FROM   ApidbTuning.Samples s,
                        ($$sample_id$$) ds
                  WHERE lower(s.name) = lower(ds.name)
+                UNION
+                SELECT distinct uds.name as name, '@PROJECT_ID@' as project_id
+                FROM   apidbUserDatasets.UD_Sample uds,
+                       ($$sample_id$$) ds
+                 WHERE lower(uds.name) = lower(ds.name)
+
             ]]>
         </sql>
 
     </sqlQuery>
- 
+
     <sqlQuery name="SampleByMetadata" doNotTest="true"
               displayName="Metadata">
       <paramRef ref="sampleParams.metadata_datasets" visible="false"/>
@@ -94,7 +101,38 @@
 
     </sqlQuery>
 
-      <!-- TEMPLATE_ANCHOR sampleMetadataQueryWithClinepi -->
+    <sqlQuery name="UserSampleByMetadata" doNotTest="true"
+              displayName="Metadata">
+       <paramRef ref="userDatasetParams.biom_dataset" />
+       <paramRef ref="sampleParamsUser.samples_filter_metadata_user" prompt="Samples"/>
+        <column name="name"/>
+        <column name="project_id"/>
+        <sql>
+            <![CDATA[
+              SELECT distinct s.name as name, '@PROJECT_ID@' as project_id
+              FROM  apidbUserDatasets.UD_Sample s
+              WHERE s.sample_id in ($$samples_filter_metadata_user$$)
+               ORDER BY s.name
+            ]]>
+        </sql>
+
+    </sqlQuery>
+    <sqlQuery name="UserSampleByTaxonAbundance" doNotTest="true"
+              displayName="Metadata">
+       <paramRef ref="userDatasetParams.biom_dataset" />
+       <paramRef ref="sampleParamsUser.samples_filter_taxon_user" prompt="Samples"/>
+        <column name="name"/>
+        <column name="project_id"/>
+        <sql>
+            <![CDATA[
+              SELECT distinct s.name as name, '@PROJECT_ID@' as project_id
+              FROM  apidbUserDatasets.UD_Sample s
+              WHERE s.sample_id in ($$samples_filter_taxon_user$$)
+               ORDER BY s.name
+            ]]>
+        </sql>
+
+    </sqlQuery>
 
     </querySet>
 
