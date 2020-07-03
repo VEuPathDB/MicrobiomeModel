@@ -10,7 +10,7 @@
 
     <question name="MicrobiomeSampleByMetadata"
               searchCategory="Other Attributes"
-              iconName="mbio-sampleDetails_light"
+              iconName="ebrc-icon-sampleDetails_light"
               shortDisplayName="Details"
               queryRef="sampleIds.SampleByMetadataWiz"
               displayName="Sample Details"
@@ -63,7 +63,7 @@
     Base UserSampleByMetadata on the templated question for each user
 
     <question name="SamplesByMetadata_${datasetName}"
-              iconName="mbio-sampleDetails_light"
+              iconName="ebrc-icon-sampleDetails_light"
               shortDisplayName="${datasetShortDisplayName} (smpl details)"
               queryRef="sampleIds.SampleByMetadata"
               displayName="${datasetDisplayName} Sample Details"
@@ -97,7 +97,7 @@
 
  -->
     <question name="UserSampleByMetadata"
-              iconName="mbio-sampleDetails_light"
+              iconName="ebrc-icon-sampleDetails_light"
               shortDisplayName="Details"
               queryRef="sampleIds.UserSampleByMetadata"
               displayName="Sample Details"
