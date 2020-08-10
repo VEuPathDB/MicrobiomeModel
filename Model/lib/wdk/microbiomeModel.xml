@@ -17,7 +17,7 @@
   
   <modelName  displayName="MicrobiomeDB" version="%%buildNumber%%" releaseDate="%%releaseDate%%" buildNumber="%%buildNumber%%" />
 
-  <exampleStratsAuthor name="EuPathDB Example"/>
+  <exampleStratsAuthor name="VEuPathDB BRC"/>
 
   <declaredMacro name="WEBAPP_BASE_URL"          usedBy="model"/>
   <declaredMacro name="LEGACY_WEBAPP_BASE_URL"   usedBy="model"/>
