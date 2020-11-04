@@ -44,4 +44,26 @@
     <import file="model/records/microbiomeSampleRecord.xml"/>
 
     <!-- Data Sets -->
+
+  <defaultColumnToolBundle ref="standard" />
+
+  <columnToolBundles>
+    <toolBundle name="standard">
+      <tool name="standard">
+        <string>
+          <reporter implementation="org.gusdb.wdk.model.toolbundle.reporter.MultiTypeColumnReporter" />
+          <filter implementation="org.gusdb.wdk.model.toolbundle.filter.MultiTypeColumnFilter" />
+        </string>
+        <number>
+          <reporter implementation="org.gusdb.wdk.model.toolbundle.reporter.MultiTypeColumnReporter" />
+          <filter implementation="org.gusdb.wdk.model.toolbundle.filter.MultiTypeColumnFilter" />
+        </number>
+        <date>
+          <reporter implementation="org.gusdb.wdk.model.toolbundle.reporter.MultiTypeColumnReporter" />
+          <filter implementation="org.gusdb.wdk.model.toolbundle.filter.MultiTypeColumnFilter" />
+        </date>
+      </tool>
+    </toolBundle>
+  </columnToolBundles>
+
 </wdkModel>
