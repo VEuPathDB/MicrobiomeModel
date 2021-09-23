@@ -1,5 +1,6 @@
  			recordClassName	targetType	name	displayName	shortDisplayName	description	geneOrTranscript	displayOrder	scope	scope	scope
 			eupath/eupath.owl#recordClassName	eupath/eupath.owl#targetType	eupath/eupath.owl#name	EUPATH_0000052	eupath/eupath.owl#shortDisplayName	eupath/eupath.owl#description	eupath/eupath.owl#geneOrTranscript	EUPATH_0000274	eupath/eupath.owl#scope	eupath/eupath.owl#scope	eupath/eupath.owl#scope
+topic_0219_synonym	http://www.w3.org/2002/07/owl#Thing	Thing			data_provenance	Data Provenance	DP	Data submission, annotation and curation		3	internal		
 SampleRecordClasses.MicrobiomeSampleRecordClass.record_overview	http://edamontology.org/topic_3050 	Biodiversity	SampleRecordClasses.MicrobiomeSampleRecordClass	attribute	record_overview						record-internal		
 SampleRecordClasses.MicrobiomeSampleRecordClass.description	http://edamontology.org/topic_3050	Biodiversity	SampleRecordClasses.MicrobiomeSampleRecordClass	attribute	description						results	record-internal	download
 SampleRecordClasses.MicrobiomeSampleRecordClass.Characteristics	http://edamontology.org/topic_3050 	Biodiversity	SampleRecordClasses.MicrobiomeSampleRecordClass	table	Characteristics					2	record	download	
@@ -9,5 +10,6 @@ SampleRecordClasses.MicrobiomeSampleRecordClass.TaxaRelativeAbundance	http://eda
 SampleRecordClasses.MicrobiomeSampleRecordClass.Datasets	http://edamontology.org/topic_3050 	Biodiversity	SampleRecordClasses.MicrobiomeSampleRecordClass	table	Datasets					1	record	download	
 SampleRecordClasses.MicrobiomeSampleRecordClass.SampleQuestions.SampleByMetadata	http://edamontology.org/topic_3050 	Biodiversity	SampleRecordClasses.MicrobiomeSampleRecordClass	search	SampleQuestions.MicrobiomeSampleByMetadata					1	menu	webservice	
 SampleRecordClasses.MicrobiomeSampleRecordClass.SampleQuestions.SampleByTaxonAbundance	http://edamontology.org/topic_3050 	Biodiversity	SampleRecordClasses.MicrobiomeSampleRecordClass	search	SampleQuestions.MicrobiomeSampleByTaxonAbundance 					3	menu	webservice	
+DatasetRecordClasses.DatasetRecordClass.card_questions	topic_0219_synonym	Curation and Annotation	DatasetRecordClasses.DatasetRecordClass	attribute	card_questions					1	results
 ## TEMPLATE_ANCHOR sampleMetadataQuestionCategory
 ## TEMPLATE_ANCHOR taxonAbundanceQuestionCategory
