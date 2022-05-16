@@ -1,4 +1,4 @@
-<project name="MicrobiomeModel" default="Installation" basedir=".">
+<project name="MicrobiomeModel" basedir=".">
 
   <!-- oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo -->
   <!-- oooooooooooooooooooooooooo  Dependencies  oooooooooooooooooooooooooo -->
@@ -15,73 +15,22 @@
   <!-- oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo -->
 
   <target name="MicrobiomeModel-Installation" depends="CBIL-Installation,
-                                            ReFlow-Installation,
-                                            WDK-Installation,
-                                            EbrcModelCommon-Installation,
-                                            MicrobiomeModel-MavenInstallation,
-                                            MicrobiomeModel/Model-Installation">
-
-
+                                                       ReFlow-Installation,
+                                                       WDK-Installation,
+                                                       EbrcModelCommon-Installation,
+                                                       MicrobiomeModel/Model-Installation">
     <ant target="defaultProjectInstall">
       <property name="project" value="MicrobiomeModel" />
     </ant>
-
   </target>
-
-  <target name="MicrobiomeModel-MavenInstallation">
-    <ant target="mavenBuildProject">
-      <property name="project" value="MicrobiomeModel" />
-    </ant>
-    <property name="alreadyBuilt" value="true" />
-  </target>
-
-
-  <!-- oooooooooooooooooo  Installation Postprocess  ooooooooooooooooooooo -->
-
-  <target name="MicrobiomeModel-Installation-postprocess">
-    <echo message="Postprocessing the MicrobiomeModel installation" />
-
-    <replace dir="${targetDir}/bin"
-             propertyFile="${targetDir}/config/replacements.prop">
-      <include name="**/*" />
-      <replacefilter token="@perl@" property="perl" />
-    </replace>
-
-  </target>
-
 
   <!-- ooooooooooooooooooooooo  Install Components  ooooooooooooooooooooooo -->
 
-
-  <target name="MicrobiomeModel/Model-Installation" depends="ProjectTree">
-
+  <target name="MicrobiomeModel/Model-Installation">
     <ant target="defaultComponentInstall">
       <property name="project" value="MicrobiomeModel" />
       <property name="component" value="Model" />
     </ant>
-
-  </target>
-
-  <!-- oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo -->
-  <!-- oooooooooooooooooooooooooo  Distributable  ooooooooooooooooooooooooo -->
-  <!-- oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo -->
-
-  <target name="MicrobiomeModel-Distributable" depends="ProjectTree">
-
-    <copy todir="${targetDir}">
-      <fileset dir="${projectsDir}">
-        <exclude name="**/CVS/*" />
-      </fileset>
-    </copy>
-  </target>
-
-
-  <!-- oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo -->
-  <!-- oooooooooooooooooooooooooo  ProjectTree  ooooooooooooooooooooooooooo -->
-  <!-- oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo -->
-
-  <target name="ProjectTree" if="${checkout}">
-    <ant target="projectCheckOut" />
   </target>
 
 </project>
