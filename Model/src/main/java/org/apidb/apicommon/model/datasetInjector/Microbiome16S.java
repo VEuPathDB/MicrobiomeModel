@@ -34,6 +34,7 @@ public class Microbiome16S extends DatasetInjector {
           {"studyCategories", ""},
           {"projectAvailability", ""},
           {"studyAccess", ""},
+          {"isPublic", ""},
           {"policyUrl", ""},
           {"cardHeadline", ""},
           {"cardPoints", ""},
