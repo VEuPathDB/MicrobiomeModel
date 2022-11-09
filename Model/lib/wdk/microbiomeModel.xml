@@ -8,7 +8,7 @@
 
 <wdkModel>
 
-  <constant name="releaseDate">23 June 2022 14:19</constant>
+  <constant name="releaseDate">09 November 2022 13:25</constant>
   <constant name="buildNumber">28</constant>
 
   <constant name="attributesReporterDisplayName">Tab- or comma-delimited (openable in Excel) - choose columns to make a custom table</constant>
